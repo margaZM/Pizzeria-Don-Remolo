@@ -127,7 +127,7 @@ export default function RegisterForm() {
 			}}
 		>
 			{(formik) => (
-				<Form className="flex flex-col">
+				<Form className="w-full flex flex-col">
 					<Input label="Nombre" name="name" type="text" />
 					<Input label="Correo electrónico" name="email" type="email" />
 					{errorMessage && <ErrorMessage message={errorMessage} />}
@@ -153,7 +153,7 @@ export default function RegisterForm() {
 						<span>¿Ya tienes cuenta? </span>
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
-							data-modal='login'
+							data-modal="login"
 							onClick={handleWindow}
 						>
 							Inicia sesión

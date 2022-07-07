@@ -31,10 +31,10 @@ export default function LoginForm() {
 				'Introduce un correo electrónico válido por favor',
 			)
 			.required(() => {
-				if(errorMessage !== '') {
+				if (errorMessage !== '') {
 					setErrorMessage('');
-					return 'El correo electrónico es obligatorio.'
-				} else return 'El correo electrónico es obligatorio.'
+					return 'El correo electrónico es obligatorio.';
+				} else return 'El correo electrónico es obligatorio.';
 			}),
 		password: Yup.string().required('Ingresa tu contraseña por favor'),
 	});
@@ -91,7 +91,7 @@ export default function LoginForm() {
 			}}
 		>
 			{(formik) => (
-				<Form className="flex flex-col w-full">
+				<Form className="w-full flex flex-col">
 					<Input label="Correo electrónico" name="email" type="email" />
 					{errorMessage && <ErrorMessage message={errorMessage} />}
 					<Input label="Contraseña" name="password" type="password" />
@@ -108,7 +108,7 @@ export default function LoginForm() {
 						<span>¿Aún no tienes una cuenta?</span> {''}
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
-							data-modal='register'
+							data-modal="register"
 							onClick={handleWindow}
 						>
 							Regístrate
