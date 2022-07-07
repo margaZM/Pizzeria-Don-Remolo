@@ -1,9 +1,9 @@
 .button {
-	@apply cursor-pointer block w-full rounded-3xl py-2 px-4 shadow outline-none transition-opacity;
+	@apply cursor-pointer block w-full rounded-3xl py-2 px-4 shadow outline-none transition-opacity max-w-[32rem];
 }
 
 .button-primary {
-	@apply cursor-pointer block w-full rounded-3xl py-2 px-2 shadow outline-none text-white bg-primary transition-opacity;
+	@apply cursor-pointer block w-full rounded-3xl py-2 px-2 shadow outline-none text-white bg-primary transition-opacity max-w-[32rem];
 }
 
 input,
