@@ -6,6 +6,7 @@ import { Categories } from './sections/Categories/Categories';
 import { BannerBenefit } from './components/banners/BannerBenefit';
 import { useSelector } from 'react-redux';
 import { useOnModalChange } from '/hooks/useOnModalChange';
+import MostPopular from './sections/most-popular/Main';
 
 export const Main = () => {
 	let { user } = useSelector((state) => state.user);
@@ -29,6 +30,7 @@ export const Main = () => {
 			<Hero />
 			<Promotions />
 			<Categories />
+			<MostPopular />
 			<Gallery />
 			{isOpenModal && (
 				<BannerBenefit

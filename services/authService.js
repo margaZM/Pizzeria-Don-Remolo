@@ -14,4 +14,5 @@ export const registerUser = (body) => {
 
 export const loging = () => {
 	window.localStorage.removeItem('auth');
+	window.localStorage.removeItem('userName');
 };

@@ -1,11 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../../../redux/slices/auth";
+import { detectUser, selectUser } from "../../../redux/slices/auth";
 import { handleModal } from "../../../redux/slices/modal/modalSlice";
 import { logout } from '../../../redux/slices/auth/index';
 import LoginForm from '../../login/Main';
 import RegisterForm from '../../register/Main';
 import Modal from "../../shared/Modal";
 import { defaultButtonStyle, loginButtonStyle, registerButtonStyle } from "../styles/buttons_styles";
+import { useEffect } from "react";
 
 export const NavBtnsContainer = () => {
 	const isUser = useSelector(selectUser);
@@ -16,6 +17,11 @@ export const NavBtnsContainer = () => {
 	const handleLoginModal = (e) => dispatch(handleModal(e.target.dataset.modal));
 	const handleRegisterModal = (e) => dispatch(handleModal(e.target.dataset.modal));
 	const handleLogout = () => dispatch(logout());
+
+	useEffect(() => {
+		dispatch(detectUser());
+		console.log(isUser)
+	}, [dispatch]);
 
 	return (
 		<>

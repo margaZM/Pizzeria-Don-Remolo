@@ -1,5 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { loging } from '../../../services/authService';
+
+export const detectUser = createAsyncThunk('user, detect-user', () => {
+	const user = {
+		name: localStorage.getItem('userName'),
+		token: localStorage.getItem('auth')
+	};
+	return user;
+});
 
 export const userSlice = createSlice({
 	name: 'user',
@@ -14,6 +22,12 @@ export const userSlice = createSlice({
 			state.user = null;
 			loging();
 		},
+	},
+	extraReducers(builder) {
+		builder
+			.addCase(detectUser.fulfilled, (state, action) => {
+				state.user = action.payload;
+			})
 	},
 });
 

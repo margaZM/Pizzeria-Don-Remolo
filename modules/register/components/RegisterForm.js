@@ -13,6 +13,7 @@ import { Notification } from '../../shared/Notification';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage } from '../../shared/ErrorMessage';
 import { useOnModalChange } from '../../../hooks/useOnModalChange';
+import { handleModal } from '../../../redux/slices/modal/modalSlice';
 
 export default function RegisterForm() {
 	const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -52,7 +53,7 @@ export default function RegisterForm() {
 			),
 		password: Yup.string()
 			.required('Ingresa tu contraseña por favor')
-			.min(2, 'La contraseña debe contener un mínimo de 8 caracteres')
+			.min(8, 'La contraseña debe contener un mínimo de 8 caracteres')
 			.matches(NUM_PATTERN, 'La contraseña debe contener al menos un número')
 			.matches(CAPITAL_PATTERN, 'La contraseña debe contener al menos una mayúscula')
 			.matches(LOWERCASE_PATTERN, 'La contraseña debe contener al menos una minúscula')
@@ -83,7 +84,7 @@ export default function RegisterForm() {
 			onSubmit={async (values, { resetForm }) => {
 				try {
 					const response = await registerUser({
-						name: values.user,
+						name: values.name,
 						email: values.email,
 						password: values.password,
 					});
@@ -91,12 +92,16 @@ export default function RegisterForm() {
 						icon: 'success',
 						message: 'Tu cuenta se ha creado de manera exitosa.',
 					});
-					localStorage.setItem('auth', response?.token);
-					dispatch(auth({ ...values, token: response?.token }));
+					localStorage.setItem('auth', response?.data.token);
+					localStorage.setItem('userName', values.name);
+					dispatch(auth({ name: values.name, email: values.email, token: response.data.token }));
+					setTimeout(() => {
+						dispatch(handleModal('register-success'));
+					}, 2100);
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
-					setSubmitting(false);
+					// setSubmitting(false);
 					if (error.response.data.message === 'Email in use') {
 						setErrorMessage(
 							'Ya existe una cuenta asociada a este correo. Por favor inicia sesión o registra una cuenta nueva.',
@@ -117,20 +122,15 @@ export default function RegisterForm() {
 						},
 					});
 				}
-				resetForm({
-					values: {
-						name: '',
-						email: '',
-						password: '',
-					},
-				});
 			}}
 		>
 			{(formik) => (
 				<Form className="w-full flex flex-col">
 					<Input label="Nombre" name="name" type="text" />
-					<Input label="Correo electrónico" name="email" type="email" />
-					{errorMessage && <ErrorMessage message={errorMessage} />}
+					<div className='flex flex-col gap-3'>
+						<Input label="Correo electrónico" name="email" type="email" />
+						{errorMessage && <ErrorMessage message={errorMessage} />}
+					</div>
 					<Input label="Contraseña" name="password" type="password" />
 					<div className="flex pl-4">
 						<Image

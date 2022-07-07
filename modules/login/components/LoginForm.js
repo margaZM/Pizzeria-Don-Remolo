@@ -51,7 +51,8 @@ export default function LoginForm() {
 				try {
 					const response = await loginUser(values);
 					localStorage.setItem('auth', response?.data.token);
-					dispatch(auth({ ...response.data, token: response?.data.token }));
+					localStorage.setItem('userName', response?.data.name);
+					dispatch(auth({ ...response.data }));
 					setTimeout(() => {
 						dispatch(handleModal('login-success'));
 					}, 2100);
@@ -59,6 +60,7 @@ export default function LoginForm() {
 						icon: 'success',
 						message: 'Bienvenido nuevamente!',
 					});
+					setErrorMessage('');
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
@@ -91,9 +93,11 @@ export default function LoginForm() {
 			}}
 		>
 			{(formik) => (
-				<Form className="w-full flex flex-col">
-					<Input label="Correo electrónico" name="email" type="email" />
-					{errorMessage && <ErrorMessage message={errorMessage} />}
+				<Form className="flex flex-col w-full">
+					<div className="flex flex-col gap-4">
+						<Input label="Correo electrónico" name="email" type="email" />
+						{errorMessage && <ErrorMessage message={errorMessage} />}
+					</div>
 					<Input label="Contraseña" name="password" type="password" />
 					<button
 						className="button-primary w-full max-w-[512px] mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
