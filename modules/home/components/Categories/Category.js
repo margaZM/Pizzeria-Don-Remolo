@@ -1,14 +1,22 @@
 import Image from 'next/image';
 import React from 'react';
 
-export const Categories = ({ image, title }) => {
+export const Category = ({ image, title, index }) => {
+	console.log(index);
 	return (
-		<section>
+		<section
+			className={
+				'flex flex-col items-center p-4 relative hover:scale-125 hover:cursor-pointer'
+			}
+		>
 			<Image
-				src={require(`/public/assets/categories/empanada.png`)}
+				loader={() => image}
+				src={image}
 				alt="category-food-image"
+				width="400"
+				height="260"
 			/>
-			<p> {title} </p>
+			<p className="mt-4 font-bold"> {title} </p>
 		</section>
 	);
 };
