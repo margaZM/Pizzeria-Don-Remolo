@@ -20,6 +20,11 @@ export const PasswordSecurityLevel = ({ password }) => {
 					<hr className="w-full border-green border-4" />
 				</div>
 			)}
+			{password.length >= 26 && (
+				<div>
+					<p className="text-xs text-red text-[13.6px] pl-4">La contraseña supera los 25 caracteres</p>
+				</div>
+			)}
 		</div>
 	);
 };

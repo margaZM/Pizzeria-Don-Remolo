@@ -15,7 +15,7 @@ export const CodeStep = () => {
 			}}
 		>
 			{(formik) => (
-				<Form className={codeStepStyles}>
+				<Form className={`${codeStepStyles} shadow-fab`}>
 					<StepTitle title='Código de verificación' />
 					<p className="p-0">Introduce el código de verificación enviado al correo electrónico.</p>
 					<div className="flex justify-center w-full">

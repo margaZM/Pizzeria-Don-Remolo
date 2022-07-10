@@ -12,7 +12,7 @@ export const MailStep = () => {
 				}}
 			>
 				{(formik) => (
-					<Form className={mailStepStyles}>
+					<Form className={`${mailStepStyles} shadow-fab`}>
 						<StepTitle title='Recuperar contraseña' />
 						<div>
 							<label className="w-[397px] p-0 text-[16px]" htmlFor="email-recovery">

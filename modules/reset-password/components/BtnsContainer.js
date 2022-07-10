@@ -10,7 +10,7 @@ export const BtnsContainer = ({ btn_2_text, step_3 }) => {
 					text='Cancelar'
 				/>
 				<Button 
-					style={`${registerButtonStyle} ${step_3 ? 'w-[250px]' : 'max-w-[81px]'} min-h-[40px]`} 
+					style={`${registerButtonStyle} ${step_3 ? 'w-[200px]' : 'max-w-[81px]'} min-h-[40px]`} 
 					text={btn_2_text} 
 				/>
 			</div>

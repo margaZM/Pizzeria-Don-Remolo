@@ -20,7 +20,6 @@ export const NavBtnsContainer = () => {
 
 	useEffect(() => {
 		dispatch(detectUser());
-		console.log(isUser)
 	}, [dispatch]);
 
 	return (
