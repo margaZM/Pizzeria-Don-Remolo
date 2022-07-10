@@ -4,6 +4,7 @@ import { handleModal } from "../../../redux/slices/modal/modalSlice";
 import { logout } from '../../../redux/slices/auth/index';
 import LoginForm from '../../login/Main';
 import RegisterForm from '../../register/Main';
+import ResetPassword from '../../reset-password/Main';
 import Modal from "../../shared/Modal";
 import { defaultButtonStyle, loginButtonStyle, registerButtonStyle } from "../styles/buttons_styles";
 import { useEffect } from "react";
@@ -12,6 +13,7 @@ export const NavBtnsContainer = () => {
 	const isUser = useSelector(selectUser);
 	const isLogin = useSelector((state) => state.modal.login);
 	const isRegister = useSelector((state) => state.modal.register);
+	const isResetPassword = useSelector((state) => state.modal.resetPassword);
 	const dispatch = useDispatch();
 
 	const handleLoginModal = (e) => dispatch(handleModal(e.target.dataset.modal));
@@ -46,6 +48,7 @@ export const NavBtnsContainer = () => {
 			</div>
 			{isLogin && <Modal> <LoginForm /> </Modal>}
 			{isRegister && <Modal> <RegisterForm /> </Modal>}
+			{isResetPassword && <Modal resetPassword={true} > <ResetPassword /> </Modal>}
 		</>
 	);
 };

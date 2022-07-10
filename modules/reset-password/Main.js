@@ -4,7 +4,7 @@ import { NewPassStep } from "./components/NewPassStep";
 
 const Main = () => {
 	return (
-		<div className="flex items-center w-full h-screen bg-white">
+		<div className="flex items-center bg-white">
 			<MailStep />
 			{/* <CodeStep /> */}
 			{/* <NewPassStep /> */}
