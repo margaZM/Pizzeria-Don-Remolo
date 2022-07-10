@@ -84,7 +84,7 @@ export default function RegisterForm() {
 			onSubmit={async (values, { resetForm }) => {
 				try {
 					const response = await registerUser({
-						name: values.name,
+						fullName: values.name,
 						email: values.email,
 						password: values.password,
 					});
@@ -94,7 +94,9 @@ export default function RegisterForm() {
 					});
 					localStorage.setItem('auth', response?.data.token);
 					localStorage.setItem('userName', values.name);
-					dispatch(auth({ name: values.name, email: values.email, token: response.data.token }));
+					dispatch(
+						auth({ name: values.name, email: values.email, token: response.data.token }),
+					);
 					setTimeout(() => {
 						dispatch(handleModal('register-success'));
 					}, 2100);
@@ -127,7 +129,7 @@ export default function RegisterForm() {
 			{(formik) => (
 				<Form className="w-full flex flex-col">
 					<Input label="Nombre" name="name" type="text" />
-					<div className='flex flex-col gap-3'>
+					<div className="flex flex-col gap-3">
 						<Input label="Correo electrónico" name="email" type="email" />
 						{errorMessage && <ErrorMessage message={errorMessage} />}
 					</div>
