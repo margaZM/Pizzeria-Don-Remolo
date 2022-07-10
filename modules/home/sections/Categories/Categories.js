@@ -15,14 +15,15 @@ export const Categories = () => {
 		<section className="md:w-[87%] min-h-[340px]' mx-auto py-8">
 			<h2 className="text-[1.2rem] font-bold">¿QUÉ SE TE ANTOJA HOY?</h2>
 			<section className="my-8 py-12 flex gap-4 flex-nowrap overflow-x-scroll scrolling-touch items-start">
-				{categories.map((category) => (
-					<section
-						className="flex-none w-[45%] md:w-[30%] mr-4 md:pb-4 rounded-lg"
-						key={category.name}
-					>
-						<Category image={category.picture} title={category.name} />
-					</section>
-				))}
+				{categories.length > 0 &&
+					categories.map((category) => (
+						<section
+							className="flex-none w-[45%] md:w-[30%] mr-4 md:pb-4 rounded-lg"
+							key={category.name}
+						>
+							<Category image={category?.picture} title={category?.name} />
+						</section>
+					))}
 			</section>
 		</section>
 	);
