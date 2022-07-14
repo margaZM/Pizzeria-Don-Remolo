@@ -14,8 +14,9 @@ export const BtnsContainer = ({ btn_2_text, step_3 }) => {
 					onClick={handleWindow}
 				/>
 				<Button 
+					type='submit' 
 					style={`${registerButtonStyle} ${step_3 ? 'w-[200px]' : 'max-w-[81px]'} min-h-[40px]`} 
-					text={btn_2_text} 
+					text={btn_2_text}
 				/>
 			</div>
 	</div>

@@ -12,6 +12,14 @@ export const registerUser = (body) => {
 	return http.post('/account/Register', body);
 };
 
+export const requestResetPassword = (body) => {
+	return http.post('/Account/RequestResetPassword', body);
+};
+
+export const checkingEmail = (body) => {
+	return http.post('/Account/EmailExists', body);
+};
+
 export const loging = () => {
 	window.localStorage.removeItem('auth');
 	window.localStorage.removeItem('userName');
