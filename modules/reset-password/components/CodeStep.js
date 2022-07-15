@@ -1,8 +1,10 @@
 import { Form, Formik } from "formik";
 import { useRef } from "react";
 import { useState } from "react";
+import { useNotification } from "../../../hooks/useNotification";
 import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";
 import { IsResetPasswordCodeValid } from "../../../services/authService";
+import { Notification } from "../../shared/Notification";
 import { codeStepStyles } from "../styles/reset-password-styles";
 import { BtnsContainer } from "./BtnsContainer";
 import { CodeInput } from "./CodeInput";
@@ -15,9 +17,11 @@ export const CodeStep = () => {
 		third: '',
 		fourth: '',
 	});
+	const [loading, setLoading] = useState(false);
 	const secondCode = useRef(null);
 	const thirdCode = useRef(null);
 	const fourthCode = useRef(null);
+	const { isOpenNotification, setIsOpenNotification, infoNotification, setInfoNotification } = useNotification();
 	const { handleChangeStep, currentState } = useOnResetPassStep();
 	const codePattern = /^[0-9]{1}/;
 
@@ -32,12 +36,19 @@ export const CodeStep = () => {
 			onSubmit = {async (values) => {
 				let code = Object.values(codesValues).join('');
 				try {
+					setLoading(true);
 					const response = await IsResetPasswordCodeValid({
 						email: currentState.currentEmail,
 						code
 					});
 					if(response.data) {
+						setLoading(false);
 						handleChangeStep({ isCode: true, code });
+						setInfoNotification({
+							icon: 'success',
+							message: 'El código ha sido verificado con éxito.',
+						});
+						setIsOpenNotification(true);
 						setTimeout(() => {
 							handleChangeStep('codeStep');
 						}, 3000);
@@ -98,9 +109,17 @@ export const CodeStep = () => {
 						¿No te llegó el código?
 						<button className="text-primary" type="button">Reenviar código</button>
 					</span>
+					{loading && <span className="text-center">Verificando código...</span>}
 					<BtnsContainer 
 						btn_2_text='Verificar'
 					/>
+					{isOpenNotification && (
+						<Notification
+							message={infoNotification.message}
+							icon={infoNotification.icon}
+							setIsOpenNotification={setIsOpenNotification}
+						/>
+					)}
 				</Form>
 			)}
 		</Formik>
