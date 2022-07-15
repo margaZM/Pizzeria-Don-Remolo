@@ -7,7 +7,6 @@ const resetPasswordSlice = createSlice({
 		currentCode: '',
 		mailStep: false,
 		codeStep: false,
-		passwordStep: false,
 	},
 	reducers: {
 		handleStep: (state, action) => {
@@ -22,10 +21,11 @@ const resetPasswordSlice = createSlice({
 			} 
 			if(action.payload === 'codeStep') {
 				state.codeStep = !state.codeStep;
-				console.log(state.mailStep)
-				console.log(state.codeStep)
-				console.log(state.passwordStep)
 			}
+			if(action.payload === 'resetSuccessful') {
+				state.mailStep = !state.mailStep;
+				state.codeStep = !state.codeStep;
+			} 
 		},
 	},
 });

@@ -6,8 +6,25 @@ import { resetPasswordStepStyles } from "../styles/reset-password-styles";
 import { StepTitle } from "./StepTitle";
 import { BtnsContainer } from "./BtnsContainer";
 import { Input } from "../../shared/Input";
+import { resetPassword } from "../../../services/authService";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { handleModal } from "../../../redux/slices/modal/modalSlice";
+import { Notification } from "../../shared/Notification";
+import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";
 
 export const NewPassStep = () => {
+	const [noMatchPassword, setNoMatchPassword] = useState(false);
+	const [reqState, setReqState] = useState({
+		loading: false,
+	});
+	const [isOpenNotification, setIsOpenNotification] = useState(false);
+	const [infoNotification, setInfoNotification] = useState({
+		icon: '',
+		message: '',
+	});
+	const { currentState, handleChangeStep } = useOnResetPassStep();
+	const dispatch = useDispatch();
 	const NUM_PATTERN = /[0-9]/;
 	const CAPITAL_PATTERN = /[A-Z]/;
 	const LOWERCASE_PATTERN = /[a-z]/;
@@ -43,6 +60,28 @@ export const NewPassStep = () => {
 				confirmNewPassword: ''
 			}}
 			validationSchema={validate}
+			onSubmit = {async (values, { resetForm }) => {
+				if(values.newPassword !== values.confirmNewPassword) return setNoMatchPassword(true);
+				setReqState({ loading: true, finish: false })
+				const response = await resetPassword({
+					email: currentState.currentEmail,
+					code: currentState.currentCode,
+					password: values.confirmNewPassword,
+				});
+				if(response.data === "Password reset successful") {
+					setReqState({ loading: false, finish: true });
+					resetForm();
+					setInfoNotification({
+						icon: 'success',
+						message: 'Contraseña restablecida con éxito.',
+					});
+					setIsOpenNotification(true);
+					setTimeout(() => {
+						dispatch(handleModal("forgot-password"));
+						handleChangeStep("resetSuccessful")
+					}, 2000);
+				}
+			}}
 		>
 			{(formik) => (
 				<Form className={`${resetPasswordStepStyles} shadow-fab`}>
@@ -61,10 +100,19 @@ export const NewPassStep = () => {
 							<Input label="Repetir nueva contraseña" name="confirmNewPassword" type="password" />
 						</div>
 					</div>
+					{reqState.loading && <span className="text-center">Solicitando nueva contraseña...</span>}
+					{noMatchPassword && <span className="text-[red] text-center">Las contraseñas deben ser iguales</span>}
 					<BtnsContainer 
 						btn_2_text='Restablecer contraseña'
 						step_3={true}
 					/>
+					{isOpenNotification && (
+						<Notification
+							message={infoNotification.message}
+							icon={infoNotification.icon}
+							setIsOpenNotification={setIsOpenNotification}
+						/>
+					)}
 				</Form>
 			)}
 		</Formik>

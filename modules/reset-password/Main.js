@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useOnResetPassStep } from "../../hooks/useOnResetPassStep";
 import { CodeStep } from "./components/CodeStep";
 import { MailStep } from "./components/MailStep";
