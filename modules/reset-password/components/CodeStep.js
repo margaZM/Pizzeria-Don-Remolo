@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useNotification } from "../../../hooks/useNotification";
 import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";
-import { IsResetPasswordCodeValid } from "../../../services/authService";
+import { IsResetPasswordCodeValid, requestResetPassword } from "../../../services/authService";
 import { Notification } from "../../shared/Notification";
 import { codeStepStyles } from "../styles/reset-password-styles";
 import { BtnsContainer } from "./BtnsContainer";
@@ -18,12 +18,32 @@ export const CodeStep = () => {
 		fourth: '',
 	});
 	const [loading, setLoading] = useState(false);
+	const [reSend, setReSend] = useState({
+		sending: false,
+	});
 	const secondCode = useRef(null);
 	const thirdCode = useRef(null);
 	const fourthCode = useRef(null);
 	const { isOpenNotification, setIsOpenNotification, infoNotification, setInfoNotification } = useNotification();
 	const { handleChangeStep, currentState } = useOnResetPassStep();
 	const codePattern = /^[0-9]{1}/;
+
+	const handleResendEmail = async () => {
+		try {
+			setReSend({ sending: true });
+			const response = await requestResetPassword({ email: currentState.currentEmail });
+			setReSend({ sending: false });
+			if(response.data === "Email sent successful") {
+				setInfoNotification({
+					icon: 'success',
+					message: 'El código ha sido reenviado con éxito.',
+				});
+				setIsOpenNotification(true);
+			};
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
 	return (
 		<Formik
@@ -107,9 +127,10 @@ export const CodeStep = () => {
 					</div>
 					<span className="flex justify-center gap-1">
 						¿No te llegó el código?
-						<button className="text-primary" type="button">Reenviar código</button>
+						<button className="text-primary" type="button" onClick={handleResendEmail}>Reenviar código</button>
 					</span>
 					{loading && <span className="text-center">Verificando código...</span>}
+					{reSend.sending && <span className="text-center">Reenviando código...</span>}
 					<BtnsContainer 
 						btn_2_text='Verificar'
 					/>
