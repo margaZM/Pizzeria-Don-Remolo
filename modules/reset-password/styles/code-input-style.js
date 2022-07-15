@@ -1,5 +1,6 @@
-export const inputStyle = [
-	"max-w-[50px]", 
+export const codeInputStyle = [
+	"max-w-[50px]",
+	"text-center",
 	"border-t-0", 
 	"border-r-0", 
 	"border-l-0", 
