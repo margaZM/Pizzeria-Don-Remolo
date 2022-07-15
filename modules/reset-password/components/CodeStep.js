@@ -1,14 +1,15 @@
 import { Form, Formik } from "formik";
 import { useRef } from "react";
 import { useState } from "react";
-import { codeInputStyle } from "../styles/code-input-style";
+import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";
+import { IsResetPasswordCodeValid } from "../../../services/authService";
 import { codeStepStyles } from "../styles/reset-password-styles";
 import { BtnsContainer } from "./BtnsContainer";
 import { CodeInput } from "./CodeInput";
 import { StepTitle } from "./StepTitle";
 
 export const CodeStep = () => {
-	const [codesValues, setCodes] = useState({
+	const [codesValues, setCodesValues] = useState({
 		first: '',
 		second: '',
 		third: '',
@@ -17,25 +18,41 @@ export const CodeStep = () => {
 	const secondCode = useRef(null);
 	const thirdCode = useRef(null);
 	const fourthCode = useRef(null);
+	const { handleChangeStep, currentState } = useOnResetPassStep();
 	const codePattern = /^[0-9]{1}/;
 
 	return (
 		<Formik
-			initialValues = {{
-				first: '',
-				second: '',
-				third: '',
-				fourth: ''
-			}}
-			onSubmit = {(values) => {
-				console.log('submiting');
+		initialValues = {{
+			first: '',
+			second: '',
+			third: '',
+			fourth: '',
+		}}
+			onSubmit = {async (values) => {
+				let code = Object.values(codesValues).join('');
+				try {
+					const response = await IsResetPasswordCodeValid({
+						email: currentState.currentEmail,
+						code
+					});
+					if(response.data) {
+						handleChangeStep({ isCode: true, code });
+						setTimeout(() => {
+							handleChangeStep('codeStep');
+						}, 3000);
+					};
+				} catch (error) {
+					console.error(error);
+				}
 			}}
 			validateOnChange = {(e) => {
 				if(codePattern.test(+e.target.value)) {
-					setCodes({
+					setCodesValues({
 						...codesValues,
 						[e.target.name]: e.target.value,
 					});
+					console.log(codesValues)
 					if(e.target.value.length > 0 && e.target.name === "first") {
 						secondCode.current.focus();
 					} else if(e.target.value.length > 0 && e.target.name === "second") {
@@ -52,34 +69,28 @@ export const CodeStep = () => {
 					<p className="p-0">Introduce el código de verificación enviado al correo electrónico.</p>
 					<div className="flex justify-center w-full">
 						<div className="grid grid-cols-4 justify-items-center w-1/2 min-w-[340px]">
-							<CodeInput 
-								className={codeInputStyle} 
-								type="text" name="first" 
+							<CodeInput  
+								name="first" 
 								value={codesValues.first}
-								autoFocus
-								onChange={validateOnChange} 
-							/>
+								onChange={validateOnChange}
+								/>
 							<CodeInput 
-								ref={secondCode} 
-								className={codeInputStyle} 
-								type="text" name="second" 
-								value={codesValues.second} 
-								onChange={validateOnChange} 
-							/>
+								ref={secondCode}  
+								name="second" 
+								value={codesValues.second}
+								onChange={validateOnChange}
+								/>
 							<CodeInput 
-								ref={thirdCode} 
-								className={codeInputStyle} 
-								type="text" 
+								ref={thirdCode}  
 								name="third" 
 								value={codesValues.third}
-								onChange={validateOnChange} />
+								onChange={validateOnChange}
+								/>
 							<CodeInput 
-								ref={fourthCode} 
-								className={codeInputStyle} 
-								type="text" 
+								ref={fourthCode}  
 								name="fourth" 
-								value={codesValues.fourth} 
-								onChange={validateOnChange} 
+								value={codesValues.fourth}
+								onChange={validateOnChange}
 							/>
 						</div>
 					</div>

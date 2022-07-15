@@ -28,7 +28,7 @@ export const resetPasswordStepStyles = [
 	"flex-col",
 	"gap-6", 
 	"w-full", 
-	"max-w-[510px]", 
+	"min-w-[510px]", 
 	"h-max",
 	"mx-auto", 
 	"p-3", 

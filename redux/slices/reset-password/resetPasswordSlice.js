@@ -14,8 +14,17 @@ const resetPasswordSlice = createSlice({
 			if(action.payload.isEmail) {
 				state.currentEmail = action.payload.email;
 			};
+			if(action.payload.isCode) {
+				state.currentCode = action.payload.code;
+			};
 			if(action.payload === 'mailStep') {
 				state.mailStep = !state.mailStep;
+			} 
+			if(action.payload === 'codeStep') {
+				state.codeStep = !state.codeStep;
+				console.log(state.mailStep)
+				console.log(state.codeStep)
+				console.log(state.passwordStep)
 			}
 		},
 	},
