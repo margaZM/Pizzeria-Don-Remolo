@@ -83,7 +83,6 @@ export const CodeStep = () => {
 						...codesValues,
 						[e.target.name]: e.target.value,
 					});
-					console.log(codesValues)
 					if(e.target.value.length > 0 && e.target.name === "first") {
 						secondCode.current.focus();
 					} else if(e.target.value.length > 0 && e.target.name === "second") {

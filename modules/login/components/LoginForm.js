@@ -51,7 +51,7 @@ export default function LoginForm() {
 				try {
 					const response = await loginUser(values);
 					localStorage.setItem('auth', response?.data.token);
-					localStorage.setItem('userName', response?.data.name);
+					localStorage.setItem('userName', response?.data.fullName);
 					dispatch(auth({ ...response.data }));
 					setTimeout(() => {
 						dispatch(handleModal('login-success'));
