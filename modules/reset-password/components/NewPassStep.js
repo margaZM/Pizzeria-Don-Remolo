@@ -6,7 +6,7 @@ import { resetPasswordStepStyles } from "../styles/reset-password-styles";
 import { StepTitle } from "./StepTitle";
 import { BtnsContainer } from "./BtnsContainer";
 import { Input } from "../../shared/Input";
-import { resetPassword } from "../../../services/authService";
+import { resetPassword } from "../../../services/resetPasswordService";
 import { useState } from "react";
 import { Notification } from "../../shared/Notification";
 import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";

@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useState } from "react";
 import { useNotification } from "../../../hooks/useNotification";
 import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";
-import { IsResetPasswordCodeValid, requestResetPassword } from "../../../services/authService";
+import { IsResetPasswordCodeValid, requestResetPassword } from "../../../services/resetPasswordService";
 import { Notification } from "../../shared/Notification";
 import { codeStepStyles } from "../styles/reset-password-styles";
 import { BtnsContainer } from "./BtnsContainer";

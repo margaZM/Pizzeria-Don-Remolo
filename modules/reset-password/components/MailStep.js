@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from 'yup';
-import { checkingEmail, requestResetPassword } from "../../../services/authService";
+import { checkingEmail, requestResetPassword } from "../../../services/resetPasswordService";
 import { Input } from "../../shared/Input";
 import { mailStepStyles } from "../styles/reset-password-styles";
 import { BtnsContainer } from "./BtnsContainer";
