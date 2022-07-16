@@ -7,10 +7,13 @@ import { mailStepStyles } from "../styles/reset-password-styles";
 import { BtnsContainer } from "./BtnsContainer";
 import { StepTitle } from "./StepTitle";
 import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";
+import { useNotification } from "../../../hooks/useNotification";
+import { Notification } from "../../shared/Notification";
 
 export const MailStep = () => {
-	const [isSent, setIsSent] = useState(null);
+	const [isSending, setIsSending] = useState(false);
 	const [isEmail, setIsEmail] = useState(null);
+	const { isOpenNotification, setIsOpenNotification, infoNotification, setInfoNotification } = useNotification();
 	const { handleChangeStep } = useOnResetPassStep();
 	const validate = Yup.object({
 		email: Yup.string()
@@ -36,11 +39,16 @@ export const MailStep = () => {
 							setIsEmail(null);
 						}, 3000);
 					};
-					setIsSent('sending');
+					setIsSending(true);
 					const response = await requestResetPassword(values);
 					if(response.statusText === 'OK' && response.data === 'Email sent successful') {
-						setIsSent('sent');
+						setIsSending(false);
 						handleChangeStep({ isEmail: true, email: values.email });
+						setInfoNotification({
+							icon: 'success',
+							message: 'El código ha sido enviado a tu correo electrónico.',
+						});
+						setIsOpenNotification(true);
 						setTimeout(() => {
 							handleChangeStep('mailStep');
 						}, 3000);
@@ -63,15 +71,17 @@ export const MailStep = () => {
 						type='email'
 					/>
 					{isEmail !== null ? <span className="text-[red] text-center">{ isEmail }</span> : null}
-					{
-						isSent === 'sent'
-						? <span className="text-[green] text-center">Se ha enviado el código a tu correo electrónico.</span> 
-						: isSent === 'sending' ? <span className="text-center">Enviando código...</span>
-						: null
-					}
+					{isSending && <span className="text-center">Enviando código...</span>}
 					<BtnsContainer 
 						btn_2_text='Enviar'
 					/>
+					{isOpenNotification && (
+						<Notification
+							message={infoNotification.message}
+							icon={infoNotification.icon}
+							setIsOpenNotification={setIsOpenNotification}
+						/>
+					)}
 				</Form>
 			)}
 		</Formik>
