@@ -7,7 +7,7 @@ const Main = () => {
 	const { currentState } = useOnResetPassStep();
 
 	return (
-		<div className="flex items-center bg-white">
+		<div className="flex items-center w-full h-screen max-h-[500px] p-1 bg-white">
 			{currentState.mailStep || <MailStep />}
 			{currentState.mailStep && !currentState.codeStep
 			? <CodeStep />
