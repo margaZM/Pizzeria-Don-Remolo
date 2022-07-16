@@ -21,6 +21,7 @@ export const CodeStep = () => {
 	const [reSend, setReSend] = useState({
 		sending: false,
 	});
+	const [isCodeInvalid, setIsCodeInvalid] = useState(false);
 	const secondCode = useRef(null);
 	const thirdCode = useRef(null);
 	const fourthCode = useRef(null);
@@ -61,18 +62,23 @@ export const CodeStep = () => {
 						email: currentState.currentEmail,
 						code
 					});
-					if(response.data) {
-						setLoading(false);
-						handleChangeStep({ isCode: true, code });
-						setInfoNotification({
-							icon: 'success',
-							message: 'El código ha sido verificado con éxito.',
-						});
-						setIsOpenNotification(true);
+					if(!response.data) {
 						setTimeout(() => {
-							handleChangeStep('codeStep');
-						}, 3000);
+							setIsCodeInvalid(false);
+						}, 2000);
+						setLoading(false);
+						return setIsCodeInvalid(true);
 					};
+					setLoading(false);
+					handleChangeStep({ isCode: true, code });
+					setInfoNotification({
+						icon: 'success',
+						message: 'El código ha sido verificado con éxito.',
+					});
+					setIsOpenNotification(true);
+					setTimeout(() => {
+						handleChangeStep('codeStep');
+					}, 3000);
 				} catch (error) {
 					console.error(error);
 				}
@@ -130,6 +136,7 @@ export const CodeStep = () => {
 					</span>
 					{loading && <span className="text-center">Verificando código...</span>}
 					{reSend.sending && <span className="text-center">Reenviando código...</span>}
+					{isCodeInvalid && <span className="text-[red] text-center">El código es incorrecto</span>}
 					<BtnsContainer 
 						btn_2_text='Verificar'
 					/>
