@@ -22,6 +22,10 @@ export default function LoginForm() {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const { handleWindow } = useOnModalChange();
+	const handleRedirect = () => {
+		dispatch(handleModal("login"));
+		router.push("/reset_password");
+	};
 
 	const validate = Yup.object({
 		email: Yup.string()
@@ -102,8 +106,7 @@ export default function LoginForm() {
 					<button 
 						className="w-max text-primary" 
 						type="button" 
-						data-modal="forgot-password"
-						onClick={handleWindow}
+						onClick={handleRedirect}
 					>
 						¿Olvidaste tu contraseña?
 					</button>

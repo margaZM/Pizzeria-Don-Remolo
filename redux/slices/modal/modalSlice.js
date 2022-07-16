@@ -6,7 +6,6 @@ const modalSlice = createSlice({
 		login: false,
 		register: false,
 		menu: false,
-		resetPassword: false,
 	},
 	reducers: {
 		handleModal: (state, action) => {
@@ -22,9 +21,6 @@ const modalSlice = createSlice({
 				state.login = !state.login;
 			} else if(action.payload === 'register-success') {
 				state.register = !state.register;
-			} else if(action.payload === 'forgot-password') {
-				if(state.login) state.login = false;
-				state.resetPassword = !state.resetPassword;
 			}
 		},
 	}
