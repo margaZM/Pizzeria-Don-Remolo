@@ -25,6 +25,8 @@ const resetPasswordSlice = createSlice({
 			if(action.payload === 'resetSuccessful') {
 				state.mailStep = !state.mailStep;
 				state.codeStep = !state.codeStep;
+				state.currentEmail = '';
+				state.currentCode = '';
 			} 
 		},
 	},

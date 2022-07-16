@@ -8,10 +8,9 @@ import { BtnsContainer } from "./BtnsContainer";
 import { Input } from "../../shared/Input";
 import { resetPassword } from "../../../services/authService";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { handleModal } from "../../../redux/slices/modal/modalSlice";
 import { Notification } from "../../shared/Notification";
 import { useOnResetPassStep } from "../../../hooks/useOnResetPassStep";
+import { useRouter } from "next/router";
 
 export const NewPassStep = () => {
 	const [noMatchPassword, setNoMatchPassword] = useState(false);
@@ -23,8 +22,8 @@ export const NewPassStep = () => {
 		icon: '',
 		message: '',
 	});
+	const router = useRouter();
 	const { currentState, handleChangeStep } = useOnResetPassStep();
-	const dispatch = useDispatch();
 	const NUM_PATTERN = /[0-9]/;
 	const CAPITAL_PATTERN = /[A-Z]/;
 	const LOWERCASE_PATTERN = /[a-z]/;
@@ -77,8 +76,8 @@ export const NewPassStep = () => {
 					});
 					setIsOpenNotification(true);
 					setTimeout(() => {
-						dispatch(handleModal("forgot-password"));
-						handleChangeStep("resetSuccessful")
+						router.push("/");
+						handleChangeStep("resetSuccessful");
 					}, 2000);
 				}
 			}}
