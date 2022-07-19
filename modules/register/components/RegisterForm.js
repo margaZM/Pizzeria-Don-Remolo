@@ -93,9 +93,9 @@ export default function RegisterForm() {
 						message: 'Tu cuenta se ha creado de manera exitosa.',
 					});
 					localStorage.setItem('auth', response?.data.token);
-					localStorage.setItem('userName', values.name);
+					localStorage.setItem('userName', response?.data.fullName);
 					dispatch(
-						auth({ name: values.name, email: values.email, token: response.data.token }),
+						auth({ fullName: values.name, email: values.email, token: response.data.token }),
 					);
 					setTimeout(() => {
 						dispatch(handleModal('register-success'));
@@ -103,7 +103,6 @@ export default function RegisterForm() {
 					router.push('/');
 					setIsOpenNotification(true);
 				} catch (error) {
-					// setSubmitting(false);
 					if (error.response.data.message === 'Email in use') {
 						setErrorMessage(
 							'Ya existe una cuenta asociada a este correo. Por favor inicia sesión o registra una cuenta nueva.',

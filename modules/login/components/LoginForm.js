@@ -22,6 +22,10 @@ export default function LoginForm() {
 	const dispatch = useDispatch();
 	const router = useRouter();
 	const { handleWindow } = useOnModalChange();
+	const handleRedirect = () => {
+		dispatch(handleModal("login"));
+		router.push("/reset_password");
+	};
 
 	const validate = Yup.object({
 		email: Yup.string()
@@ -51,7 +55,7 @@ export default function LoginForm() {
 				try {
 					const response = await loginUser(values);
 					localStorage.setItem('auth', response?.data.token);
-					localStorage.setItem('userName', response?.data.name);
+					localStorage.setItem('userName', response?.data.fullName);
 					dispatch(auth({ ...response.data }));
 					setTimeout(() => {
 						dispatch(handleModal('login-success'));
@@ -93,12 +97,19 @@ export default function LoginForm() {
 			}}
 		>
 			{(formik) => (
-				<Form className="flex flex-col w-full">
+				<Form className="flex flex-col w-full gap-2">
 					<div className="flex flex-col gap-4">
 						<Input label="Correo electrónico" name="email" type="email" />
 						{errorMessage && <ErrorMessage message={errorMessage} />}
 					</div>
 					<Input label="Contraseña" name="password" type="password" />
+					<button 
+						className="w-max text-primary" 
+						type="button" 
+						onClick={handleRedirect}
+					>
+						¿Olvidaste tu contraseña?
+					</button>
 					<button
 						className="button-primary w-full max-w-[512px] mt-3 disabled:opacity-50 disabled:cursor-not-allowed"
 						type="submit"
