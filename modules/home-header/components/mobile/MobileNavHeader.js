@@ -1,12 +1,14 @@
+import { Cart } from "../../../shared/Cart";
 import { mobileLayout } from "../../styles/layouts";
-import { NavCart } from "../NavCart";
 import { MenuIcon } from "./MenuIcon";
 
 export const MobileNavHeader = () => {
 	return (
 		<header className={`mobileHeader ${mobileLayout}`}>
 			<MenuIcon />
-			<NavCart position='justify-self-end' />
+			<div className="grid items-center w-full h-full">
+				<Cart position="justify-self-end" />
+			</div>
 		</header>
 	);
 };
