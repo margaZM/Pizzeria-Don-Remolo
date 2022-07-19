@@ -150,7 +150,11 @@ export default function RegisterForm() {
 						Registrarse
 					</button>
 					<LinksTermsAndPolicies />
-					<SocialButtons action={'Registrarse'} />
+					<SocialButtons
+						action={'Registrarse'}
+						setInfoNotification={setInfoNotification}
+						setIsOpenNotification={setIsOpenNotification}
+					/>
 					<div className="text-center">
 						<span>¿Ya tienes cuenta? </span>
 						<span

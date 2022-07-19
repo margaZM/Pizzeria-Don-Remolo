@@ -107,7 +107,11 @@ export default function LoginForm() {
 					>
 						Iniciar Sesión
 					</button>
-					<SocialButtons action={'Iniciar sesión'} />
+					<SocialButtons
+						action={'Iniciar sesión'}
+						setInfoNotification={setInfoNotification}
+						setIsOpenNotification={setIsOpenNotification}
+					/>
 					<div className="w-full max-w-[512px] text-center">
 						<span>¿Aún no tienes una cuenta?</span> {''}
 						<span
