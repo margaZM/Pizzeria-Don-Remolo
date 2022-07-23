@@ -6,6 +6,6 @@ export const CodeInput = forwardRef((props, ref) => {
 	const [field] = useField(props);
 
 	return (
-		<input ref={ref} className={codeInputStyle} type="text" maxLength="1" autoComplete="off" {...field} {...props} />
+		<input ref={ref} className={codeInputStyle} type="text" maxLength="1" autoComplete="off" required {...field} {...props} />
 	);
 });

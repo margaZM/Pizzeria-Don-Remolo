@@ -1,3 +1,5 @@
+const { resolvePath } = require("react-router-dom");
+
 module.exports = {
 	content: ['./pages/**/*.js', './components/**/*.js', './modules/**/*.{jsx,js}'],
 	theme: {
@@ -51,6 +53,8 @@ module.exports = {
 			},
 			gridTemplateColumns: {
 				nav_desktop_layout: '10% 55% 25% 1fr',
+				product_cart_mobile: '100px 1fr',
+				product_cart_desktop: '150px 1fr'
 			},
 			backgroundImage: {
 				gallery:
