@@ -6,5 +6,5 @@ export const useRedirect = () => {
 		let path = e.target ? e.target.dataset.path : e;
 		router.push(path);
 	};
-	return { handleRedirect };
+	return { handleRedirect, router };
 };
