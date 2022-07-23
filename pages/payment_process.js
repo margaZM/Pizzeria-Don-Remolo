@@ -1,6 +1,8 @@
+import PaymentProcess from '../modules/payment-process/Main';
+
 const payment_process = () => {
 	return (
-		<section className="w-full h-screen">payment_process_page</section>
+		<PaymentProcess />
 	);
 };
 
