@@ -1,4 +1,4 @@
-import { Main } from '../modules/register/Main';
+import Main from '../modules/register/Main';
 
 export default function register() {
 	return (

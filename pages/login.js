@@ -1,4 +1,4 @@
-import { Main } from '../modules/login/Main';
+import Main from '../modules/login/Main';
 
 export default function login() {
 	return (
