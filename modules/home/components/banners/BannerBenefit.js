@@ -1,11 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
+import { useOnModalChange } from '../../../../hooks/useOnModalChange';
 import Modal from '../../../shared/Modal';
 
-export const BannerBenefit = ({ setIsOpenModal, handleRegisterModal }) => {
-	const handleGoBack = () => {
-		setIsOpenModal(false);
-	};
+export const BannerBenefit = () => {
+	const { handleWindow } = useOnModalChange();
 
 	return (
 		<Modal>
@@ -35,13 +34,14 @@ export const BannerBenefit = ({ setIsOpenModal, handleRegisterModal }) => {
 					<button
 						className="button-primary mt-8"
 						data-modal="register"
-						onClick={handleRegisterModal}
+						onClick={() => handleWindow("register")}
 					>
 						Registrarme
 					</button>
 					<button
 						className="bg-transparent underline text-gray-dark mt-3"
-						onClick={handleGoBack}
+						data-modal="bannerBenefit"
+						onClick={handleWindow}
 					>
 						Por ahora no
 					</button>

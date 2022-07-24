@@ -23,8 +23,8 @@ export default function LoginForm() {
 	const router = useRouter();
 	const { handleWindow } = useOnModalChange();
 	const handleRedirect = () => {
-		dispatch(handleModal("login"));
-		router.push("/reset_password");
+		dispatch(handleModal('login'));
+		router.push('/reset_password');
 	};
 
 	const validate = Yup.object({
@@ -54,7 +54,7 @@ export default function LoginForm() {
 			onSubmit={async (values, { resetForm, setSubmitting }) => {
 				try {
 					const response = await loginUser(values);
-					localStorage.setItem('auth', response?.data.token);
+					localStorage.setItem('auth', JSON.stringify({ token: response?.data.token }));
 					localStorage.setItem('userName', response?.data.fullName);
 					dispatch(auth({ ...response.data }));
 					setTimeout(() => {
@@ -103,11 +103,7 @@ export default function LoginForm() {
 						{errorMessage && <ErrorMessage message={errorMessage} />}
 					</div>
 					<Input label="Contraseña" name="password" type="password" />
-					<button 
-						className="w-max text-primary" 
-						type="button" 
-						onClick={handleRedirect}
-					>
+					<button className="w-max text-primary" type="button" onClick={handleRedirect}>
 						¿Olvidaste tu contraseña?
 					</button>
 					<button

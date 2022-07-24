@@ -91,7 +91,7 @@ export const NavBtnsContainer = () => {
 					</>
 				)}
 			</div>
-			{isLogin && (
+			{/* {isLogin && (
 				<Modal>
 					{' '}
 					<LoginForm />{' '}
@@ -102,7 +102,7 @@ export const NavBtnsContainer = () => {
 					{' '}
 					<RegisterForm />{' '}
 				</Modal>
-			)}
+			)} */}
 		</>
 	);
 };
