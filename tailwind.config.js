@@ -56,6 +56,9 @@ module.exports = {
 				product_cart_mobile: '100px 1fr',
 				product_cart_desktop: '150px 1fr'
 			},
+			gridTemplateRows: {
+				payment_process_layout: 'repeat(6, max-content)'
+			},
 			backgroundImage: {
 				gallery:
 					"url('https://github.com/margaZM/Pizzeria-Don-Remolo/blob/main/public/assets/gallery/bg-hashtag.png?raw=true')",
