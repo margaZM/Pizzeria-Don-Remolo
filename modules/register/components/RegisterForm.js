@@ -92,10 +92,14 @@ export default function RegisterForm() {
 						icon: 'success',
 						message: 'Tu cuenta se ha creado de manera exitosa.',
 					});
-					localStorage.setItem('auth', response?.data.token);
+					localStorage.setItem('auth', JSON.stringify({ token: response?.data.token }));
 					localStorage.setItem('userName', response?.data.fullName);
 					dispatch(
-						auth({ fullName: values.name, email: values.email, token: response.data.token }),
+						auth({
+							fullName: values.name,
+							email: values.email,
+							token: response.data.token,
+						}),
 					);
 					setTimeout(() => {
 						dispatch(handleModal('register-success'));
