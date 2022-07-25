@@ -3,32 +3,28 @@ import { MobileNavHeader } from './components/mobile/MobileNavHeader';
 import NavHeader from './components/NavHeader';
 
 const Main = () => {
-	const [width, setWidth] = useState(null);
+	const [isDesktop, setIsDesktop] = useState(false);
 	const hasWindow = typeof window !== undefined;
-
-	const handleResize = () => {
-		if(innerWidth >= 700) setWidth(innerWidth)
-		else if(width < 700) setWidth(innerWidth);
-	};
+	let width = 0;
 
 	useEffect(() => {
 		if(hasWindow) {
-			setWidth(innerWidth);
+			width = innerWidth;
+			if(width <= 902) { setIsDesktop(false) }
+			else if(width >= 902) { setIsDesktop(true) }
 			window.addEventListener('resize', () => {
-				setTimeout(() => {
-					handleResize();
-				}, 1000);
+				width = innerWidth;
+				if(width <= 902) { return setIsDesktop(false) }
+				else if(width >= 902) { return setIsDesktop(true) }
 			});
 		};
 	}, []);
 
 	return (
 		<>
-			{width >= 902 
+			{isDesktop 
 				? <NavHeader /> 
-				: width < 902
-				? <MobileNavHeader />
-				: null
+				: <MobileNavHeader />
 			}
 		</>
 	);
