@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { logout } from './authService';
 
-export const URL = process.env.REACT_APP_API_HOST || 'http://localhost:44390';
+export const URL = process.env.WEB_API || 'http://localhost:44390';
 let accessToken;
 if (typeof window !== 'undefined') {
 	accessToken = window.localStorage.getItem('token') || null;
