@@ -1,4 +1,4 @@
-const { resolvePath } = require("react-router-dom");
+const { resolvePath } = require('react-router-dom');
 
 module.exports = {
 	content: ['./pages/**/*.js', './components/**/*.js', './modules/**/*.{jsx,js}'],
@@ -7,6 +7,7 @@ module.exports = {
 			primary: '#e74423',
 			secondary: '#f1f0de',
 			white: '#ffffff',
+			black: '#000000',
 			blue: '#0081bd',
 			red: '#d20000',
 			green: '#4caf50',
@@ -16,7 +17,7 @@ module.exports = {
 			facebook: '#395185',
 			yellow: 'rgb(250 204 21)',
 			modal_bg: 'hsla(0, 0%, 20%, .30)',
-			'transparent-bg': 'hsla(0, 0%, 70%, .30)'
+			'transparent-bg': 'hsla(0, 0%, 70%, .30)',
 		},
 		fontFamily: {
 			sans: ['Inter', 'sans-serif'],
@@ -54,7 +55,7 @@ module.exports = {
 			gridTemplateColumns: {
 				nav_desktop_layout: '10% 55% 25% 1fr',
 				product_cart_mobile: '100px 1fr',
-				product_cart_desktop: '150px 1fr'
+				product_cart_desktop: '150px 1fr',
 			},
 			backgroundImage: {
 				gallery:
