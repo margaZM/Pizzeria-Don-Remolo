@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useSelectProduct } from '../../../../hooks/useSelectProduct';
 import { productServices } from '../../../../services/product-services/productServices';
 import { ProductCard } from '../../../shared/ProductCard';
 
 export const Promotions = () => {
-	const [promotions, setPromotions] = useState([]);
+	const [promotions, setPromotions] = useState(null);
+	const { handlePromotion } = useSelectProduct();
 
 	useEffect(() => {
 		productServices.getPromotions().then((res) => setPromotions(res.data));
@@ -23,6 +25,8 @@ export const Promotions = () => {
 							desc={promo.description}
 							oldPrice={promo.originalPrice}
 							newPrice={promo.promotionalPrice}
+							id={promo.id}
+							onClick={handlePromotion}
 						/>
 					))}
 			</section>

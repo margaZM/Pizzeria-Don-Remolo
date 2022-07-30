@@ -8,6 +8,7 @@ const modalSlice = createSlice({
 		menu: false,
 		cart: false,
 		bannerBenefit: false,
+		productDetails: false,
 	},
 	reducers: {
 		handleModal: (state, action) => {
@@ -28,6 +29,8 @@ const modalSlice = createSlice({
 				state.cart = !state.cart;
 			} else if(action.payload === 'bannerBenefit') {
 				state.bannerBenefit = !state.bannerBenefit
+			} else if(action.payload === 'productDetails') {
+				state.productDetails = !state.productDetails
 			}
 		},
 	}

@@ -5,6 +5,7 @@ import Modal from "./Modal";
 import LoginForm from '../login/Main';
 import RegisterForm from '../register/Main';
 import ShopCart from '../shop-cart/Main';
+import ProductDetails from '../shared/ProductDetails/Main';
 import { BannerBenefit } from "../home/components/banners/BannerBenefit";
 
 export const Portal = () => {
@@ -27,6 +28,7 @@ export const Portal = () => {
 			: modals.menu ? <Modal> <NavMenu /> </Modal>
 			: modals.cart ? <Modal> <ShopCart /> </Modal>
 			: modals.bannerBenefit ? <Modal> <BannerBenefit /> </Modal>
+			: modals.productDetails ? <Modal> <ProductDetails /> </Modal>
 			: null
 			}
 		</>

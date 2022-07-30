@@ -24,9 +24,17 @@ const searchProduct = async (product) => {
 	return res;
 };
 
+const searchPromotionById = async (e) => {
+	const id = e.target ? e.target.dataset.id : e;
+	const res = await axios.get(PROMOTIONS);
+	const selectedProduct = res.data.filter(prod => +id === +prod.id);
+	return selectedProduct;
+};
+
 export default {
 	getAllProducts,
 	getProductsByCategory,
 	getPromotions,
-	searchProduct
+	searchProduct,
+	searchPromotionById
 };

@@ -4,5 +4,6 @@ export const productServices = {
 	getAllProducts: REQUESTS.getAllProducts,
 	getProductsByCategory: REQUESTS.getProductsByCategory,
 	getPromotions: REQUESTS.getPromotions,
-	searchProduct: REQUESTS.searchProduct
+	searchProduct: REQUESTS.searchProduct,
+	searchPromotionById: REQUESTS.searchPromotionById
 };
