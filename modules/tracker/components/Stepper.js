@@ -9,7 +9,7 @@ export const Stepper = ({}) => {
 				className={`${rounded} ${status >= 1 ? 'before:bg-primary' : 'before:bg-gray'}`}
 			>
 				<div
-					className={`${border} ${
+					className={`${border} pb-7 ${
 						status > 1 ? 'before:border-primary' : 'before:border-gray'
 					}`}
 				>
@@ -20,7 +20,7 @@ export const Stepper = ({}) => {
 				className={`${rounded} ${status >= 2 ? 'before:bg-primary' : 'before:bg-gray'}`}
 			>
 				<div
-					className={`${border} ${
+					className={`${border} pb-7 ${
 						status >= 3 ? 'before:border-primary' : 'before:border-gray'
 					}`}
 				>
@@ -31,7 +31,7 @@ export const Stepper = ({}) => {
 				className={`${rounded} ${status >= 3 ? 'before:bg-primary' : 'before:bg-gray'}`}
 			>
 				<div
-					className={`${border} ${
+					className={`${border} pb-7 ${
 						status >= 4 ? 'before:border-primary' : 'before:border-gray'
 					}`}
 				>
@@ -42,7 +42,7 @@ export const Stepper = ({}) => {
 				className={`${rounded} ${status >= 4 ? 'before:bg-primary' : 'before:bg-gray'}`}
 			>
 				<div
-					className={`${border} ${
+					className={`${border} pb-7 ${
 						status >= 5 ? 'before:border-primary' : 'before:border-gray'
 					}`}
 				>
@@ -76,4 +76,4 @@ export const Stepper = ({}) => {
 const rounded =
 	'relative before:absolute before:w-2.5 before:h-2.5 before:top-2 sm:before:top-0 before:rounded-full before:z-10 before:-translate-x-2/4 sm:before:translate-x-0';
 const border =
-	'relative top-0 sm:pt-3 before:absolute  before:left-0 before:top-2 sm:before:top-1 before:h-full sm:before:h-0 sm:before:w-full sm:before:border before:border-l pb-7 pr-7';
+	'relative top-0 sm:pt-3 before:absolute  before:left-0 before:top-2 sm:before:top-1 before:h-full sm:before:h-0 sm:before:w-full sm:before:border before:border-l pr-7';
