@@ -9,9 +9,9 @@ export const TrackOtherOrder = (props) => {
 				Ingresa el código del pedido que fue enviado al correo electrónico de la persona
 				que ordenó.
 			</span>
-			<div className="flex gap-4 items-center mt-4">
+			<div className="flex flex-col md:flex-row gap-4 md:items-center mt-4">
 				<input placeholder="Código" />
-				<div className="w-24 flex justify-center items-center">
+				<div className="w-24 flex justify-center items-center self-end">
 					<button className="button-primary">Rastrear</button>
 				</div>
 			</div>
