@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 export const ProdAdditionalPrice = ({additionalPrice}) => {
 	return (
 		<div className="flex justify-between gap-3">

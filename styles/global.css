@@ -10,6 +10,10 @@
 	@apply cursor-pointer block rounded-3xl shadow outline-none text-primary border border-primary transition-opacity max-w-[32rem] hover:text-white hover:bg-primary active:bg-white active:text-primary;
 }
 
+.button-border-gray {
+	@apply cursor-pointer block rounded-3xl shadow outline-none text-gray-dark border border-gray-dark transition-opacity max-w-[32rem] hover:bg-primary hover:text-white hover:border-primary;
+}
+
 input,
 select,
 textarea {

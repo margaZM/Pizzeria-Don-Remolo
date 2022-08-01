@@ -24,6 +24,14 @@ module.exports = {
 		},
 		fontSize: {
 			xxs: '.85rem',
+			base: '1rem',
+			lg: '1.125rem',
+			xl: '1.25rem',
+			'2xl': '1.5rem',
+			'3xl': '1.875rem',
+			'4xl': '2.25rem',
+			'5xl': '3rem',
+			'6xl': '4rem',
 		},
 		maxWidth: {
 			xxs: '12rem',
@@ -58,11 +66,13 @@ module.exports = {
 				product_cart_desktop: '150px 1fr',
 			},
 			gridTemplateRows: {
-				payment_process_layout: 'repeat(6, max-content)'
+				payment_process_layout: 'repeat(6, max-content)',
 			},
 			backgroundImage: {
 				gallery:
 					"url('https://github.com/margaZM/Pizzeria-Don-Remolo/blob/main/public/assets/gallery/bg-hashtag.png?raw=true')",
+				comments:
+					"url('https://raw.githubusercontent.com/margaZM/Pizzeria-Don-Remolo/c680dd6520775613a59992b23704d18280068e11/public/assets/comments-header.svg')",
 			},
 		},
 		plugins: [],

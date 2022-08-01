@@ -26,6 +26,7 @@ const modalSlice = createSlice({
 			} else if(action.payload === 'register-success') {
 				state.register = !state.register;
 			} else if(action.payload === 'cart') {
+				if(state.productDetails) state.productDetails = false;
 				state.cart = !state.cart;
 			} else if(action.payload === 'bannerBenefit') {
 				state.bannerBenefit = !state.bannerBenefit

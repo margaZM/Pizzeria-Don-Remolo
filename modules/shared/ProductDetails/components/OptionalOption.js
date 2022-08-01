@@ -5,7 +5,14 @@ export const OptionalOption = ({ label, price, ...props }) => {
 				<label className="p-0" htmlFor={label.toLowerCase()}>{ label }</label>
 				{price && <p className="pt-[3px] text-gray-dark text-[13px]">{`$${price}`}</p>}
 			</div>
-			<input className="w-[18px] h-[18px] accent-primary" type="checkbox" id={label.toLowerCase()} name={label} data-price={price} {...props} />
+			<input 
+				className="w-[18px] h-[18px] accent-primary" 
+				type="checkbox" 
+				id={label.toLowerCase()} 
+				name={label} 
+				data-price={price} 
+				{...props} 
+			/>
 		</div>
 	);
 };

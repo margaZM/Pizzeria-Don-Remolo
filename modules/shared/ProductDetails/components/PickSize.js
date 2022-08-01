@@ -1,32 +1,29 @@
-import { useState } from "react";
 import { RequiredOption } from "./RequiredOption";
 
 export const PickSize = () => {
-	const [size, setSize] = useState("");
-	const handleSize = (e) => setSize(e.target.id);
 	return (
 		<>
 			<RequiredOption 
 				label="Individual" 
 				name="size"
-				value={size}
+				value="Individual"
 				price="5.00"
-				onChange={handleSize}
+				type="sizes"
 				/>
 			<RequiredOption 
 				label="Mediana" 
 				name="size"
-				value={size}
+				value="Mediana"
 				price="12.00"
-				onChange={handleSize}
+				type="sizes"
 				defaultChecked
 				/>
 			<RequiredOption 
 				label="Familiar" 
 				name="size"
-				value={size}
+				value="Familiar"
 				price="17.00"
-				onChange={handleSize}
+				type="sizes"
 			/>
 		</>
 	);

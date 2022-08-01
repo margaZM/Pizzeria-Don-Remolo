@@ -2,7 +2,7 @@ import { useSelectProduct } from "../../../hooks/useSelectProduct";
 import { CloseBtn } from "../CloseBtn";
 import { Details } from "./components/Details";
 import { SelectedProduct } from './components/SelectedProduct.js';
-import { productDetailsSectionStyles, productDetailsStyles } from "./styles/productDetailsStyles";
+import { productDetailsSectionStyles } from "./styles/productDetailsStyles";
 
 const Main = () => {
 	const { currentState } = useSelectProduct();

@@ -4,7 +4,6 @@ const selectedProductSlice = createSlice({
 	name: "selected-product-slice",
 	initialState: {
 		selectedProduct: null,
-		selectedProductDetails: {},
 	},
 	reducers: {
 		handleSelectedProduct: (state, action) => {
