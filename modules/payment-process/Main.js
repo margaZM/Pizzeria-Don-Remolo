@@ -5,7 +5,7 @@ const Main = () => {
 	return (
 		<section className="flex flex-col w-full min-h-screen sm:items-center">
 			<OrderTypeContainer />
-			<PaymentProcessForm />
+			{/* <PaymentProcessForm /> */}
 		</section>
 	);
 };
