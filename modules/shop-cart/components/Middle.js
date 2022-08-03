@@ -1,8 +1,12 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import CartProduct from '../../shared/CartProduct/Main';
 
 export const Middle = () => {
 	const currentProducts = useSelector(state => state.cart);
+	// useEffect(() => {
+	// 	console.log(currentProducts)
+	// }, []);
 	return (
 		<>
 			<div className='h-full max-h-[402px] border-t border-b border-gray overflow-y-auto'>

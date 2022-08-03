@@ -5,7 +5,10 @@ import { ProdTitle } from "./components/ProdTitle";
 
 const Main = (props) => {
 	return (
-		<article className="grid grid-cols-product_cart_mobile h-max h-[200px] p-3 sm:p-5 sm:grid-cols-product_cart_desktop">
+		<article 
+			className="grid grid-cols-product_cart_mobile h-max h-[200px] p-3 sm:p-5 sm:grid-cols-product_cart_desktop" 
+			data-id={props.id}
+		>
 			<section className="flex justify-center w-full h-full">
 				<div className="w-[74px] h-[74px] sm:w-full sm:h-full rounded-xl">
 					<img 
@@ -22,7 +25,7 @@ const Main = (props) => {
 					<ProdAdditional key={props.additional.length + Math.random()} additional={additional.drink || additional.ingredient} additionalPrice={additional.price} />
 				))}
 				<article className="flex flex-col sm:pl-4">
-					<ProdButtons />
+					<ProdButtons id={props.id} />
 				</article>
 			</section>
 		</article>

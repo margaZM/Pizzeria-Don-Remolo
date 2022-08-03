@@ -3,6 +3,7 @@ import { URL } from "../baseService";
 
 const ALL_PRODUCTS = `${URL}/api/products`;
 const PROMOTIONS = `${URL}/api/promotions`;
+const INGREDIENTS = `${URL}/api/ingredients`;
 
 const getAllProducts = async (params) => {
 	const res = await axios.get(`${ALL_PRODUCTS}?PageSize=${params?.pageSize || 6}&PageIndex=${params?.pageIndex || 1}`);
@@ -16,6 +17,11 @@ const getProductsByCategory = async (params) => {
 
 const getPromotions = async () => {
 	const res = axios.get(PROMOTIONS);
+	return res;
+};
+
+const getIngredients = async (id) => {
+	const res = axios.get(!id ? INGREDIENTS : `${INGREDIENTS}/${id}`);
 	return res;
 };
 
@@ -35,6 +41,7 @@ export default {
 	getAllProducts,
 	getProductsByCategory,
 	getPromotions,
+	getIngredients,
 	searchProduct,
 	searchPromotionById
 };

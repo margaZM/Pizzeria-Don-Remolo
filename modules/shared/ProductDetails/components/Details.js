@@ -30,13 +30,23 @@ export const Details = () => {
 		const price = e.target.dataset.price ? e.target.dataset.price : null;
 		const filteredAdditional = [];
 		if(type === "sizes") {
-			setValues({ ...values, size: e.target.value, productPrice: price });
+			setValues({ 
+				...values, 
+				size: e.target.value, 
+				productPrice: price,
+			});
 		} else if(type === "dough") {
-			setValues({ ...values, dough: e.target.value });
+			setValues({ 
+				...values, dough: e.target.value 
+			});
 		} else if(type === "ingredients") {
 			if(values.ingredients.find(ingredient => ingredient.ingredient === e.target.value)) {
 				filteredAdditional = values.ingredients.filter(ingredient => ingredient.ingredient !== e.target.value);
-				return setValues({ ...values, additionalPrice: +values.additionalPrice - +price, ingredients: [ ...filteredAdditional ] })
+				return setValues({ 
+					...values, 
+					additionalPrice: +values.additionalPrice - +price, 
+					ingredients: [ ...filteredAdditional ]
+				});
 			};
 			setValues(prevState => {
 				return { 
@@ -48,7 +58,11 @@ export const Details = () => {
 		} else if(type === "drinks") {
 			if(values.drinks.find(drink => drink.drink === e.target.value)) {
 				filteredAdditional = values.drinks.filter(drink => drink.drink !== e.target.value);
-				return setValues({ ...values, additionalPrice: +values.additionalPrice - +price, drinks: [ ...filteredAdditional ] })
+				return setValues({ 
+					...values, 
+					additionalPrice: +values.additionalPrice - +price, 
+					drinks: [ ...filteredAdditional ] 
+				});
 			};
 			setValues(prevState => {
 				return { 

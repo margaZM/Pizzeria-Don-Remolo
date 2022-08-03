@@ -17,7 +17,7 @@ services:
     ports:
       - '44390:80'
     environment:
-      - ConnectionStrings__DefaultConnection=Server=db; User Id=appuser; Password=secret; Database=DonRemolo
+      - ConnectionStrings__DefaultConnection=Data source=donremolo.db
       - ASPNETCORE_ENVIRONMENT=Development
       - Token__Key=My super secret key
       - Token__Issuer=http://localhost:44390
