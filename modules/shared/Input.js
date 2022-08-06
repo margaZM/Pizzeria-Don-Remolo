@@ -1,9 +1,9 @@
 import { useField, ErrorMessage } from 'formik';
 
-export const Input = ({ label, ...props }) => {
+export const Input = ({ label, width, ...props }) => {
 	const [field, data] = useField(props);
 	return (
-		<div className="max-w-[512px]">
+		<div className={width ? width : 'max-w-[512px]'}>
 			<label htmlFor={field.name}> {label} </label>
 			<input
 				type="text"

@@ -27,3 +27,21 @@ label {
 button:hover:not([disabled]) {
 	@apply opacity-80;
 }
+
+html,
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#__next {
+	height: 100%;
+}
+
+#map {
+	height: 400px;
+	/* The height is 400 pixels */
+	width: 100%;
+	/* The width is the width of the web page */
+}
