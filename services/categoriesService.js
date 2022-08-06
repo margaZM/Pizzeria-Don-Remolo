@@ -9,5 +9,9 @@ export const getCategories = () => {
 };
 
 export const getCategoriesById = (productId) => {
-	return http.post(`/Categories/${productId}`);
+	return http.get(`/Categories/${productId}`);
+};
+
+export const getCategoriesHome = () => {
+	return http.get(`/Categories/HomeCategories`);
 };

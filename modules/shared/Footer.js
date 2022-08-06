@@ -4,7 +4,7 @@ import React from 'react';
 export const Footer = () => {
 	return (
 		<div className="bg-gray-light w-full py-8 px-2">
-			<div className="md:w-[88%] grid lg:grid-cols-5 gap-2 mx-auto leading-6">
+			<div className="md:w-[88%] grid lg:grid-cols-5 gap-2 mx-auto leading-6 pb-4">
 				<div className="col-span-5 mx-auto lg:col-span-1">
 					<Image
 						src={require('/public/assets/logos/logo-transparent.png')}
