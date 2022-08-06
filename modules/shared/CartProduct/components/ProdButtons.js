@@ -1,25 +1,21 @@
 import Image from "next/image";
 import { useDispatch } from "react-redux";
-import { handleDeleteCartItem } from "../../../../redux/slices/cart/cartSlice";
+import { useOnModalChange } from "../../../../hooks/useOnModalChange";
+import { handleDeleteCartItem, setActionType } from "../../../../redux/slices/cart/cartSlice";
+import { ProductCounter } from "../../ProductCounter";
 
 export const ProdButtons = ({ quantity, id }) => {
+	const { handleWindow } = useOnModalChange();
 	const dispatch = useDispatch();
 	const handleDeleteItem = (e) => dispatch(handleDeleteCartItem(e.target.dataset.id));
+	const handleEditItem = () => {
+		dispatch(setActionType({ type: "edit", id }));
+		dispatch(handleWindow("productDetails"));
+		handleWindow("productDetailsEdit");
+	};
 	return (
 		<div className="flex justify-between h-full">
-			<div className="flex items-end gap-5">
-				<Image
-					className="cursor-pointer hover:translate-x-[-1px] active:translate-x-px"
-					src={require('../../../../public/assets/icons/minus-btn.svg')}
-					alt="minus-btn"
-				/>
-				<p className="text-[1.1rem] font-bold">{quantity || "1"}</p>
-				<Image
-					className="cursor-pointer hover:translate-x-[1px] active:translate-x-[-1px]"
-					src={require('../../../../public/assets/icons/plus-btn.svg')}
-					alt="plus-btn"
-				/>
-			</div>
+			<ProductCounter quantity={quantity} id={id} isInCart={true} />
 			<div className="flex gap-2 items-end">
 				<div className="delete-btn w-[40px] h-[40px] pt-2">
 					<Image
@@ -28,12 +24,14 @@ export const ProdButtons = ({ quantity, id }) => {
 						alt="trash-btn"
 						data-id={id} 
 						onClick={handleDeleteItem}
-					/>
+						/>
 				</div>
 				<Image
 					className="edit-btn cursor-pointer hover:translate-y-[-1px] active:translate-y-px"
 					src={require('../../../../public/assets/icons/edit.svg')}
 					alt="edit-btn"
+					data-id={id} 
+					onClick={handleEditItem}
 				/>
 			</div>
 		</div>

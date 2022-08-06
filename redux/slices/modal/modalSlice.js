@@ -31,7 +31,10 @@ const modalSlice = createSlice({
 			} else if(action.payload === 'bannerBenefit') {
 				state.bannerBenefit = !state.bannerBenefit
 			} else if(action.payload === 'productDetails') {
-				state.productDetails = !state.productDetails
+				state.productDetails = !state.productDetails;
+			} else if(action.payload === 'productDetailsEdit' && state.cart) {
+				state.cart = !state.cart;
+				state.productDetails = !state.productDetails;
 			}
 		},
 	}

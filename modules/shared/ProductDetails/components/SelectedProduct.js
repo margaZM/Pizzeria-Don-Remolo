@@ -1,7 +1,9 @@
+import { useSelector } from 'react-redux';
 import { ProductCounter } from '../../ProductCounter';
 import { selectedProductStyles } from '../styles/productDetailsStyles';
 
 export const SelectedProduct = ({ img, title, description, price }) => {
+	const cartState = useSelector(state => state.cart);
 	return (
 		<article className={selectedProductStyles}>
 			<img className="w-full h-[180px]" src={img} alt={title} />
@@ -9,7 +11,7 @@ export const SelectedProduct = ({ img, title, description, price }) => {
 				<h3 className="font-bold">{ title }</h3>
 				<p className="font-bold">{ price }</p>
 				<p>{ description }</p>
-				<ProductCounter />
+				{cartState.cart.actionType === "edit" ? null : <ProductCounter isInCart={false} />}
 			</div>
 		</article>
 	);

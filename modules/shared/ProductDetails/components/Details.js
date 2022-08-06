@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useOnModalChange } from "../../../../hooks/useOnModalChange";
 import { useSelectProduct } from "../../../../hooks/useSelectProduct";
-import { handleAddToCart } from "../../../../redux/slices/cart/cartSlice";
+import { handleAddToCart, handleEditCartItem } from "../../../../redux/slices/cart/cartSlice";
 import { CartPlus } from "./CartPlus";
 import DetailsHeader from "./DetailsHeader";
 import { PickDough } from "./PickDough";
@@ -13,7 +13,8 @@ import { PickSize } from "./PickSize";
 export const Details = () => {
 	const { currentState } = useSelectProduct();
 	const { handleWindow } = useOnModalChange();
-	const currentProducts = useSelector(state => state.cart);
+	const cartState = useSelector(state => state.cart);
+	const actionType = cartState.cart.actionType;
 	const dispatch = useDispatch();
 	const [values, setValues] = useState({
 		title: "",
@@ -24,6 +25,8 @@ export const Details = () => {
 		img: "",
 		productPrice: "12.00",
 		additionalPrice: 0,
+		quantity: 1,
+		productSubtotal: 0,
 	});
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
@@ -75,15 +78,31 @@ export const Details = () => {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		dispatch(handleAddToCart({
-			totalPrice: +currentProducts.cart.totalPrice + +values.productPrice + +values.additionalPrice,
-			data: { 
-				...values, 
-				id: currentState?.selectedProduct?.id,
-				img: currentState?.selectedProduct?.picture,
-				title: currentState?.selectedProduct?.title,
-			}
-		}));
+		if(actionType === "edit") {
+			dispatch(handleEditCartItem({
+				totalPrice: +cartState.cart.totalPrice + +values.productPrice + +values.additionalPrice,
+				data: { 
+					...values,
+					id: cartState?.cart?.selectedEditItem?.id,
+					title: cartState?.cart?.selectedEditItem?.title,
+					img: cartState?.cart?.selectedEditItem?.img,
+					quantity: cartState?.cart?.selectedEditItem?.quantity,
+					productSubtotal: +values.productPrice + +values.additionalPrice,
+				}
+			}));
+		} else if(actionType === "add") {
+			dispatch(handleAddToCart({
+				totalPrice: +cartState.cart.totalPrice + +values.productPrice + +values.additionalPrice,
+				data: { 
+					...values, 
+					id: currentState?.selectedProduct?.id,
+					img: currentState?.selectedProduct?.picture,
+					title: currentState?.selectedProduct?.title,
+					quantity: currentState?.selectedProduct?.quantity,
+					productSubtotal: +values.productPrice + +values.additionalPrice,
+				}
+			}));
+		};
 		handleWindow("cart");
 	};
 	return (

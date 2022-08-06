@@ -19,13 +19,18 @@ const Main = (props) => {
 				</div>
 			</section>
 			<section className="description-section flex flex-col sm:pl-4">
-				<ProdTitle title={props.title} productPrice={props.productPrice} />
+				<ProdTitle title={props.title} productPrice={props.productPrice} quantity={props.quantity} />
 				<ProdDetails size={props.size} dough={props.dough} />
 				{props.additional.map(additional => (
-					<ProdAdditional key={props.additional.length + Math.random()} additional={additional.drink || additional.ingredient} additionalPrice={additional.price} />
+					<ProdAdditional 
+						key={props.additional.length + Math.random()} 
+						additional={additional.drink || additional.ingredient} 
+						additionalPrice={additional.price}
+						quantity={props.quantity}
+					/>
 				))}
 				<article className="flex flex-col sm:pl-4">
-					<ProdButtons id={props.id} />
+					<ProdButtons id={props.id} quantity={props.quantity} />
 				</article>
 			</section>
 		</article>
