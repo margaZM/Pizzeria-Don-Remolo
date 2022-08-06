@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
-export const ProductCard = ({ title, desc, oldPrice, newPrice, image }) => {
+export const ProductCard = ({ title, desc, oldPrice, newPrice, image, id, ...props }) => {
+
 	return (
 		<article className="flex flex-col gap-3 min-w-[200px] w-full max-w-[250px] min-h-[200px] h-full max-h-[340px] rounded-lg shadow-md lg:grid lg:gap-2">
 			<section className="w-full h-max">
@@ -14,6 +15,9 @@ export const ProductCard = ({ title, desc, oldPrice, newPrice, image }) => {
 				<button
 					className="w-full max-w-[200px] col-start-1 col-end-3 justify-self-center h-8 text-white bg-primary rounded-[50px] active:shadow-xl"
 					type="button"
+					data-id={id}
+					data-modal="productDetails"
+					{...props}
 				>
 					Agregar al carrito
 				</button>
