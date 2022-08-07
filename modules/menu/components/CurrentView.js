@@ -1,4 +1,5 @@
 import { Promotions } from "../../home/sections/promotions/Promotions";
+import { Desserts } from "./desserts/Desserts";
 import { Empanadas } from "./empanadas/Empanadas";
 import { Pizzas } from "./pizzas/Pizzas";
 
@@ -8,6 +9,7 @@ export const CurrentView = () => {
 			<Promotions />
 			<Pizzas />
 			<Empanadas />
+			<Desserts />
 		</>
 	)
 };
