@@ -26,6 +26,7 @@ export const Promotions = () => {
 							oldPrice={promo.originalPrice}
 							newPrice={promo.promotionalPrice}
 							id={promo.id}
+							image={promo.picture}
 							onClick={handlePromotion}
 						/>
 					))}
