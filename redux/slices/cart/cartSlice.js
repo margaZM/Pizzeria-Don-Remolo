@@ -38,6 +38,7 @@ const cartSlice = createSlice({
 			state.cart.data = [...state.cart.data, action.payload.data];
 			state.cart.totalPrice = action.payload.totalPrice;
 			state.cart.cartLength = state.cart.data.length;
+			state.cart.totalPrice = +action.payload.data.productSubtotal * +action.payload.data.quantity;
 		},
 		handleEditCartItem: (state, action) => {
 			let acumulator = 0;

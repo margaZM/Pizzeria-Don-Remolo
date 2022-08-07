@@ -125,7 +125,14 @@ export const Details = () => {
 						<CartPlus />
 						<span>Agregar al carrito</span>
 						<span>|</span>
-						<span>${+values.productPrice + +values.additionalPrice}</span>
+						<span>
+							${currentState?.selectedProduct?.quantity ?
+							(currentState?.selectedProduct?.quantity * +values.productPrice)
+							+
+							(+currentState?.selectedProduct?.quantity * +values.additionalPrice)
+							: 12
+							}
+						</span>
 					</button>
 				</div>
 			</div>

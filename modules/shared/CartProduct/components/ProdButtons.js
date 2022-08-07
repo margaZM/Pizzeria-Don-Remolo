@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import { useOnModalChange } from "../../../../hooks/useOnModalChange";
 import { handleDeleteCartItem, setActionType } from "../../../../redux/slices/cart/cartSlice";
+import { handleSelectedProduct } from "../../../../redux/slices/selectedProduct/selectedProductSlice";
 import { ProductCounter } from "../../ProductCounter";
 
 export const ProdButtons = ({ quantity, id }) => {
@@ -11,6 +12,7 @@ export const ProdButtons = ({ quantity, id }) => {
 	const handleEditItem = () => {
 		dispatch(setActionType({ type: "edit", id }));
 		dispatch(handleWindow("productDetails"));
+		dispatch(handleSelectedProduct({ selected: false }))
 		handleWindow("productDetailsEdit");
 	};
 	return (
