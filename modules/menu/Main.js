@@ -3,7 +3,7 @@ import { MenuNavBar } from "./components/MenuNavBar";
 
 const Main = () => {
 	return (
-		<section>
+		<section className="relative h-screen">
 			<MenuNavBar />
 			<CurrentView />
 		</section>
