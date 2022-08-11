@@ -4,6 +4,7 @@ import '../styles/global.css';
 import { store } from '../redux/store/store';
 import HomeNav from '../modules/home-header/Main';
 import { Footer } from '../modules/shared/Footer';
+import { Portal } from '../modules/shared/Portal';
 function MyApp({ Component, pageProps }) {
 	return (
 		<Provider store={store}>
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }) {
 				<Component {...pageProps} />
 				<Footer />
 			</div>
+			<Portal />
 		</Provider>
 	);
 }

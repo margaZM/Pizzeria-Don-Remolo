@@ -7,9 +7,11 @@ import RegisterForm from '../register/Main';
 import ShopCart from '../shop-cart/Main';
 import ProductDetails from '../shared/ProductDetails/Main';
 import { BannerBenefit } from "../home/components/banners/BannerBenefit";
+import { useRouter } from "next/router";
 
 export const Portal = () => {
 	const { modals } = useOnModalChange();
+	const router = useRouter();
 	let isAuth = null;
 	if (typeof window !== 'undefined') {
 		isAuth = window.localStorage.getItem('auth');
@@ -20,6 +22,9 @@ export const Portal = () => {
 			handleWindow("bannerBenefit");
 		};
 	}, [isAuth]);
+	useEffect(() => {
+		handleWindow("pathChange");
+	}, [router.pathname]);
 	return (
 		<>
 			{

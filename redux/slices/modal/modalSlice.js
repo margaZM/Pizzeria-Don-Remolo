@@ -12,6 +12,16 @@ const modalSlice = createSlice({
 	},
 	reducers: {
 		handleModal: (state, action) => {
+			if(action.payload === 'pathChange' && !state.bannerBenefit) { 
+				return state = { 		
+					login: false,
+					register: false,
+					menu: false,
+					cart: false,
+					bannerBenefit: false,
+					productDetails: false, 
+				};
+			};
 			if(action.payload === 'login') {
 				if(state.register) state.register = false;
 				state.login = !state.login;
