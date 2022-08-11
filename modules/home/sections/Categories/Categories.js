@@ -13,7 +13,7 @@ export const Categories = () => {
 	}, []);
 
 	return (
-		<section className="px-2 md:px-0 md:w-[87%] min-h-[340px]' mx-auto py-8">
+		<section className="px-2 md:px-0 md:w-[87%] min-h-[340px] max-w-[1200px] mx-auto py-8">
 			<h2 className="text-[1.2rem] font-bold">¿QUÉ SE TE ANTOJA HOY?</h2>
 			<section className="md:my-4 md:py-12 flex gap-2 flex-wrap md:flex-nowrap justify-center md:justify-between">
 				{categories.length > 0 &&

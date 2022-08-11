@@ -13,8 +13,8 @@ export const Category = ({ image, title }) => {
 					loader={() => image}
 					src={image}
 					alt="category-food-image"
-					width="400"
-					height="260"
+					width="250"
+					height="150"
 				/>
 			)}
 			<p className="mt-4 font-bold"> {title} </p>
