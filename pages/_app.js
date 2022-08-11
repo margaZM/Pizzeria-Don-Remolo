@@ -7,9 +7,11 @@ import { Footer } from '../modules/shared/Footer';
 function MyApp({ Component, pageProps }) {
 	return (
 		<Provider store={store}>
-			<HomeNav />
-			<Component {...pageProps} />
-			<Footer />
+			<div className='min-h-screen'>
+				<HomeNav />
+				<Component {...pageProps} />
+				<Footer />
+			</div>
 		</Provider>
 	);
 }

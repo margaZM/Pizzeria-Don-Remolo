@@ -15,7 +15,7 @@ export const Desserts = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col items-center w-full h-screen max-h-[380px] pt-2 gap-2 md:max-h-[400px] lg:max-h-[450px]">
+		<div id="postres" className="flex flex-col items-center w-full h-screen max-h-[380px] pt-2 gap-2 md:max-h-[400px] lg:max-h-[450px] scroll-mt-[195px] desktop_bk:scroll-mt-[242px]">
 			<div className="flex w-full max-w-[1200px] px-2">
 				<h2 className="text-[1.2rem] font-bold">POSTRES</h2>
 			</div>

@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 import { handleMenuCategory } from '../../../redux/slices/menuCategories/menuCategoriesSlice';
 
-export const MenuNavItem = ({ title, display }) => {
+export const MenuNavItem = ({ title, display, linkTo }) => {
 	const dispatch = useDispatch();
 	const currentView = useSelector(state => state.menuCategories.currentView);
 	const handleCategoryDisplay = (e) => {
@@ -10,13 +11,15 @@ export const MenuNavItem = ({ title, display }) => {
 	};
 	return (
 		<li className={`p-2 ${currentView === display ? "border-b-[3px] border-primary" : ""}`}>
-			<span 
-				className={`w-max font-bold cursor-pointer`}
+			<Link 
+				href={linkTo ? `#${linkTo}` : "#"}
+				className={`w-max font-bold cursor-pointer p-2`}
+				>
+				<a
 				data-display={display}
 				onClick={handleCategoryDisplay}
-			>
-				{ title }
-			</span>
+				>{ title }</a>
+			</Link>
 		</li>
 	);
 };
