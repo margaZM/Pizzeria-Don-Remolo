@@ -8,7 +8,6 @@ export const defaultButtonStyle = [
 
 export const loginButtonStyle = [
 	"text-primary",
-	"bg-white",
 	"border-primary",
 	"hover:text-white", 
 	"hover:bg-primary",

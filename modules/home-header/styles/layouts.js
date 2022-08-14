@@ -20,6 +20,7 @@ export const mobileLayout = [
 	"w-full",
 	"h-16",
 	"p-1",
+	"px-2",
 	"bg-[#F1F0DE]",
 	"z-10"
 ].join(' ');
