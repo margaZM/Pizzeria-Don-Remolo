@@ -5,10 +5,16 @@ import { mobileLayout } from "../../styles/layouts";
 import { MenuIcon } from "./MenuIcon";
 import LoginButton from '../AuthButton';
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../../redux/slices/auth";
 
 export const MobileNavHeader = () => {
 	const { router } = useRedirect();
 	const { handleRedirect } = useRedirect();
+	const isUser = useSelector(selectUser);
+	const splitName = (name = '') => {
+		return name.split(' ').slice(0, 2).join(' ');
+	};
 	return (
 		<>
 			{
@@ -28,8 +34,10 @@ export const MobileNavHeader = () => {
 							/>
 						</span>
 					</div>
-					<div className="flex items-center gap-2 w-full h-full">
-						<LoginButton authType="login" action="Ingresar" />
+					<div className="flex justify-end items-center gap-2 w-full h-full">
+						{!isUser?.token ? <LoginButton authType="login" action="Ingresar" />
+							: <p className="font-bold"> Hola, {isUser && splitName(isUser.name)} </p>
+						}
 						<Cart position="justify-self-end" />
 					</div>
 				</header>
