@@ -2,9 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { detectUser, selectUser } from '../../../redux/slices/auth';
 import { handleModal } from '../../../redux/slices/modal/modalSlice';
 import { logout } from '../../../redux/slices/auth/index';
-import LoginForm from '../../login/Main';
-import RegisterForm from '../../register/Main';
-import Modal from '../../shared/Modal';
 import {
 	defaultButtonStyle,
 	loginButtonStyle,
@@ -12,18 +9,16 @@ import {
 } from '../styles/buttons_styles';
 import { useEffect } from 'react';
 import { cleanup } from '/utils/initFacebook';
+import { useDetectWidth } from '../../../hooks/useDetectWidth';
 
-export const NavBtnsContainer = () => {
+export const NavBtnsContainer = ({ mobileMenu }) => {
+	const { isDesktop } = useDetectWidth();
 	const isUser = useSelector(selectUser);
-	const isLogin = useSelector((state) => state.modal.login);
-	const isRegister = useSelector((state) => state.modal.register);
 	const dispatch = useDispatch();
 	let logged;
-
 	if (typeof window !== 'undefined') {
 		logged = JSON.parse(window.localStorage.getItem('auth'));
 	}
-
 	const handleLoginModal = (e) => dispatch(handleModal(e.target.dataset.modal));
 	const handleRegisterModal = (e) => dispatch(handleModal(e.target.dataset.modal));
 	const handleLogout = () => {
@@ -34,11 +29,9 @@ export const NavBtnsContainer = () => {
 		}
 		dispatch(logout());
 	};
-
 	useEffect(() => {
 		dispatch(detectUser());
 	}, [dispatch]);
-
 	function facebookLogout() {
 		FB.getLoginStatus(function (response) {
 			console.log(response);
@@ -50,18 +43,16 @@ export const NavBtnsContainer = () => {
 			}
 		});
 	}
-
 	const splitName = (name = '') => {
 		return name.split(' ').slice(0, 2).join(' ');
 	};
-
 	return (
 		<>
-			<div className="flex flex-col justify-center items-center gap-2 nav-btns-container desktop_bk:flex-row">
+			<div className={`flex flex-col ${isDesktop ? "justify-center items-center" : ""} w-full max-w-[300px] gap-2 desktop_bk:flex-row`}>
 				{!isUser?.token ? (
 					<>
 						<button
-							className={`${defaultButtonStyle} ${loginButtonStyle}`}
+							className={`${mobileMenu ? "w-full" : "w-32"} ${defaultButtonStyle} ${loginButtonStyle}`}
 							type="button"
 							data-modal="login"
 							onClick={handleLoginModal}
@@ -69,7 +60,7 @@ export const NavBtnsContainer = () => {
 							Ingresar
 						</button>
 						<button
-							className={`${defaultButtonStyle} ${registerButtonStyle}`}
+							className={`${mobileMenu ? "w-full" : "w-32"} ${defaultButtonStyle} ${registerButtonStyle}`}
 							type="button"
 							data-modal="register"
 							onClick={handleRegisterModal}
@@ -91,18 +82,6 @@ export const NavBtnsContainer = () => {
 					</>
 				)}
 			</div>
-			{/* {isLogin && (
-				<Modal>
-					{' '}
-					<LoginForm />{' '}
-				</Modal>
-			)}
-			{isRegister && (
-				<Modal>
-					{' '}
-					<RegisterForm />{' '}
-				</Modal>
-			)} */}
 		</>
 	);
 };

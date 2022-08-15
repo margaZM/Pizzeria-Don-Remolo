@@ -1,7 +1,6 @@
 export const defaultButtonStyle = [
-	"w-32",
 	"h-max",
-	"p-1", 
+	"p-1",
 	"border-2",  
 	"rounded-xl",
 ].join(' ');
