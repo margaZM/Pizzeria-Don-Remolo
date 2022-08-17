@@ -4,14 +4,14 @@ import React from 'react';
 export const Footer = () => {
 	return (
 		<div className="bg-gray-light w-full py-8 px-2">
-			<div className="md:w-[88%] grid lg:grid-cols-5 gap-2 mx-auto leading-6 pb-4">
-				<div className="col-span-5 mx-auto lg:col-span-1">
+			<div className="lg:w-[90%] xl:max-w-[70%] grid lg:grid-cols-5 gap-2 mx-auto leading-6 pb-4">
+				<div className="col-span-5 mx-auto lg:ml-0 lg:col-span-1">
 					<Image
 						src={require('/public/assets/logos/logo-transparent.png')}
 						alt="logo-don-remolo"
 					/>
 				</div>
-				<div className="col-span-5 flex justify-evenly gap-2 lg:col-span-3">
+				<div className="col-span-5 flex justify-between  gap-2 lg:col-span-3">
 					<div>
 						<h4 className="font-bold mb-3 text-xxs">Servicio al cliente</h4>
 						<p className="text-xxs">Comprobante electrónico</p>

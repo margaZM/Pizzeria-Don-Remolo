@@ -5,7 +5,7 @@ export const Category = ({ image, title }) => {
 	return (
 		<section
 			className={
-				'flex flex-col items-center p-4 relative hover:scale-125 hover:cursor-pointer'
+				'flex flex-col items-center p-4 relative hover:scale-110 hover:cursor-pointer'
 			}
 		>
 			{image && (
@@ -13,8 +13,8 @@ export const Category = ({ image, title }) => {
 					loader={() => image}
 					src={image}
 					alt="category-food-image"
-					width="400"
-					height="260"
+					width="330"
+					height="200"
 				/>
 			)}
 			<p className="mt-4 font-bold"> {title} </p>
