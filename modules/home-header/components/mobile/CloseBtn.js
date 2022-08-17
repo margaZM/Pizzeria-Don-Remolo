@@ -9,7 +9,7 @@ export const CloseBtn = () => {
 	const handleClose = (e) => dispatch(handleModal(e.target.dataset.modal));
 
 	return (
-		<div className={`${modalOpts.login && 'absolute top-2 right-2'} ${modalOpts.register && 'absolute top-2 right-2'} lg:absolute lg:right-2 flex justify-center items-center w-12 h-12 bg-white rounded-[50%] shadow-button`}>
+		<div className={`${modalOpts.login && 'absolute top-2 right-2'} ${modalOpts.register && 'absolute top-2 right-2'} lg:absolute lg:right-2 flex justify-center items-center w-12 h-12`}>
 			<div className="w-4 h-4 cursor-pointer">
 				<Image 
 					onClick={handleClose}

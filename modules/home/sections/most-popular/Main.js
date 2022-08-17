@@ -1,7 +1,12 @@
-import { most_popular_info as popular } from './info/most-popular-info';
+import { useEffect, useState } from 'react';
 import { ProductCard } from '../../../shared/ProductCard';
+import { productServices } from '../../../../services/product-services/productServices';
 
 const Main = () => {
+	const [popular, setPopular] = useState(null);
+	useEffect(() => {
+		productServices.getMostPopular().then(res => setPopular(res.data));
+	}, []);
 	return (
 		<div className="flex flex-col h-screen max-h-[380px] lg:w-[90%] xl:max-w-[70%] mx-auto pt-2 gap-2 md:max-h-[400px] lg:max-h-[450px]">
 			<div className="flex w-full max-w-[1200px] px-2">
@@ -12,10 +17,11 @@ const Main = () => {
 					popular.map((prod) => (
 						<ProductCard
 							key={prod.id}
-							title={prod.title}
+							title={prod.name}
 							desc={prod.description}
-							oldPrice={prod.originalPrice}
-							newPrice={prod.promotionalPrice}
+							oldPrice="15"
+							newPrice={prod.price}
+							image={prod.picture}
 						/>
 					))}
 			</section>

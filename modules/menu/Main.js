@@ -31,7 +31,7 @@ const Main = () => {
 	}, [viewScroll]);
 
 	return (
-		<section>
+		<section className="relative min-h-screen">
 			<MenuNavBar />
 			<Promotions refProp={promotionsRef} />
 			<Pizzas refProp={pizzasRef} />

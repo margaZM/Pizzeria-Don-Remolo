@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 import { handleMenuCategory } from '../../../redux/slices/menuCategories/menuCategoriesSlice';
 
-export const MenuNavItem = ({ title, display }) => {
+export const MenuNavItem = ({ title, display, linkTo }) => {
 	const dispatch = useDispatch();
 	const currentView = useSelector((state) => state.menuCategories.currentView);
 	const handleCategoryDisplay = (e) => {
