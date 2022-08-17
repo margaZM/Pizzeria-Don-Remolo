@@ -11,7 +11,9 @@ export const SelectedProduct = ({ img, title, description, price }) => {
 				<h3 className="font-bold">{ title }</h3>
 				<p className="font-bold">{ price }</p>
 				<p>{ description }</p>
-				{cartState.cart.actionType === "edit" ? null : <ProductCounter isInCart={false} />}
+				<ProductCounter 
+					isInCart={cartState?.cart?.selectedEditItem !== null ? "edit" : "selected" } 
+				/>
 			</div>
 		</article>
 	);
