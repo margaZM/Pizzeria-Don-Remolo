@@ -16,7 +16,9 @@ export const HeroAddress = ({ orderType }) => {
 		<div className="flex gap-2 my-4">
 			<MapIcon />
 			<p className="underline font-medium cursor-pointer" onClick={handleContinue}>
-				Añade tu dirección aquí
+				{orderType.home
+					? 'Añade tu dirección aquí'
+					: 'Sellecciona el Don Rémolo más cercano a tu domiclio'}
 			</p>
 		</div>
 	);
