@@ -10,7 +10,7 @@ export const HeroBottom = ({ orderType, handleOrder }) => {
 			<div className="flex items-center w-full h-full p-3 md:justify-center">
 				<Switch orderType={orderType} handleOrder={handleOrder} />
 			</div>
-			{orderType.home && <HeroAddress orderType={orderType} />}
+			<HeroAddress orderType={orderType} />
 		</article>
 	);
 };

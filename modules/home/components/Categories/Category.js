@@ -5,7 +5,7 @@ export const Category = ({ image, title }) => {
 	return (
 		<section
 			className={
-				'flex flex-col items-center p-4 relative hover:scale-125 hover:cursor-pointer'
+				'flex flex-col items-center p-4 relative hover:scale-110 hover:cursor-pointer'
 			}
 		>
 			{image && (

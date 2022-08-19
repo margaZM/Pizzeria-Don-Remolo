@@ -1,17 +1,14 @@
-import { Promotions } from "../../home/sections/promotions/Promotions";
-import { Desserts } from "./desserts/Desserts";
-import { Drinks } from "./drinks/Drinks";
-import { Empanadas } from "./empanadas/Empanadas";
-import { Pizzas } from "./pizzas/Pizzas";
+import { useSelector } from 'react-redux';
+// import { Promotions } from "../sections/promotions/Promotions";
 
 export const CurrentView = () => {
+	const currentView = useSelector((state) => state.menuCategories);
 	return (
 		<>
-			<Promotions />
-			<Pizzas />
-			<Empanadas />
-			<Desserts />
-			<Drinks />
+			{
+				// currentView?.promotions ? <Promotions />
+				// : null
+			}
 		</>
-	)
+	);
 };

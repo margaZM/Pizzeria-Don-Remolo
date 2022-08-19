@@ -12,11 +12,11 @@ export const Promotions = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col items-center w-full h-screen max-h-[380px] pt-2 gap-2 md:max-h-[400px] lg:max-h-[450px]">
-			<div className="flex w-full max-w-[1200px] px-2">
+		<div className="px-2 flex flex-col h-screen max-h-[380px] lg:w-[90%] xl:max-w-[70%] mx-auto pt-2 gap-2 md:max-h-[400px] lg:max-h-[450px]">
+			<div className="flex w-full max-w-[1200px]">
 				<h2 className="text-[1.2rem] font-bold">PROMOCIONES</h2>
 			</div>
-			<section className="flex gap-3 w-full max-w-[1200px] min-h-[255px] h-full px-2 overflow-x-scroll lg:grid lg:grid-cols-4 lg:overflow-hidden">
+			<section className="flex justify-between overflow-hidden gap-4 overflow-x-scroll min-h-[255px] h-full">
 				{promotions &&
 					promotions.map((promo) => (
 						<ProductCard

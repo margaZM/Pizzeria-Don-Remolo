@@ -8,13 +8,14 @@ import { useOnModalChange } from '/hooks/useOnModalChange';
 import MostPopular from './sections/most-popular/Main';
 
 export const Main = () => {
-
 	return (
 		<section>
 			<Hero />
+
 			<Promotions />
 			<Categories />
 			<MostPopular />
+
 			<Gallery />
 		</section>
 	);

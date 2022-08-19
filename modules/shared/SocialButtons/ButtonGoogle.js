@@ -75,8 +75,7 @@ export const ButtonGoogle = ({ action, setIsOpenNotification, setInfoNotificatio
 
 	const authWithGoogle = () => {
 		google.accounts.id.initialize({
-			client_id:
-				'876166062131-v0bj8o9ka4c777q6bkrmcevqh9q3fiut.apps.googleusercontent.com',
+			client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
 			callback: handleCredentialResponse,
 		});
 		google.accounts.id.prompt(); // also display the One Tap dialog
