@@ -1,22 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
-import Link from 'next/link';
-import { handleMenuCategory } from '../../../redux/slices/menuCategories/menuCategoriesSlice';
+import { useEffect } from 'react';
 
-export const MenuNavItem = ({ title, display, linkTo }) => {
-	const dispatch = useDispatch();
-	const currentView = useSelector((state) => state.menuCategories.currentView);
-	const handleCategoryDisplay = (e) => {
-		// const toDisplay = e.target.dataset.display;
-		// dispatch(handleMenuCategory(toDisplay));
+export const MenuNavItem = ({ title, setViewScroll, viewScroll }) => {
+	const handleViewScroll = (e) => {
+		const toDisplay = e.target.dataset.display;
+		setViewScroll(toDisplay);
 	};
+
 	return (
-		<li
-			className={`p-2 ${currentView === display ? 'border-b-[3px] border-primary' : ''}`}
-		>
+		<li className={`p-2 ${viewScroll === title ? 'border-b-[3px] border-primary' : ''}`}>
 			<span
 				className={`w-max font-bold cursor-pointer`}
-				data-display={display}
-				onClick={handleCategoryDisplay}
+				data-display={title}
+				onClick={handleViewScroll}
 			>
 				{title}
 			</span>

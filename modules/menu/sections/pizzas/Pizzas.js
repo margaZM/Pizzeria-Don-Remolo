@@ -18,7 +18,7 @@ export const Pizzas = ({ refProp }) => {
 	};
 
 	return (
-		<div ref={refProp} className="px-2 lg:w-[90%] xl:max-w-[70%] mx-auto my-8">
+		<div ref={refProp} className="px-2 lg:w-[90%] xl:max-w-[70%] mx-auto mt-8">
 			<h2 className="text-[1.2rem] font-bold uppercase">Pizzas</h2>
 			<div className="h-full flex flex-wrap gap-4 gap-y-8 lg:grid lg:grid-cols-4">
 				{category.pizzas?.data?.map((product) => (

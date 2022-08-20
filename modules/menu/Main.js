@@ -6,11 +6,14 @@ import { Pizzas } from './sections/pizzas/Pizzas';
 import { Pattys } from './sections/pattys/Pattys';
 import { Desserts } from './sections/desserts/Desserts';
 import { Drinks } from './sections/drinks/Drinks';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Main = () => {
 	const router = useRouter();
-	const viewScroll = router.query.c ?? null;
+
+	const [viewScroll, setViewScroll] = useState(
+		router.isReady && router.query.c ? router.query.c : 'Promociones',
+	);
 
 	const promotionsRef = useRef();
 	const pizzasRef = useRef();
@@ -18,21 +21,23 @@ const Main = () => {
 	const dessertsRef = useRef();
 	const drinksRef = useRef();
 
-	useEffect(() => {
+	const handleScroll = (category) => {
 		const categoriesRef = [promotionsRef, pizzasRef, pattysRef, dessertsRef, drinksRef];
 		const indexRef = ['Promociones', 'Pizzas', 'Empanadas', 'Postres', 'Bebidas'];
+		const indexOfCategory = indexRef.indexOf(category);
+		console.log(indexOfCategory);
+		const refCategory = categoriesRef[indexOfCategory];
+		console.log(refCategory);
+		refCategory.current.scrollIntoView({ behavior: 'smooth' });
+	};
 
-		if (viewScroll) {
-			const scrollToRef = (ref) => ref.current.scrollIntoView({ behavior: 'smooth' });
-			const scrollToPane = (index) => scrollToRef(categoriesRef[index]);
-
-			scrollToPane(indexRef.indexOf(viewScroll));
-		}
+	useEffect(() => {
+		handleScroll(viewScroll);
 	}, [viewScroll]);
 
 	return (
-		<section className="n">
-			<MenuNavBar />
+		<section className="scroll-mt-48 md:scroll-mt-60">
+			<MenuNavBar setViewScroll={setViewScroll} viewScroll={viewScroll} />
 			<Promotions refProp={promotionsRef} />
 			<Pizzas refProp={pizzasRef} />
 			<Pattys refProp={pattysRef} />
