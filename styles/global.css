@@ -42,3 +42,7 @@ body {
 ::-webkit-scrollbar {
 	display: none;
 }
+
+* {
+	scroll-margin-top: 250px;
+}

@@ -8,7 +8,7 @@ import { Portal } from '../modules/shared/Portal';
 function MyApp({ Component, pageProps }) {
 	return (
 		<Provider store={store}>
-			<div className='min-h-screen'>
+			<div className="min-h-screen">
 				<HomeNav />
 				<Component {...pageProps} />
 				<Footer />
