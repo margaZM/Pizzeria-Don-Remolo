@@ -5,6 +5,7 @@ import { menuCategoriesReducer } from '../slices/menuCategories/menuCategoriesSl
 import { modalReducer } from '../slices/modal/modalSlice';
 import { resetPasswordReducer } from '../slices/reset-password/resetPasswordSlice';
 import { selectedProductReducer } from '../slices/selectedProduct/selectedProductSlice';
+import { categoriesReducer } from '../slices/menuCategories/categories';
 
 export const store = configureStore({
 	reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
 		selectedProduct: selectedProductReducer,
 		cart: cartReducer,
 		menuCategories: menuCategoriesReducer,
+		categories: categoriesReducer,
 	},
 });

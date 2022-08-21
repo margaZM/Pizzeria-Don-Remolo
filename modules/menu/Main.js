@@ -6,11 +6,14 @@ import { Pizzas } from './sections/pizzas/Pizzas';
 import { Pattys } from './sections/pattys/Pattys';
 import { Desserts } from './sections/desserts/Desserts';
 import { Drinks } from './sections/drinks/Drinks';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const Main = () => {
 	const router = useRouter();
-	const viewScroll = router.query.c ?? null;
+
+	const [viewScroll, setViewScroll] = useState(
+		router.isReady && router.query.c ? router.query.c : 'Promociones',
+	);
 
 	const promotionsRef = useRef();
 	const pizzasRef = useRef();
@@ -18,22 +21,25 @@ const Main = () => {
 	const dessertsRef = useRef();
 	const drinksRef = useRef();
 
-	useEffect(() => {
+	const handleScroll = (category) => {
 		const categoriesRef = [promotionsRef, pizzasRef, pattysRef, dessertsRef, drinksRef];
 		const indexRef = ['Promociones', 'Pizzas', 'Empanadas', 'Postres', 'Bebidas'];
+		const indexOfCategory = indexRef.indexOf(category);
+		const refCategory = categoriesRef[indexOfCategory];
+		refCategory.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	};
 
-		if (viewScroll) {
-			const scrollToRef = (ref) => ref.current.scrollIntoView({ behavior: 'smooth' });
-			const scrollToPane = (index) => scrollToRef(categoriesRef[index]);
-
-			scrollToPane(indexRef.indexOf(viewScroll));
-		}
+	useEffect(() => {
+		console.log(viewScroll);
+		handleScroll(viewScroll);
 	}, [viewScroll]);
 
 	return (
-		<section className="relative min-h-screen">
-			<MenuNavBar />
-			<Promotions refProp={promotionsRef} />
+		<section className="">
+			<MenuNavBar setViewScroll={setViewScroll} viewScroll={viewScroll} />
+			<div ref={promotionsRef} className="scroll-mt-60">
+				<Promotions />
+			</div>
 			<Pizzas refProp={pizzasRef} />
 			<Pattys refProp={pattysRef} />
 			<Desserts refProp={dessertsRef} />

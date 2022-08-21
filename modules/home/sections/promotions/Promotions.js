@@ -3,7 +3,7 @@ import { useSelectProduct } from '../../../../hooks/useSelectProduct';
 import { productServices } from '../../../../services/product-services/productServices';
 import { ProductCard } from '../../../shared/ProductCard';
 
-export const Promotions = () => {
+export const Promotions = ({ refProp }) => {
 	const [promotions, setPromotions] = useState(null);
 	const { handlePromotion } = useSelectProduct();
 
@@ -12,11 +12,14 @@ export const Promotions = () => {
 	}, []);
 
 	return (
-		<div className="px-2 flex flex-col h-screen max-h-[380px] lg:w-[90%] xl:max-w-[70%] mx-auto pt-2 gap-2 md:max-h-[400px] lg:max-h-[450px]">
+		<div
+			ref={refProp}
+			className="px-2 flex flex-col h-screen max-h-[380px] lg:w-[90%] xl:max-w-[70%] mx-auto pt-2 gap-2"
+		>
 			<div className="flex w-full max-w-[1200px]">
 				<h2 className="text-[1.2rem] font-bold">PROMOCIONES</h2>
 			</div>
-			<section className="flex justify-between overflow-hidden gap-4 overflow-x-scroll min-h-[255px] h-full">
+			<section className="flex justify-between max-w-[212] overflow-hidden gap-4 overflow-x-scroll min-h-[255px] h-full">
 				{promotions &&
 					promotions.map((promo) => (
 						<ProductCard
