@@ -9,15 +9,14 @@ export const PickSize = () => {
 				value="Individual"
 				price="5.00"
 				type="sizes"
-				/>
+			/>
 			<RequiredOption 
 				label="Mediana" 
 				name="size"
 				value="Mediana"
 				price="12.00"
 				type="sizes"
-				defaultChecked
-				/>
+			/>
 			<RequiredOption 
 				label="Familiar" 
 				name="size"

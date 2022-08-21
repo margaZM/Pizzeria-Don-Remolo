@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useOnModalChange } from "../../../../hooks/useOnModalChange";
 import { useSelectProduct } from "../../../../hooks/useSelectProduct";
@@ -18,20 +18,26 @@ export const Details = () => {
 	const dispatch = useDispatch();
 	const [values, setValues] = useState({
 		title: "",
-		size: "Mediana",
-		dough: "Masa normal",
-		ingredients: [],
-		drinks: [],
+		size: cartState?.cart?.selectedEditItem?.size || "Mediana",
+		dough: cartState?.cart?.selectedEditItem?.dough || "Masa normal",
+		ingredients: cartState?.cart?.selectedEditItem?.ingredients || [],
+		rawIngredients: cartState?.cart?.selectedEditItem?.rawIngredients || [],
+		drinks: cartState?.cart?.selectedEditItem?.drinks || [],
+		rawDrinks: cartState?.cart?.selectedEditItem?.rawDrinks || [],
 		img: "",
-		productPrice: "12.00",
-		additionalPrice: 0,
+		productPrice: cartState?.cart?.selectedEditItem?.productPrice || 12.00,
+		additionalPrice: cartState?.cart?.selectedEditItem?.additionalPrice || 0,
 		quantity: 1,
-		productSubtotal: 0,
+		productSubtotal: cartState?.cart?.selectedEditItem?.productSubtotal || 0,
 	});
+	useEffect(() => {
+		console.log(cartState?.cart?.selectedEditItem)
+	}, []);
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
 		const price = e.target.dataset.price ? e.target.dataset.price : null;
 		const filteredAdditional = [];
+		const filteredRawAdditional = [];
 		if(type === "sizes") {
 			setValues({ 
 				...values, 
@@ -45,25 +51,30 @@ export const Details = () => {
 		} else if(type === "ingredients") {
 			if(values.ingredients.find(ingredient => ingredient.ingredient === e.target.value)) {
 				filteredAdditional = values.ingredients.filter(ingredient => ingredient.ingredient !== e.target.value);
+				filteredRawAdditional = values.rawIngredients.filter(rawIngredient => rawIngredient !== e.target.value);
 				return setValues({ 
 					...values, 
 					additionalPrice: +values.additionalPrice - +price, 
+					rawIngredients: [ ...filteredRawAdditional ],
 					ingredients: [ ...filteredAdditional ]
 				});
 			};
 			setValues(prevState => {
 				return { 
 					...values,
-					additionalPrice: +prevState.additionalPrice + +price, 
-					ingredients: [ ...values.ingredients, {ingredient: e.target.value, price }] 
+					additionalPrice: +prevState.additionalPrice + +price,
+					rawIngredients: [ ...values.rawIngredients, e.target.value ],
+					ingredients: [ ...values.ingredients, {ingredient: e.target.value, price, checked: true, }] 
 				};
 			});
 		} else if(type === "drinks") {
 			if(values.drinks.find(drink => drink.drink === e.target.value)) {
 				filteredAdditional = values.drinks.filter(drink => drink.drink !== e.target.value);
+				filteredRawAdditional = values.rawDrinks.filter(rawDrink => rawDrink !== e.target.value);
 				return setValues({ 
 					...values, 
-					additionalPrice: +values.additionalPrice - +price, 
+					additionalPrice: +values.additionalPrice - +price,
+					rawDrinks: [ ...filteredRawAdditional ],
 					drinks: [ ...filteredAdditional ] 
 				});
 			};
@@ -71,6 +82,7 @@ export const Details = () => {
 				return { 
 					...values,
 					additionalPrice: +prevState.additionalPrice + +price, 
+					rawDrinks: [ ...values.rawDrinks, e.target.value ],
 					drinks: [ ...values.drinks, {drink: e.target.value, price }] 
 				};
 			});

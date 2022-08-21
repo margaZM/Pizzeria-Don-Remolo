@@ -8,7 +8,6 @@ export const PickDough = () => {
 				name="dough"
 				value="Masa normal"
 				type="dough"
-				defaultChecked
 				/>
 			<RequiredOption 
 				label="Masa fina" 
