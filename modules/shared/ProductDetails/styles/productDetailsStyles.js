@@ -10,7 +10,10 @@ export const productDetailsSectionStyles = [
 export const selectedProductStyles = [
 	"flex", 
 	"flex-col", 
-	"w-full", 
-	"h-max",
+	"w-full",
+	"h-max", 
+	"sm:h-full",
+	"sm:border-r",
+	"sm:border-gray-light",
 	"sm:w-[40%]",
 ].join(" ");

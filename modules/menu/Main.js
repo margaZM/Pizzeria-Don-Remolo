@@ -38,7 +38,7 @@ const Main = () => {
 		<section className="">
 			<MenuNavBar setViewScroll={setViewScroll} viewScroll={viewScroll} />
 			<div ref={promotionsRef} className="scroll-mt-60">
-				<Promotions />
+				<Promotions isMenu={true} />
 			</div>
 			<Pizzas refProp={pizzasRef} />
 			<Pattys refProp={pattysRef} />

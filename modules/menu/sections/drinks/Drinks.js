@@ -35,6 +35,7 @@ export const Drinks = ({ refProp }) => {
 							id={product.id}
 							image={product.picture}
 							onClick={handleclick}
+							isMenu={true}
 						/>
 					</div>
 				))}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useOnModalChange } from "../../../../hooks/useOnModalChange";
 import { useSelectProduct } from "../../../../hooks/useSelectProduct";
@@ -25,14 +25,11 @@ export const Details = () => {
 		drinks: cartState?.cart?.selectedEditItem?.drinks || [],
 		rawDrinks: cartState?.cart?.selectedEditItem?.rawDrinks || [],
 		img: "",
-		productPrice: cartState?.cart?.selectedEditItem?.productPrice || 12.00,
+		productPrice: cartState?.cart?.selectedEditItem?.productPrice || 0,
 		additionalPrice: cartState?.cart?.selectedEditItem?.additionalPrice || 0,
 		quantity: 1,
 		productSubtotal: cartState?.cart?.selectedEditItem?.productSubtotal || 0,
 	});
-	useEffect(() => {
-		console.log(cartState?.cart?.selectedEditItem)
-	}, []);
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
 		const price = e.target.dataset.price ? e.target.dataset.price : null;
@@ -118,7 +115,7 @@ export const Details = () => {
 		handleWindow("cart");
 	};
 	return (
-		<form className="w-full h-max p-3 sm:w-[60%]" onChange={handleChange} onSubmit={handleSubmit}>
+		<form className="w-full h-max p-3 pb-[4rem] sm:w-[60%]" onChange={handleChange} onSubmit={handleSubmit}>
 			<DetailsHeader title="Tamaños" icon="pizza" iconTitle="Icono pizza" required={true}>
 				<PickSize />
 			</DetailsHeader>
@@ -131,18 +128,22 @@ export const Details = () => {
 			<DetailsHeader title="Añade bebidas" icon="drink" iconTitle="Icono bebidas">
 				<PickDrink />
 			</DetailsHeader>
-			<div className="flex justify-center p-2">
+			<div className="fixed bottom-0 flex justify-center w-full max-w-screen p-2 bg-white sm:max-w-[360px] sm:bottom-[1.75rem]">
 				<div className="w-full max-w-[270px]">
 					<button className="flex justify-between items-center gap-2 p-4 w-full h-[40px] text-white bg-primary rounded-[50px]" type="submit">
 						<CartPlus />
 						<span>Agregar al carrito</span>
 						<span>|</span>
 						<span>
-							${currentState?.selectedProduct?.quantity ?
-							(currentState?.selectedProduct?.quantity * +values.productPrice)
-							+
-							(+currentState?.selectedProduct?.quantity * +values.additionalPrice)
-							: 12
+							${currentState?.selectedProduct?.quantity 
+							?
+								(currentState?.selectedProduct?.quantity * +values.productPrice)
+								+
+								(+currentState?.selectedProduct?.quantity * +values.additionalPrice)
+							: 
+								(+cartState?.cart?.selectedEditItem?.quantity * +values.productPrice)
+								+
+								(+cartState?.cart?.selectedEditItem?.quantity * +values.additionalPrice)
 							}
 						</span>
 					</button>
