@@ -25,20 +25,21 @@ const Main = () => {
 		const categoriesRef = [promotionsRef, pizzasRef, pattysRef, dessertsRef, drinksRef];
 		const indexRef = ['Promociones', 'Pizzas', 'Empanadas', 'Postres', 'Bebidas'];
 		const indexOfCategory = indexRef.indexOf(category);
-		console.log(indexOfCategory);
 		const refCategory = categoriesRef[indexOfCategory];
-		console.log(refCategory);
-		refCategory.current.scrollIntoView({ behavior: 'smooth' });
+		refCategory.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
 
 	useEffect(() => {
+		console.log(viewScroll);
 		handleScroll(viewScroll);
 	}, [viewScroll]);
 
 	return (
-		<section className="scroll-mt-48 md:scroll-mt-60">
+		<section className="">
 			<MenuNavBar setViewScroll={setViewScroll} viewScroll={viewScroll} />
-			<Promotions refProp={promotionsRef} />
+			<div ref={promotionsRef} className="scroll-mt-60">
+				<Promotions />
+			</div>
 			<Pizzas refProp={pizzasRef} />
 			<Pattys refProp={pattysRef} />
 			<Desserts refProp={dessertsRef} />

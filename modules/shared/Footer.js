@@ -3,7 +3,7 @@ import React from 'react';
 
 export const Footer = () => {
 	return (
-		<footer className="bg-gray-light w-full py-8 px-2">
+		<footer className="bg-gray-light w-full py-8 px-2 mt-8">
 			<div className="lg:w-[90%] xl:max-w-[70%] grid lg:grid-cols-5 gap-2 mx-auto leading-6 pb-4">
 				<div className="col-span-5 mx-auto lg:ml-0 lg:col-span-1">
 					<Image
