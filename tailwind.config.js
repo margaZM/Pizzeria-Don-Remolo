@@ -45,11 +45,21 @@ module.exports = {
 		extend: {
 			animation: {
 				fade_in: 'fade_in .2s ease forwards',
+				cart_in: 'cart_in .2s ease forwards',
+				cart_out: 'cart_out .2s ease forwards'
 			},
 			keyframes: {
 				fade_in: {
 					from: { opacity: '0' },
 					to: { opacity: '1' },
+				},
+				cart_in: {
+					from: { right: "-300px" },
+					to: { right: "0" }
+				},
+				cart_out: {
+					from: { right: "0" },
+					to: { right: "-1000px" }
 				},
 			},
 			screens: {
