@@ -1,12 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 
-export const Notification = ({ message, icon, setIsOpenNotification }) => {
+export const Notification = ({ message, icon, setIsOpenNotification, ...props }) => {
 	setTimeout(
 		() => {
 			setIsOpenNotification(false);
 		},
-		icon === 'success' ? 1500 : 4000,
+		icon === 'success' ? props.successDelay || 1500 : props.errorDelay || 4000,
 	);
 
 	return (

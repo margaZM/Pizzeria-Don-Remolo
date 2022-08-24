@@ -1,8 +1,11 @@
+import { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { useNotification } from "../../../../hooks/useNotification";
 import { useOnModalChange } from "../../../../hooks/useOnModalChange";
 import { useSelectProduct } from "../../../../hooks/useSelectProduct";
 import { handleAddToCart, handleEditCartItem } from "../../../../redux/slices/cart/cartSlice";
+import { Notification } from "../../Notification";
 import { CartPlus } from "./CartPlus";
 import DetailsHeader from "./DetailsHeader";
 import { PickDough } from "./PickDough";
@@ -13,6 +16,12 @@ import { PickSize } from "./PickSize";
 export const Details = () => {
 	const { currentState } = useSelectProduct();
 	const { handleWindow } = useOnModalChange();
+	const {
+		infoNotification,
+		setInfoNotification,
+		isOpenNotification,
+		setIsOpenNotification
+	} = useNotification();
 	const cartState = useSelector(state => state.cart);
 	const actionType = cartState.cart.actionType;
 	const dispatch = useDispatch();
@@ -30,6 +39,7 @@ export const Details = () => {
 		quantity: 1,
 		productSubtotal: cartState?.cart?.selectedEditItem?.productSubtotal || 0,
 	});
+	let cartTimeout;
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
 		const price = e.target.dataset.price ? e.target.dataset.price : null;
@@ -111,11 +121,29 @@ export const Details = () => {
 					productSubtotal: +values.productPrice + +values.additionalPrice,
 				}
 			}));
+			setIsOpenNotification(true);
+			setInfoNotification({
+				icon: "success",
+				message: `"${currentState?.selectedProduct?.title}" ha sido agregado al carrito`
+			});
 		};
-		handleWindow("cart");
+		cartTimeout = setTimeout(() => {
+			handleWindow("cart")
+		}, 2000);;
 	};
+	useEffect(() => {
+		return() => clearTimeout(cartTimeout);
+	}, []);
 	return (
 		<form className="w-full h-max p-3 pb-[4rem] sm:w-[60%]" onChange={handleChange} onSubmit={handleSubmit}>
+			{isOpenNotification && (
+				<Notification
+					message={infoNotification.message}
+					icon={infoNotification.icon}
+					setIsOpenNotification={setIsOpenNotification}
+					successDelay={2000}
+				/>
+			)}
 			<DetailsHeader title="Tamaños" icon="pizza" iconTitle="Icono pizza" required={true}>
 				<PickSize />
 			</DetailsHeader>
