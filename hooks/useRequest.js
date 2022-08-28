@@ -18,6 +18,14 @@ export const useRequest = (params = {}) => {
 				productServices.getSizes(params.id).then(res => setData(res.data))
 			}
 				break;
+			case "drinks": {
+				productServices.getProductsByCategory({
+					category: "bebidas",
+					pageIndex: params.pageIndex || 1,
+					pageSize: params.pageSize
+				}).then(res => setData(res.data.data))
+			}
+				break;
 			default:
 				break;
 		}
