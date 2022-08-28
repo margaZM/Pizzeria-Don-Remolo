@@ -4,6 +4,8 @@ import { URL } from '../baseService';
 const ALL_PRODUCTS = `${URL}/api/products`;
 const PROMOTIONS = `${URL}/api/promotions`;
 const INGREDIENTS = `${URL}/api/ingredients`;
+const DOUGHS = `${URL}/api/doughs`;
+const SIZES = `${URL}/api/sizes`;
 const MOST_POPULAR = `${URL}/api/products/mostpopular`;
 
 const getAllProducts = async (params) => {
@@ -28,7 +30,14 @@ const getPromotions = async () => {
 	const res = axios.get(PROMOTIONS);
 	return res;
 };
-
+const getDoughs = async (id) => {
+	const res = await axios.get(!id ? DOUGHS : `${DOUGHS}/${id}`);
+	return res;
+};
+const getSizes = async (id) => {
+	const res = await axios.get(!id ? SIZES : `${SIZES}/${id}`);
+	return res;
+};
 const getIngredients = async (id) => {
 	const res = axios.get(!id ? INGREDIENTS : `${INGREDIENTS}/${id}`);
 	return res;
@@ -54,6 +63,8 @@ export const productServices = {
 	getAllProducts,
 	getProductsByCategory,
 	getPromotions,
+	getDoughs,
+	getSizes,
 	getIngredients,
 	getMostPopular,
 	searchProduct,

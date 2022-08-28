@@ -1,20 +1,21 @@
+import { useRequest } from "../../../../hooks/useRequest";
 import { RequiredOption } from "./RequiredOption";
 
 export const PickDough = () => {
+	const doughs = useRequest({request: "doughs"})
 	return (
 		<>
-			<RequiredOption
-				label="Masa normal" 
-				name="dough"
-				value="Masa normal"
-				type="dough"
-				/>
-			<RequiredOption 
-				label="Masa fina" 
-				name="dough"
-				type="dough"
-				value="Masa fina"
-			/>
+			{doughs &&
+				doughs.map(dough => (
+					<RequiredOption
+						key={dough.id}
+						label={dough.name}
+						value={dough.name}
+						name="dough"
+						type="dough"
+					/>
+				))
+			}
 		</>
 	);
 };
