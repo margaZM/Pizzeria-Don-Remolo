@@ -1,6 +1,7 @@
 import Image from 'next/image';
+import { CartPlus } from './ProductDetails/components/CartPlus';
 
-export const ProductCard = ({ title, desc, oldPrice, newPrice, image, id, ...props }) => {
+export const ProductCard = ({ title, desc, oldPrice, newPrice, image, id, isMenu, ...props }) => {
 	return (
 		<article className="flex flex-col gap-3 min-w-[200px] w-full max-w-[250px] min-h-[200px] h-full max-h-[320px] rounded-lg shadow-md border border-gray-light mb-4">
 			<section className="w-full h-full max-h-[130px] relative">
@@ -20,13 +21,16 @@ export const ProductCard = ({ title, desc, oldPrice, newPrice, image, id, ...pro
 			</section>
 			<section className="px-2">
 				<button
-					className="button-primary translate-y-4"
+					className="button-primary w-max translate-y-4"
 					type="button"
-					data-id={id}
+					data-id={id} 
 					data-modal="productDetails"
 					{...props}
 				>
-					Agregar al carrito
+					<div className="flex justify-center items-center gap-2" data-id={id} data-modal="productDetails">
+						<span className="flex items-center w-max h-max" data-id={id} data-modal="productDetails"> <CartPlus data-id={id} data-modal="productDetails" /> </span>
+						{isMenu || <span data-id={id} data-modal="productDetails">Agregar al carrito</span>}
+					</div>
 				</button>
 			</section>
 		</article>

@@ -35,6 +35,7 @@ export const Pattys = ({ refProp }) => {
 							id={product.id}
 							image={product.picture}
 							onClick={handleclick}
+							isMenu={true}
 						/>
 					</div>
 				))}

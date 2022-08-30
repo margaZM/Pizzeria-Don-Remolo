@@ -2,9 +2,9 @@ import { Bottom } from './components/Bottom';
 import { Middle } from './components/Middle';
 import { Top } from './components/Top';
 
-const Main = () => {
+const Main = ({ animation }) => {
 	return (
-		<section className="flex flex-col w-screen h-screen p-2 sm:h-max sm:max-w-[640px]">
+		<section className={`fixed top-0 right-0 flex flex-col w-screen h-screen p-2 bg-white sm:h-max max-h-screen sm:max-w-[640px] ${animation}`}>
 			<Top />
 			<Middle />
 			<Bottom />

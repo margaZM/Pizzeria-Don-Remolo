@@ -17,7 +17,7 @@ export const ProdButtons = ({ quantity, id }) => {
 	};
 	return (
 		<div className="flex justify-between h-full">
-			<ProductCounter quantity={quantity} id={id} isInCart={true} />
+			<ProductCounter quantity={quantity} id={id} isInCart="cart" />
 			<div className="flex gap-2 items-end">
 				<div className="delete-btn w-[40px] h-[40px] pt-2">
 					<Image

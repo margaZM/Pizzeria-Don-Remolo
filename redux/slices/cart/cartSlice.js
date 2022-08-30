@@ -5,7 +5,7 @@ const cartSlice = createSlice({
 	initialState: {
 		cart: {
 			actionType: "",
-			selectedEditItem: {},
+			selectedEditItem: null,
 			cartLength: 0,
 			totalPrice: 0,
 			data: []
@@ -17,6 +17,13 @@ const cartSlice = createSlice({
 				state.cart.selectedEditItem = state.cart.data.find(item => item.id === +action.payload.id);
 			};
 			state.cart.actionType = action.payload.type;
+		},
+		handleSelectedEditItemQuantity: (state, action) => {
+			if(action.payload === "increase") {
+				state.cart.selectedEditItem.quantity += 1;
+			} else if(action.payload === "decrease") {
+				state.cart.selectedEditItem.quantity -= 1;
+			};
 		},
 		handleCartItemQuantity: (state, action) => {
 			let cartItem = state.cart.data.find(item => item.id === +action.payload.itemID);
@@ -50,6 +57,7 @@ const cartSlice = createSlice({
 				acumulator += +cartItem.productSubtotal * +cartItem.quantity;
 			});
 			state.cart.totalPrice = acumulator;
+			state.cart.selectedEditItem = null;
 		},
 		handleDeleteCartItem: (state, action) => {
 			let acumulator = 0;
@@ -67,6 +75,7 @@ const cartSlice = createSlice({
 
 export const { 
 	handleCartItemQuantity,
+	handleSelectedEditItemQuantity,
 	handleAddToCart, 
 	handleDeleteCartItem, 
 	handleEditCartItem, 

@@ -5,7 +5,7 @@ export const Middle = () => {
 	const currentProducts = useSelector(state => state.cart);
 	return (
 		<>
-			<div className='h-full max-h-[402px] border-t border-b border-gray overflow-y-auto'>
+			<div className='h-full border-t border-b border-gray overflow-y-auto'>
 				{currentProducts?.cart?.data?.map(product => (
 					<CartProduct
 						key={product.id}

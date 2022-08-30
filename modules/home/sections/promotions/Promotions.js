@@ -3,7 +3,7 @@ import { useSelectProduct } from '../../../../hooks/useSelectProduct';
 import { productServices } from '../../../../services/product-services/productServices';
 import { ProductCard } from '../../../shared/ProductCard';
 
-export const Promotions = ({ refProp }) => {
+export const Promotions = ({ refProp, isMenu }) => {
 	const [promotions, setPromotions] = useState(null);
 	const { handlePromotion } = useSelectProduct();
 
@@ -31,6 +31,7 @@ export const Promotions = ({ refProp }) => {
 							id={promo.id}
 							image={promo.picture}
 							onClick={handlePromotion}
+							isMenu={isMenu}
 						/>
 					))}
 			</section>
