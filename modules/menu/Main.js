@@ -1,4 +1,3 @@
-// import { CurrentView } from './components/CurrentView';
 import { MenuNavBar } from './components/MenuNavBar';
 import { useRouter } from 'next/router';
 import { Promotions } from '../home/sections/promotions/Promotions';
@@ -11,8 +10,9 @@ import { useEffect, useRef, useState } from 'react';
 const Main = () => {
 	const router = useRouter();
 
+	const [interceptedElement, setInterceptedElement] = useState('');
 	const [viewScroll, setViewScroll] = useState(
-		router.isReady && router.query.c ? router.query.c : 'Promociones',
+		router.isReady && router.query.c ? router.query.c : '',
 	);
 
 	const promotionsRef = useRef();
@@ -20,30 +20,53 @@ const Main = () => {
 	const pattysRef = useRef();
 	const dessertsRef = useRef();
 	const drinksRef = useRef();
+	const containerRef = useRef();
 
 	const handleScroll = (category) => {
 		const categoriesRef = [promotionsRef, pizzasRef, pattysRef, dessertsRef, drinksRef];
 		const indexRef = ['Promociones', 'Pizzas', 'Empanadas', 'Postres', 'Bebidas'];
-		const indexOfCategory = indexRef.indexOf(category);
-		const refCategory = categoriesRef[indexOfCategory];
-		refCategory.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		const indexOfCategory = indexRef.indexOf(category ? category : 'Promociones');
+		return categoriesRef[indexOfCategory];
 	};
 
 	useEffect(() => {
-		console.log(viewScroll);
-		handleScroll(viewScroll);
+		const refCategory = handleScroll(viewScroll);
+		refCategory.current.scrollIntoView({ behavior: 'smooth' });
 	}, [viewScroll]);
 
+	useEffect(() => {
+		const container = containerRef?.current;
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				const { target, intersectionRatio, isIntersecting } = entry;
+				if (intersectionRatio > 0 && isIntersecting) {
+					const elementVisible = target.id;
+					setInterceptedElement(elementVisible);
+				}
+			});
+		});
+		container.childNodes.forEach((child) => {
+			observer.observe(child);
+		});
+		return () => observer.disconnect();
+	}, []);
+
 	return (
-		<section className="">
-			<MenuNavBar setViewScroll={setViewScroll} viewScroll={viewScroll} />
-			<div ref={promotionsRef} className="scroll-mt-60">
-				<Promotions />
+		<section>
+			<MenuNavBar
+				setViewScroll={setViewScroll}
+				viewScroll={viewScroll}
+				interceptedElement={interceptedElement}
+			/>
+			<div ref={containerRef}>
+				<div ref={promotionsRef} id="Promociones" className="scroll-mt-60">
+					<Promotions />
+				</div>
+				<Pizzas refProp={pizzasRef} />
+				<Pattys refProp={pattysRef} />
+				<Drinks refProp={drinksRef} />
+				<Desserts refProp={dessertsRef} />
 			</div>
-			<Pizzas refProp={pizzasRef} />
-			<Pattys refProp={pattysRef} />
-			<Desserts refProp={dessertsRef} />
-			<Drinks refProp={drinksRef} />
 		</section>
 	);
 };

@@ -20,6 +20,7 @@ export const Pattys = ({ refProp }) => {
 	return (
 		<div
 			ref={refProp}
+			id="Empanadas"
 			className="px-2 md:px-0 lg:w-[90%] xl:max-w-[70%] mx-auto mt-8 scroll-mt-60"
 		>
 			<h2 className="text-[1.2rem] font-bold uppercase">Empanadas</h2>
@@ -29,8 +30,8 @@ export const Pattys = ({ refProp }) => {
 						<ProductCard
 							title={`Empanada de ${product.name}`}
 							desc={product.description}
-							price={product.price}
-							newPrice={''}
+							oldPrice={product.price}
+							newPrice={product.price}
 							id={product.id}
 							image={product.picture}
 							onClick={handleclick}

@@ -20,6 +20,7 @@ export const Pizzas = ({ refProp }) => {
 	return (
 		<div
 			ref={refProp}
+			id="Pizzas"
 			className="px-2 lg:w-[90%] xl:max-w-[70%] mx-auto mt-8 scroll-mt-60"
 		>
 			<h2 className="text-[1.2rem] font-bold uppercase">Pizzas</h2>
