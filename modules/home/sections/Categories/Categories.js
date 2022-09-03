@@ -8,9 +8,15 @@ export const Categories = () => {
 	const router = useRouter();
 
 	useEffect(() => {
-		getCategoriesHome().then((response) => {
-			setCategories(response.data);
-		});
+		try {
+			const getCategories = async () => {
+				const response = await getCategoriesHome();
+				setCategories(response.data);
+			};
+			getCategories();
+		} catch (error) {
+			console.log(error);
+		}
 	}, []);
 
 	const redirect = (category) => {

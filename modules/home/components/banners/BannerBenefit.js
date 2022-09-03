@@ -32,9 +32,9 @@ export const BannerBenefit = () => {
 						en enterarte de descuentos especiales y acceder a pedidos anteriores.
 					</p>
 					<button
-						className="button-primary mt-8"
+						className="button-primary mx-auto mt-8"
 						data-modal="register"
-						onClick={() => handleWindow("register")}
+						onClick={() => handleWindow('register')}
 					>
 						Registrarme
 					</button>

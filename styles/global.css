@@ -42,3 +42,34 @@ body {
 ::-webkit-scrollbar {
 	display: none;
 }
+
+@keyframes pizza {
+	0% {
+		opacity: 0.8;
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+		transform-origin: center;
+	}
+}
+
+@keyframes slice {
+	0% {
+		left: 44px;
+		top: 0;
+	}
+	100% {
+		left: 43%;
+		top: 0px;
+		transform: scale(1.2);
+	}
+}
+
+.animation {
+	animation: pizza 5s ease-in infinite;
+}
+
+.animation-slice {
+	animation: slice 4.5s infinite;
+}

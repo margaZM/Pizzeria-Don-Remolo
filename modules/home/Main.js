@@ -6,17 +6,25 @@ import { Categories } from './sections/Categories/Categories';
 import { BannerBenefit } from './components/banners/BannerBenefit';
 import { useOnModalChange } from '/hooks/useOnModalChange';
 import MostPopular from './sections/most-popular/Main';
+import { LoadingScreen } from '/modules/shared/loading/LoadingScreen';
+import { useLoading } from '../../hooks/useLoading';
 
 export const Main = () => {
+	const { loading } = useLoading();
+
 	return (
 		<section>
-			<Hero />
-
-			<Promotions />
-			<Categories />
-			<MostPopular />
-
-			<Gallery />
+			{loading ? (
+				<LoadingScreen />
+			) : (
+				<div>
+					<Hero />
+					<Promotions />
+					<Categories />
+					<MostPopular />
+					<Gallery />
+				</div>
+			)}
 		</section>
 	);
 };

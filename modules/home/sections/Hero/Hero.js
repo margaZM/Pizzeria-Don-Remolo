@@ -6,8 +6,6 @@ import { useSwitch } from '/hooks/useSwitch';
 export const Hero = () => {
 	const { orderType, handleOrder } = useSwitch();
 
-	console.log(orderType);
-
 	return (
 		<section className={`${HeroSectionStyles}`}>
 			<HeroTop />
