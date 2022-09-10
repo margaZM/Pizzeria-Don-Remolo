@@ -16,6 +16,7 @@ export const PickIngredients = () => {
 					label={ingredient.name}
 					price={ingredient.price}
 					value={ingredient.name}
+					data-id={ingredient.id}
 					data-type="ingredients"
 				/>
 			))}

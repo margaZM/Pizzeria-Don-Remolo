@@ -14,6 +14,7 @@ export const PickSize = () => {
 						price={size.price}
 						name="size"
 						type="sizes"
+						data-id={size.id}
 					/>
 				))
 			}

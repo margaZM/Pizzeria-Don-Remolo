@@ -1,20 +1,18 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { useNotification } from '../../../../hooks/useNotification';
-import { useOnModalChange } from '../../../../hooks/useOnModalChange';
-import { useSelectProduct } from '../../../../hooks/useSelectProduct';
-import {
-	handleAddToCart,
-	handleEditCartItem,
-} from '../../../../redux/slices/cart/cartSlice';
-import { Notification } from '../../Notification';
-import { CartPlus } from './CartPlus';
-import DetailsHeader from './DetailsHeader';
-import { PickDough } from './PickDough';
-import { PickDrink } from './PickDrink';
-import { PickIngredients } from './PickIngredients';
-import { PickSize } from './PickSize';
+import { v4 as uuidv4 } from 'uuid';
+import { useNotification } from "../../../../hooks/useNotification";
+import { useOnModalChange } from "../../../../hooks/useOnModalChange";
+import { useSelectProduct } from "../../../../hooks/useSelectProduct";
+import { handleAddToCart, handleEditCartItem } from "../../../../redux/slices/cart/cartSlice";
+import { productServices } from "../../../../services/product-services/productServices";
+import { Notification } from "../../Notification";
+import { CartPlus } from "./CartPlus";
+import DetailsHeader from "./DetailsHeader";
+import { PickDough } from "./PickDough";
+import { PickDrink } from "./PickDrink";
+import { PickIngredients } from "./PickIngredients";
+import { PickSize } from "./PickSize";
 
 export const Details = () => {
 	const { currentState } = useSelectProduct();
@@ -29,9 +27,10 @@ export const Details = () => {
 	const actionType = cartState.cart.actionType;
 	const dispatch = useDispatch();
 	const [values, setValues] = useState({
-		title: '',
-		size: cartState?.cart?.selectedEditItem?.size || 'Mediana',
-		dough: cartState?.cart?.selectedEditItem?.dough || 'Masa normal',
+		id: currentState?.selectedProduct?.id || 0,
+		title: "",
+		size: cartState?.cart?.selectedEditItem?.size || {type: "Mediana", id: 0},
+		dough: cartState?.cart?.selectedEditItem?.dough || {type: "Masa normal", id: 0},
 		ingredients: cartState?.cart?.selectedEditItem?.ingredients || [],
 		rawIngredients: cartState?.cart?.selectedEditItem?.rawIngredients || [],
 		drinks: cartState?.cart?.selectedEditItem?.drinks || [],
@@ -40,123 +39,136 @@ export const Details = () => {
 		productPrice: cartState?.cart?.selectedEditItem?.productPrice || 0,
 		additionalPrice: cartState?.cart?.selectedEditItem?.additionalPrice || 0,
 		quantity: 1,
-		productSubtotal: cartState?.cart?.selectedEditItem?.productSubtotal || 0,
+		productSubTotal: cartState?.cart?.selectedEditItem?.productSubTotal || 0,
 	});
+	const [basketValues, setBasketValues] = useState([]);
 	let cartTimeout;
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
 		const price = e.target.dataset.price ? e.target.dataset.price : null;
+		const id = e.target.dataset.id || undefined;
 		const filteredAdditional = [];
 		const filteredRawAdditional = [];
-		if (type === 'sizes') {
-			setValues({
-				...values,
-				size: e.target.value,
+		if(type === "sizes") {
+			setValues({ 
+				...values, 
+				size: {type: e.target.value, id}, 
 				productPrice: price,
 			});
-		} else if (type === 'dough') {
-			setValues({
-				...values,
-				dough: e.target.value,
+		} else if(type === "dough") {
+			setValues({ 
+				...values, dough: {type: e.target.value, id} 
 			});
-		} else if (type === 'ingredients') {
-			if (
-				values.ingredients.find((ingredient) => ingredient.ingredient === e.target.value)
-			) {
-				filteredAdditional = values.ingredients.filter(
-					(ingredient) => ingredient.ingredient !== e.target.value,
-				);
-				filteredRawAdditional = values.rawIngredients.filter(
-					(rawIngredient) => rawIngredient !== e.target.value,
-				);
-				return setValues({
-					...values,
-					additionalPrice: +values.additionalPrice - +price,
-					rawIngredients: [...filteredRawAdditional],
-					ingredients: [...filteredAdditional],
+		} else if(type === "ingredients") {
+			if(values.ingredients.find(ingredient => ingredient.ingredientName === e.target.value)) {
+				filteredAdditional = values.ingredients.filter(ingredient => ingredient.ingredientName !== e.target.value);
+				filteredRawAdditional = values.rawIngredients.filter(rawIngredient => rawIngredient !== e.target.value);
+				return setValues({ 
+					...values, 
+					additionalPrice: +values.additionalPrice - +price, 
+					rawIngredients: [ ...filteredRawAdditional ],
+					ingredients: [ ...filteredAdditional ]
 				});
 			}
 			setValues((prevState) => {
 				return {
 					...values,
 					additionalPrice: +prevState.additionalPrice + +price,
-					rawIngredients: [...values.rawIngredients, e.target.value],
-					ingredients: [
-						...values.ingredients,
-						{ ingredient: e.target.value, price, checked: true },
-					],
+					rawIngredients: [ ...values.rawIngredients, e.target.value ],
+					ingredients: [ ...values.ingredients, {ingredientName: e.target.value, price, ingredientId: id }] 
 				};
 			});
-		} else if (type === 'drinks') {
-			if (values.drinks.find((drink) => drink.drink === e.target.value)) {
-				filteredAdditional = values.drinks.filter(
-					(drink) => drink.drink !== e.target.value,
-				);
-				filteredRawAdditional = values.rawDrinks.filter(
-					(rawDrink) => rawDrink !== e.target.value,
-				);
-				return setValues({
-					...values,
+		} else if(type === "drinks") {
+			if(values.drinks.find(drink => drink.productName === e.target.value)) {
+				filteredAdditional = values.drinks.filter(drink => drink.productName !== e.target.value);
+				console.log(filteredAdditional)
+				filteredRawAdditional = values.rawDrinks.filter(rawDrink => rawDrink !== e.target.value);
+				setBasketValues([...filteredAdditional]);
+				return setValues({ 
+					...values, 
 					additionalPrice: +values.additionalPrice - +price,
-					rawDrinks: [...filteredRawAdditional],
-					drinks: [...filteredAdditional],
+					rawDrinks: [ ...filteredRawAdditional ],
+					drinks: [ ...filteredAdditional ] 
 				});
-			}
-			setValues((prevState) => {
-				return {
+			};
+			productServices.getProductsByCategory({
+				pageSize: 30,
+				category: "bebidas"
+			}).then(res => {
+				const selectedDrink = res.data.data.find(drink => drink.id === +id)
+				setBasketValues([...basketValues, {productId: selectedDrink.id, isDrink: true, productRelationNumber: currentState?.selectedProduct?.id || cartState?.cart?.selectedEditItem?.id}]);
+			})
+			setValues(prevState => {
+				return { 
 					...values,
-					additionalPrice: +prevState.additionalPrice + +price,
-					rawDrinks: [...values.rawDrinks, e.target.value],
-					drinks: [...values.drinks, { drink: e.target.value, price }],
+					additionalPrice: +prevState.additionalPrice + +price, 
+					rawDrinks: [ ...values.rawDrinks, e.target.value ],
+					drinks: [ ...values.drinks, {productName: e.target.value, price }] 
 				};
 			});
 		}
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (actionType === 'edit') {
-			dispatch(
-				handleEditCartItem({
-					totalPrice:
-						+cartState.cart.totalPrice + +values.productPrice + +values.additionalPrice,
-					data: {
-						...values,
-						id: cartState?.cart?.selectedEditItem?.id,
-						title: cartState?.cart?.selectedEditItem?.title,
-						img: cartState?.cart?.selectedEditItem?.img,
+		if(actionType === "edit") {
+			dispatch(handleEditCartItem({
+				totalPrice: +cartState.cart.totalPrice + +values.productPrice + +values.additionalPrice,
+				data: { 
+					...values,
+					id: cartState?.cart?.selectedEditItem?.id,
+					title: cartState?.cart?.selectedEditItem?.title,
+					img: cartState?.cart?.selectedEditItem?.img,
+					quantity: cartState?.cart?.selectedEditItem?.quantity,
+					productSubTotal: +values.productPrice + +values.additionalPrice,
+				},
+				apiData: {
+					id: localStorage.getItem("GuestCart") || uuidv4(),
+					products: [...basketValues, {
+						productId: cartState?.cart?.selectedEditItem?.id,
+						doughId: cartState?.cart?.selectedEditItem?.id,
+						sizeId: cartState?.cart?.selectedEditItem?.id,
 						quantity: cartState?.cart?.selectedEditItem?.quantity,
-						productSubtotal: +values.productPrice + +values.additionalPrice,
-					},
-				}),
-			);
-		} else if (actionType === 'add') {
-			dispatch(
-				handleAddToCart({
-					totalPrice:
-						+cartState.cart.totalPrice + +values.productPrice + +values.additionalPrice,
-					data: {
-						...values,
-						id: currentState?.selectedProduct?.id,
-						img: currentState?.selectedProduct?.picture,
-						title: currentState?.selectedProduct?.title,
+						ingredients: [...values.ingredients],
+					}],
+				}
+			}));
+			handleWindow("cart");
+		} else if(actionType === "add") {
+			dispatch(handleAddToCart({
+				totalPrice: +cartState.cart.totalPrice + +values.productPrice + +values.additionalPrice,
+				data: { 
+					...values, 
+					id: currentState?.selectedProduct?.id,
+					img: currentState?.selectedProduct?.picture,
+					title: currentState?.selectedProduct?.title,
+					quantity: currentState?.selectedProduct?.quantity,
+					productSubTotal: +values.productPrice + +values.additionalPrice,
+				},
+				apiData: {
+					id: localStorage.getItem("GuestCart") || uuidv4(),
+					products: [...basketValues, {
+						productId: currentState?.selectedProduct?.id,
+						doughId: values.dough.id,
+						sizeId: values.size.id,
 						quantity: currentState?.selectedProduct?.quantity,
-						productSubtotal: +values.productPrice + +values.additionalPrice,
-					},
-				}),
-			);
+						ingredients: [...values.ingredients],
+					}],
+				}
+			}));
 			setIsOpenNotification(true);
 			setInfoNotification({
 				icon: 'success',
 				message: `"${currentState?.selectedProduct?.title}" ha sido agregado al carrito`,
 			});
-		}
-		cartTimeout = setTimeout(() => {
-			handleWindow('cart');
-		}, 2000);
+			cartTimeout = setTimeout(() => {
+				handleWindow("cart");
+			}, 2000);;
+		};
 	};
 	useEffect(() => {
-		return () => clearTimeout(cartTimeout);
-	}, [cartTimeout]);
+		// console.log(cartState?.cart?.apiData);
+		return() => clearTimeout(cartTimeout);
+	}, []);
 	return (
 		<form
 			className="relative w-full h-max p-3 pb-[4rem] sm:w-[60%]"

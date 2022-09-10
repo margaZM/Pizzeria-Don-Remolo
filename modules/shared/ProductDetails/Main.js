@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useSelectProduct } from "../../../hooks/useSelectProduct";
 import { CloseBtn } from "../CloseBtn";

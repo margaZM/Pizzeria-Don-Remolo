@@ -16,6 +16,7 @@ export const PickDrink = () => {
 						value={drink.name}
 						price={drink.price}
 						data-type="drinks"
+						data-id={drink.id}
 					/>
 				))
 			}

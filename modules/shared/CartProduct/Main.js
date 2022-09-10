@@ -24,8 +24,8 @@ const Main = (props) => {
 				{props.additional.map(additional => (
 					<ProdAdditional 
 						key={props.additional.length + Math.random()} 
-						additional={additional.drink || additional.ingredient} 
-						additionalPrice={additional.price}
+						additional={additional.productName || additional.ingredientName} 
+						additionalPrice={additional.ingredientPrice || additional.price}
 						quantity={props.quantity}
 					/>
 				))}
