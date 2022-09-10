@@ -202,7 +202,7 @@ export const Details = () => {
 			<DetailsHeader title="Añade bebidas" icon="drink" iconTitle="Icono bebidas">
 				<PickDrink />
 			</DetailsHeader>
-			<div className="fixed bottom-0 flex justify-center -mx-3 w-full bg-white sm:max-w-[370px] p-2">
+			<div className="fixed bottom-0 sm:bottom-[30px] flex justify-center -mx-3 w-full bg-white sm:max-w-[370px] p-2">
 				<div className="w-full max-w-[270px]">
 					<button
 						className="flex justify-between items-center gap-2 p-4 w-full h-[40px] text-white bg-primary rounded-[50px]"
