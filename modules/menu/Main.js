@@ -10,11 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 const Main = () => {
 	const router = useRouter();
 
-	const [interceptedElement, setInterceptedElement] = useState('');
-	const [viewScroll, setViewScroll] = useState(
-		router.isReady && router.query.c ? router.query.c : '',
-	);
-
+	const [interceptedElement, setInterceptedElement] = useState(router?.query?.c || '');
+	const [viewScroll, setViewScroll] = useState(router?.query?.c || '');
 	const promotionsRef = useRef();
 	const pizzasRef = useRef();
 	const pattysRef = useRef();
@@ -49,7 +46,7 @@ const Main = () => {
 			observer.observe(child);
 		});
 		return () => observer.disconnect();
-	}, []);
+	}, [router.query.c]);
 
 	return (
 		<section>
