@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import React from 'react';
-import { useOnModalChange } from '/hooks/useOnModalChange';
 import Modal from '/modules/shared/Modal';
 import Close from '/modules/shared/Close';
 
-export const CommentsModal = () => {
-	const { handleWindow } = useOnModalChange();
+export const CommentsModal = ({ setOpenModalComments }) => {
+	const closeModal = () => {
+		setOpenModalComments(false);
+	};
 
 	return (
 		<Modal>
@@ -13,7 +14,7 @@ export const CommentsModal = () => {
 				<button
 					className="bg-transparent mt-8 mr-6 md:m-4 self-end"
 					data-modal="bannerBenefit"
-					onClick={handleWindow}
+					onClick={closeModal}
 				>
 					<Close />
 				</button>
