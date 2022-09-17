@@ -3,7 +3,7 @@ import Star from './components/Star';
 import PropTypes from 'prop-types';
 
 export const StarRatings = ({ rating, setRating, hover, setHover }) => {
-	const star = [...Array(5)].map((star, index) => {
+	const star = [...Array(5)].map((_, index) => {
 		index += 1;
 		return (
 			<Star
@@ -21,5 +21,8 @@ export const StarRatings = ({ rating, setRating, hover, setHover }) => {
 };
 
 StarRatings.propTypes = {
-	rate: PropTypes.number,
+	rating: PropTypes.number,
+	setRating: PropTypes.func,
+	hover: PropTypes.number,
+	setHover: PropTypes.func,
 };
