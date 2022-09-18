@@ -71,16 +71,17 @@ const cartSlice = createSlice({
 			state.cart.totalPrice = acumulator;
 			state.cart.selectedEditItem = null;
 			if(action.payload.apiData) {
-				let newDrinksApiItems = action.payload.apiData.products.filter(newDrinkApiItem => newDrinkApiItem.isDrink);
-				console.log(newDrinksApiItems)
-				let newSingleApiItem = action.payload.apiData.products.filter(newSingleApiItem => !newSingleApiItem.isDrink)[0];
+				// let newDrinksApiItems = action.payload.apiData.products.filter(newDrinkApiItem => newDrinkApiItem.isDrink);
+				// let newSingleApiItem = action.payload.apiData.products.filter(newSingleApiItem => !newSingleApiItem.isDrink)[0];
 				if(state.cart.apiData.products.find(apiDataItem => apiDataItem.productId === newSingleApiItem.productId)) {
-					// console.log('match')
 					state.cart.apiData.products = [ ...state.cart.apiData.products];
 				};
 			}
 		},
 		handleDeleteCartItem: (state, action) => {
+			const apiDrinks = state.cart.apiData.products.filter(item => item.isDrink);
+			const apiProducts = state.cart.apiData.products.filter(item => !item.isDrink);
+			const finalApiProducts = [...apiProducts.filter(item => item.productId !== +action.payload), ...apiDrinks.filter(item => item.productRelationNumber !== +action.payload)];
 			let acumulator = 0;
 			let productPrice = state.cart.data.find(item => item.id === +action.payload);
 			state.cart.data = state.cart.data.filter(item => item.id !== +action.payload);
@@ -90,6 +91,10 @@ const cartSlice = createSlice({
 				acumulator += +cartItem.productSubTotal * +cartItem.quantity;
 			});
 			state.cart.totalPrice = acumulator;
+			state.cart.apiData.products = finalApiProducts;
+			if(finalApiProducts.length < 1) {
+				state.cart.apiData.id = undefined;
+			}
 		},
 	}
 });

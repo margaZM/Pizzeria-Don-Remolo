@@ -41,12 +41,12 @@ export const Details = () => {
 		quantity: 1,
 		productSubTotal: cartState?.cart?.selectedEditItem?.productSubTotal || 0,
 	});
-	const [basketValues, setBasketValues] = useState([]);
+	const [drinksAsProducts, setDrinksAsProducts] = useState([]);
 	let cartTimeout;
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
-		const price = e.target.dataset.price ? e.target.dataset.price : null;
-		const id = e.target.dataset.id || undefined;
+		const price = +e.target.dataset.price ? +e.target.dataset.price : null;
+		const id = +e.target.dataset.id || undefined;
 		const filteredAdditional = [];
 		const filteredRawAdditional = [];
 		if(type === "sizes") {
@@ -75,15 +75,14 @@ export const Details = () => {
 					...values,
 					additionalPrice: +prevState.additionalPrice + +price,
 					rawIngredients: [ ...values.rawIngredients, e.target.value ],
-					ingredients: [ ...values.ingredients, {ingredientName: e.target.value, price, ingredientId: id }] 
+					ingredients: [ ...values.ingredients, {ingredientName: e.target.value, ingredientPrice: price, ingredientId: id }] 
 				};
 			});
 		} else if(type === "drinks") {
 			if(values.drinks.find(drink => drink.productName === e.target.value)) {
 				filteredAdditional = values.drinks.filter(drink => drink.productName !== e.target.value);
-				console.log(filteredAdditional)
 				filteredRawAdditional = values.rawDrinks.filter(rawDrink => rawDrink !== e.target.value);
-				setBasketValues([...filteredAdditional]);
+				setDrinksAsProducts([...filteredAdditional]);
 				return setValues({ 
 					...values, 
 					additionalPrice: +values.additionalPrice - +price,
@@ -95,8 +94,8 @@ export const Details = () => {
 				pageSize: 30,
 				category: "bebidas"
 			}).then(res => {
-				const selectedDrink = res.data.data.find(drink => drink.id === +id)
-				setBasketValues([...basketValues, {productId: selectedDrink.id, isDrink: true, productRelationNumber: currentState?.selectedProduct?.id || cartState?.cart?.selectedEditItem?.id}]);
+				const selectedDrink = res.data.data.find(drink => drink.id === +id);
+				setDrinksAsProducts([...drinksAsProducts, {productId: selectedDrink.id, isDrink: true, productRelationNumber: currentState?.selectedProduct?.id || cartState?.cart?.selectedEditItem?.id}]);
 			})
 			setValues(prevState => {
 				return { 
@@ -123,12 +122,12 @@ export const Details = () => {
 				},
 				apiData: {
 					id: localStorage.getItem("GuestCart") || uuidv4(),
-					products: [...basketValues, {
+					products: [...drinksAsProducts, {
 						productId: cartState?.cart?.selectedEditItem?.id,
-						doughId: cartState?.cart?.selectedEditItem?.id,
-						sizeId: cartState?.cart?.selectedEditItem?.id,
+						doughId: values.dough.id,
+						sizeId: values.size.id,
 						quantity: cartState?.cart?.selectedEditItem?.quantity,
-						ingredients: [...values.ingredients],
+						ingredients: values.ingredients,
 					}],
 				}
 			}));
@@ -146,7 +145,7 @@ export const Details = () => {
 				},
 				apiData: {
 					id: localStorage.getItem("GuestCart") || uuidv4(),
-					products: [...basketValues, {
+					products: [...drinksAsProducts, {
 						productId: currentState?.selectedProduct?.id,
 						doughId: values.dough.id,
 						sizeId: values.size.id,
@@ -166,7 +165,6 @@ export const Details = () => {
 		};
 	};
 	useEffect(() => {
-		// console.log(cartState?.cart?.apiData);
 		return() => clearTimeout(cartTimeout);
 	}, []);
 	return (
