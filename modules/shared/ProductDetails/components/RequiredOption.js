@@ -17,7 +17,7 @@ export const RequiredOption = ({ label, name, price, type, ...props }) => {
 				name={name}
 				data-price={price || null}
 				data-type={type}
-				defaultChecked={size === label || dough === label ? true : false}
+				defaultChecked={size?.type === label || dough?.type === label ? true : false}
 				required
 				{...props}
 			/>

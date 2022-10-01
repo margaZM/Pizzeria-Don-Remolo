@@ -13,6 +13,7 @@ export const PickDough = () => {
 						value={dough.name}
 						name="dough"
 						type="dough"
+						data-id={dough.id}
 					/>
 				))
 			}

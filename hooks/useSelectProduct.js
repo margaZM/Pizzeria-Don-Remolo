@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import { setActionType } from '../redux/slices/cart/cartSlice';
 import { handleSelectedProduct, handleSelectedProductCounter } from '../redux/slices/selectedProduct/selectedProductSlice';
 import { productServices } from '../services/product-services/productServices';
@@ -12,7 +13,7 @@ export const useSelectProduct = () => {
 		dispatch(setActionType({ type: "add" }));
 		handleWindow(e);
 		productServices.searchPromotionById(e).then(res => {
-			dispatch(handleSelectedProduct({ selected: true, data: { ...res[0], quantity: 1 }}))
+			dispatch(handleSelectedProduct({ selected: true, data: { ...res[0], quantity: 1, productRelationNumber: uuidv4() }}))
 		});
 	};
 	const handleQuantity = (e) => dispatch(handleSelectedProductCounter(e.target.dataset.action));
