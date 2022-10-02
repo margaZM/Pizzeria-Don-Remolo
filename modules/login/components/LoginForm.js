@@ -21,10 +21,14 @@ export default function LoginForm() {
 	const [errorMessage, setErrorMessage] = useState('');
 	const dispatch = useDispatch();
 	const router = useRouter();
-	const { handleWindow } = useOnModalChange();
+	const { openModalDispatch, closeModalDispatch } = useOnModalChange();
 	const handleRedirect = () => {
-		dispatch(handleModal('login'));
+		closeModalDispatch('login');
 		router.push('/reset_password');
+	};
+	const handleRegister = () => {
+		closeModalDispatch('login');
+		openModalDispatch('register');
 	};
 
 	const validate = Yup.object({
@@ -124,7 +128,7 @@ export default function LoginForm() {
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
 							data-modal="register"
-							onClick={handleWindow}
+							onClick={handleRegister}
 						>
 							Regístrate
 						</span>

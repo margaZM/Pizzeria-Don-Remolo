@@ -1,16 +1,19 @@
-import { useOnModalChange } from "../../../hooks/useOnModalChange";
-import { defaultButtonStyle, loginButtonStyle } from "../../home-header/styles/buttons_styles";
+import { useOnModalChange } from '../../../hooks/useOnModalChange';
+import {
+	defaultButtonStyle,
+	loginButtonStyle,
+} from '../../home-header/styles/buttons_styles';
 
 export const HeaderRightSide = () => {
-	const { handleWindow } = useOnModalChange();
+	const { openModalDispatch } = useOnModalChange();
 	return (
 		<article className="flex justify-end items-center">
 			<button
 				className={`${defaultButtonStyle} ${loginButtonStyle} bg-transparent`}
 				type="button"
 				data-modal="login"
-				onClick={handleWindow}
-				>
+				onClick={openModalDispatch}
+			>
 				Ingresar
 			</button>
 		</article>

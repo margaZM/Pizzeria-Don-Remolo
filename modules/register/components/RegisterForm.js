@@ -13,7 +13,7 @@ import { Notification } from '../../shared/Notification';
 import { useDispatch } from 'react-redux';
 import { ErrorMessage } from '../../shared/ErrorMessage';
 import { useOnModalChange } from '../../../hooks/useOnModalChange';
-import { handleModal } from '../../../redux/slices/modal/modalSlice';
+import { openModal } from '../../../redux/slices/modal/modalSlice';
 
 export default function RegisterForm() {
 	const [isOpenNotification, setIsOpenNotification] = useState(false);
@@ -27,7 +27,7 @@ export default function RegisterForm() {
 
 	const router = useRouter();
 	const dispatch = useDispatch();
-	const { handleWindow } = useOnModalChange();
+	const { openModalDispatch } = useOnModalChange();
 
 	const NUM_PATTERN = /[0-9]/;
 	const CAPITAL_PATTERN = /[A-Z]/;
@@ -102,7 +102,7 @@ export default function RegisterForm() {
 						}),
 					);
 					setTimeout(() => {
-						dispatch(handleModal('register-success'));
+						dispatch(openModal('register-success'));
 					}, 2100);
 					router.push('/');
 					setIsOpenNotification(true);
@@ -163,7 +163,7 @@ export default function RegisterForm() {
 						<span
 							className="font-medium text-primary hover:font-bold cursor-pointer"
 							data-modal="login"
-							onClick={handleWindow}
+							onClick={openModalDispatch}
 						>
 							Inicia sesión
 						</span>

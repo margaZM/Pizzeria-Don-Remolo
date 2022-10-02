@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { handleModal } from '../redux/slices/modal/modalSlice';
+import { openModal, closeModal } from '../redux/slices/modal/modalSlice';
 
 export const useOnModalChange = () => {
 	const dispatch = useDispatch();
 	const modals = useSelector((state) => state.modal);
-	const handleWindow = (e) => dispatch(handleModal(e.target ? e.target.dataset.modal : e));
-	return { handleWindow, modals };
+	const openModalDispatch = (e) =>
+		dispatch(openModal(e.target ? e.target.dataset.modal : e));
+	const closeModalDispatch = (e) =>
+		dispatch(closeModal(e.target ? e.target.dataset.modal : e));
+	return { openModalDispatch, closeModalDispatch, modals };
 };

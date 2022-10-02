@@ -1,19 +1,22 @@
-import Image from "next/image";
-import { useDispatch } from "react-redux";
-import { useOnModalChange } from "../../../../hooks/useOnModalChange";
-import { handleDeleteCartItem, setActionType } from "../../../../redux/slices/cart/cartSlice";
-import { handleSelectedProduct } from "../../../../redux/slices/selectedProduct/selectedProductSlice";
-import { ProductCounter } from "../../ProductCounter";
+import Image from 'next/image';
+import { useDispatch } from 'react-redux';
+import { useOnModalChange } from '../../../../hooks/useOnModalChange';
+import {
+	handleDeleteCartItem,
+	setActionType,
+} from '../../../../redux/slices/cart/cartSlice';
+import { handleSelectedProduct } from '../../../../redux/slices/selectedProduct/selectedProductSlice';
+import { ProductCounter } from '../../ProductCounter';
 
 export const ProdButtons = ({ quantity, id }) => {
-	const { handleWindow } = useOnModalChange();
+	const { openModalDispatch } = useOnModalChange();
 	const dispatch = useDispatch();
 	const handleDeleteItem = (e) => dispatch(handleDeleteCartItem(e.target.dataset.id));
 	const handleEditItem = () => {
-		dispatch(setActionType({ type: "edit", id }));
-		dispatch(handleWindow("productDetails"));
-		dispatch(handleSelectedProduct({ selected: false }))
-		handleWindow("productDetailsEdit");
+		dispatch(setActionType({ type: 'edit', id }));
+		dispatch(openModalDispatch('productDetails'));
+		dispatch(handleSelectedProduct({ selected: false }));
+		openModalDispatch('productDetailsEdit');
 	};
 	return (
 		<div className="flex justify-between h-full">
@@ -24,15 +27,15 @@ export const ProdButtons = ({ quantity, id }) => {
 						className="cursor-pointer hover:translate-y-[-1px] active:translate-y-px"
 						src={require('../../../../public/assets/icons/trash.svg')}
 						alt="trash-btn"
-						data-id={id} 
+						data-id={id}
 						onClick={handleDeleteItem}
-						/>
+					/>
 				</div>
 				<Image
 					className="edit-btn cursor-pointer hover:translate-y-[-1px] active:translate-y-px"
 					src={require('../../../../public/assets/icons/edit.svg')}
 					alt="edit-btn"
-					data-id={id} 
+					data-id={id}
 					onClick={handleEditItem}
 				/>
 			</div>

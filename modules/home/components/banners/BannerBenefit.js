@@ -4,7 +4,7 @@ import { useOnModalChange } from '../../../../hooks/useOnModalChange';
 import Modal from '../../../shared/Modal';
 
 export const BannerBenefit = () => {
-	const { handleWindow } = useOnModalChange();
+	const { openModalDispatch, closeModalDispatch } = useOnModalChange();
 
 	return (
 		<Modal>
@@ -34,14 +34,14 @@ export const BannerBenefit = () => {
 					<button
 						className="button-primary mx-auto mt-8"
 						data-modal="register"
-						onClick={() => handleWindow('register')}
+						onClick={() => openModalDispatch('register')}
 					>
 						Registrarme
 					</button>
 					<button
 						className="bg-transparent underline text-gray-dark mt-3"
 						data-modal="bannerBenefit"
-						onClick={handleWindow}
+						onClick={closeModalDispatch}
 					>
 						Por ahora no
 					</button>

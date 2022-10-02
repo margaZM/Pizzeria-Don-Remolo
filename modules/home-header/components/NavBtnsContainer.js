@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { detectUser, selectUser } from '../../../redux/slices/auth';
-import { handleModal } from '../../../redux/slices/modal/modalSlice';
+import { openModal } from '../../../redux/slices/modal/modalSlice';
 import { logout } from '../../../redux/slices/auth/index';
 import {
 	defaultButtonStyle,
@@ -19,8 +19,8 @@ export const NavBtnsContainer = ({ mobileMenu }) => {
 	if (typeof window !== 'undefined') {
 		logged = JSON.parse(window.localStorage.getItem('auth'));
 	}
-	const handleLoginModal = (e) => dispatch(handleModal(e.target.dataset.modal));
-	const handleRegisterModal = (e) => dispatch(handleModal(e.target.dataset.modal));
+	const handleLoginModal = (e) => dispatch(openModal(e.target.dataset.modal));
+	const handleRegisterModal = (e) => dispatch(openModal(e.target.dataset.modal));
 	const handleLogout = () => {
 		if (logged.provider === 'google') {
 			google.accounts.id.disableAutoSelect();
@@ -48,11 +48,17 @@ export const NavBtnsContainer = ({ mobileMenu }) => {
 	};
 	return (
 		<>
-			<div className={`flex flex-col ${isDesktop ? "justify-center items-center" : ""} w-full max-w-[300px] gap-2 desktop_bk:flex-row`}>
+			<div
+				className={`flex flex-col ${
+					isDesktop ? 'justify-center items-center' : ''
+				} w-full max-w-[300px] gap-2 desktop_bk:flex-row`}
+			>
 				{!isUser?.token ? (
 					<>
 						<button
-							className={`${mobileMenu ? "w-full" : "w-32"} ${defaultButtonStyle} ${loginButtonStyle}`}
+							className={`${
+								mobileMenu ? 'w-full' : 'w-32'
+							} ${defaultButtonStyle} ${loginButtonStyle}`}
 							type="button"
 							data-modal="login"
 							onClick={handleLoginModal}
@@ -60,7 +66,9 @@ export const NavBtnsContainer = ({ mobileMenu }) => {
 							Ingresar
 						</button>
 						<button
-							className={`${mobileMenu ? "w-full" : "w-32"} ${defaultButtonStyle} ${registerButtonStyle}`}
+							className={`${
+								mobileMenu ? 'w-full' : 'w-32'
+							} ${defaultButtonStyle} ${registerButtonStyle}`}
 							type="button"
 							data-modal="register"
 							onClick={handleRegisterModal}
