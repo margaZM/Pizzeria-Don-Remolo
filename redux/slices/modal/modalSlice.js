@@ -1,8 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const modalSlice = createSlice({
-	name: 'modal',
-	initialState: {
+const initialState = {
 		login: false,
 		register: false,
 		menu: false,
@@ -10,10 +8,16 @@ const modalSlice = createSlice({
 		bannerBenefit: false,
 		productDetails: false,
 		promotionDetails: false,
-	},
+};
+const modalSlice = createSlice({
+	name: 'modal',
+	initialState,
 	reducers: {
 		openModal: (state, action) => {
-			state[action.payload] = true;
+			return state = {
+				...initialState,
+				[action.payload]: true,
+			};
 		},
 		closeModal: (state, action) => {
 			state[action.payload] = false;

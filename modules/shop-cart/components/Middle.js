@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { useCartValues } from '../../../hooks/useCartValues';
 import { basketServices } from '../../../services/product-services/basketServices';
-import CartProduct from '../../shared/CartProduct/Main';
+import CartProduct from './CartProduct/Main';
 
 export const Middle = () => {
 	const [loaded, setLoaded] = useState(false);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const cartDataHandler = useCartValues();
-	const currentProducts = useSelector(state => state.cart);
-	const apiData = cartDataHandler.cartState.apiData;
+	const {cartState} = cartDataHandler;
+	const {apiData} = cartDataHandler.cartState;
 	useEffect(() => {
 		let drinks = [];
 		let products = [];
 		let cartItems = [];
 		let totalPrice = 0;
-		currentProducts?.cart?.data?.length >= 1 ? setLoaded(true) : null;
-		if(localStorage.getItem("GuestCart") && currentProducts?.cart?.data?.length < 1) {
+		cartState?.data?.length >= 1 ? setLoaded(true) : null;
+		if(localStorage.getItem("GuestCart") && cartState?.data?.length < 1) {
 			basketServices.getBasket(localStorage.getItem("GuestCart"))
 				.then(res => {
 					console.log('back res', res);
@@ -74,14 +73,13 @@ export const Middle = () => {
 					setLoaded(true);
 					return;
 				});
-		} else if(!localStorage.getItem("GuestCart") && currentProducts?.cart?.data?.length < 1) {
+		} else if(!localStorage.getItem("GuestCart") && cartState?.data?.length < 1) {
 			setLoaded(true);
 			setErrorMessage("No hay productos en el carrito.");
 		};
 	}, []);
 	useEffect(() => {
 		if(apiData.id !== undefined) {
-			// console.log('cart api data', apiData);
 			basketServices.createEditBasket(apiData)
 			.then(res => {
 				if(res.status >= 200 && res.status < 400) {
@@ -99,7 +97,7 @@ export const Middle = () => {
 			<div className='h-full border-t border-b border-gray overflow-y-auto'>
 				{loaded || <p className="text-center">Estamos cargando los datos, aguarde un momento...</p>}
 				{loaded && <p className="text-center">{errorMessage}</p>}
-				{loaded && currentProducts?.cart?.data?.map(product => (
+				{loaded && cartState?.data?.map(product => (
 					<CartProduct
 						key={product.id}
 						id={product.id}

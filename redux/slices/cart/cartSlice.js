@@ -72,7 +72,7 @@ const cartSlice = createSlice({
 			state.cart.selectedEditItem = null;
 			if(action.payload.apiData) {
 				// let newDrinksApiItems = action.payload.apiData.products.filter(newDrinkApiItem => newDrinkApiItem.isDrink);
-				// let newSingleApiItem = action.payload.apiData.products.filter(newSingleApiItem => !newSingleApiItem.isDrink)[0];
+				let newSingleApiItem = action.payload.apiData.products.filter(newSingleApiItem => !newSingleApiItem.isDrink)[0];
 				if(state.cart.apiData.products.find(apiDataItem => apiDataItem.productId === newSingleApiItem.productId)) {
 					state.cart.apiData.products = [ ...state.cart.apiData.products];
 				};

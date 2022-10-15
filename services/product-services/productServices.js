@@ -25,7 +25,10 @@ export const getProductsByCategory = async (params) => {
 	);
 	return res;
 };
-
+const getProductByID = async (id) => {
+	const res = await axios.get(`${ALL_PRODUCTS}/${id}`);
+	return res;
+};
 const getPromotions = async () => {
 	const res = axios.get(PROMOTIONS);
 	return res;
@@ -65,6 +68,7 @@ export const getPromotionDetails = (id) => {
 
 export const productServices = {
 	getAllProducts,
+	getProductByID,
 	getProductsByCategory,
 	getPromotions,
 	getDoughs,

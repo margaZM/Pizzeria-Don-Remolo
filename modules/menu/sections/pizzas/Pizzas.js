@@ -3,19 +3,17 @@ import { getMenuByCategory } from '/redux/slices/menuCategories/categories.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProductCard } from '/modules/shared/ProductCard.js';
 import PropTypes from 'prop-types';
+import { useSelectProduct } from '../../../../hooks/useSelectProduct';
 
 export const Pizzas = ({ refProp }) => {
 	const dispatch = useDispatch();
+	const {handleProductSelection} = useSelectProduct();
 
 	let { category } = useSelector((state) => state.categories);
 
 	useEffect(() => {
 		dispatch(getMenuByCategory({ category: 'pizzas' }));
 	}, [dispatch]);
-
-	const handleclick = () => {
-		console.log('nhklk');
-	};
 
 	return (
 		<div
@@ -34,8 +32,9 @@ export const Pizzas = ({ refProp }) => {
 							newPrice={product.price}
 							id={product.id}
 							image={product.picture}
-							onClick={handleclick}
 							isMenu={true}
+							actionType='add'
+							onClick={handleProductSelection}
 						/>
 					</div>
 				))}

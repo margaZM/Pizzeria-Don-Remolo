@@ -10,6 +10,7 @@ export const ProductCard = ({
 	id,
 	isMenu,
 	dataModal,
+	actionType,
 	...props
 }) => {
 	return (
@@ -35,23 +36,26 @@ export const ProductCard = ({
 					type="button"
 					data-id={id}
 					data-modal={dataModal || 'productDetails'}
+					data-action_type={actionType}
 					{...props}
 				>
 					<div
 						className="flex justify-center items-center gap-2"
 						data-id={id}
 						data-modal={dataModal || 'productDetails'}
+						data-action_type={actionType}
 					>
 						<span
 							className="flex items-center w-max h-max"
 							data-id={id}
 							data-modal={dataModal || 'productDetails'}
+							data-action_type={actionType}
 						>
 							{' '}
-							<CartPlus data-id={id} data-modal={dataModal || 'productDetails'} />{' '}
+							<CartPlus data-id={id} data-action_type={actionType} data-modal={dataModal || 'productDetails'} />{' '}
 						</span>
 						{isMenu || (
-							<span data-id={id} data-modal={dataModal || 'productDetails'}>
+							<span data-id={id} data-action_type={actionType} data-modal={dataModal || 'productDetails'}>
 								Agregar al carrito
 							</span>
 						)}

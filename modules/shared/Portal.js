@@ -8,28 +8,22 @@ import RegisterForm from '../register/Main';
 import ShopCart from '../shop-cart/Main';
 import ProductDetails from '../shared/ProductDetails/Main';
 import { BannerBenefit } from '../home/components/banners/BannerBenefit';
-import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import { PromotionsDetailsModal } from '/modules/shared/PromotionsDetailsModal/PromotionsDetailsModal.js';
 
 export const Portal = () => {
-	const { modals } = useOnModalChange();
 	const cartIsMounted = useSelector((state) => state?.modal?.cart);
 	const cartTransition = useMountTransition(cartIsMounted, 250);
-	const router = useRouter();
+	const { openModalDispatch, modals } = useOnModalChange();
 	let isAuth = null;
 	if (typeof window !== 'undefined') {
 		isAuth = window.localStorage.getItem('auth');
 	}
-	const { openModalDispatch } = useOnModalChange();
 	useEffect(() => {
 		if (isAuth === null) {
 			openModalDispatch('bannerBenefit');
 		}
 	}, [isAuth]);
-	useEffect(() => {
-		openModalDispatch('pathChange');
-	}, [router.pathname]);
 	return (
 		<>
 			{modals.login ? (

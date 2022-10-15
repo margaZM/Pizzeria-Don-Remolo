@@ -24,10 +24,25 @@ export const useSelectProduct = () => {
 			);
 		});
 	};
+	const handleProductSelection = (e) => {
+		const productID = e.target.dataset.id;
+		const actionType = e.target.dataset.action_type;
+		dispatch(setActionType({ type: actionType }));
+		openModalDispatch(e);
+		productServices.getProductByID(productID).then((res) => {
+			dispatch(
+				handleSelectedProduct({
+					selected: true,
+					data: { ...res.data, quantity: 1, productRelationNumber: uuidv4() },
+				}),
+			);
+		});
+	};
 	const handleQuantity = (e) =>
 		dispatch(handleSelectedProductCounter(e.target.dataset.action));
 	return {
 		handlePromotion,
+		handleProductSelection,
 		handleQuantity,
 		currentState,
 	};
