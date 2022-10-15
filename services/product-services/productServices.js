@@ -59,6 +59,10 @@ const searchPromotionById = async (e) => {
 	return selectedProduct;
 };
 
+export const getPromotionDetails = (id) => {
+	return axios.get(`${URL}/api/Promotions/Rules/${id}`);
+};
+
 export const productServices = {
 	getAllProducts,
 	getProductsByCategory,
@@ -69,4 +73,5 @@ export const productServices = {
 	getMostPopular,
 	searchProduct,
 	searchPromotionById,
+	getPromotionDetails,
 };

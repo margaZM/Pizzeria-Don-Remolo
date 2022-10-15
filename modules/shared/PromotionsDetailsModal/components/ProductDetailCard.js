@@ -3,18 +3,22 @@ import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { ButtonsCounter } from '/modules/shared/ButtonsCounter';
 
-export const ProductDetailCard = ({ product, maxAmount }) => {
-	const { image, title, newPrice, oldPrice, description } = product;
+export const ProductDetailCard = ({ product }) => {
+	const { picture, title, newPrice, oldPrice, description } = product;
+
+	// console.log(product);
 
 	return (
 		<div className="border-r-2 border-r-gray col-span-2">
 			<div className="h-40 w-full max-h-[230px] relative bg-secondary">
-				<Image
-					// loader={() => image}
-					src={require('/public/assets/categories/pizza.png')}
-					alt="promociones de pizzas"
-					layout="fill"
-				/>
+				{picture && (
+					<Image
+						loader={() => picture}
+						src={require('/public/assets/categories/pizza.png')}
+						alt="promociones de pizzas"
+						layout="fill"
+					/>
+				)}
 			</div>
 			<div className="px-2 flex flex-col gap-2">
 				<p className="font-bold"> {title} </p>
@@ -23,7 +27,7 @@ export const ProductDetailCard = ({ product, maxAmount }) => {
 					<span className="text-primary font-medium"> $/{newPrice} </span>
 				</div>
 				<p>{description} </p>
-				<ButtonsCounter maxAmount={maxAmount} />
+				<ButtonsCounter />
 			</div>
 		</div>
 	);

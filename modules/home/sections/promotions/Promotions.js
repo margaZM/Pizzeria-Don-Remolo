@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { useSelectProduct } from '../../../../hooks/useSelectProduct';
+import { useSelectPromotion } from '/hooks/useSelectPromotion.js';
 import { productServices } from '../../../../services/product-services/productServices';
 import { ProductCard } from '../../../shared/ProductCard';
 
 export const Promotions = ({ refProp, isMenu }) => {
 	const [promotions, setPromotions] = useState(null);
-	const { handlePromotion } = useSelectProduct();
+	const { handlePromotion } = useSelectPromotion();
 
 	useEffect(() => {
 		productServices.getPromotions().then((res) => setPromotions(res.data));
@@ -24,14 +24,15 @@ export const Promotions = ({ refProp, isMenu }) => {
 					promotions.map((promo) => (
 						<ProductCard
 							key={promo.id}
-							title={promo.title}
+							promotion={promo.title}
 							desc={promo.description}
 							oldPrice={promo.originalPrice}
 							newPrice={promo.promotionalPrice}
 							id={promo.id}
 							image={promo.picture}
-							onClick={handlePromotion}
+							onClick={() => handlePromotion(promo, 'promotionDetails')}
 							isMenu={isMenu}
+							dataModal={'promotionDetails'}
 						/>
 					))}
 			</section>

@@ -1,7 +1,17 @@
 import Image from 'next/image';
 import { CartPlus } from './ProductDetails/components/CartPlus';
 
-export const ProductCard = ({ title, desc, oldPrice, newPrice, image, id, isMenu, ...props }) => {
+export const ProductCard = ({
+	title,
+	desc,
+	oldPrice,
+	newPrice,
+	image,
+	id,
+	isMenu,
+	dataModal,
+	...props
+}) => {
 	return (
 		<article className="flex flex-col gap-3 min-w-[200px] w-full max-w-[250px] min-h-[200px] h-full max-h-[320px] rounded-lg shadow-md border border-gray-light mb-4">
 			<section className="w-full h-full max-h-[130px] relative">
@@ -23,13 +33,28 @@ export const ProductCard = ({ title, desc, oldPrice, newPrice, image, id, isMenu
 				<button
 					className="button-primary w-max translate-y-4"
 					type="button"
-					data-id={id} 
-					data-modal="productDetails"
+					data-id={id}
+					data-modal={dataModal || 'productDetails'}
 					{...props}
 				>
-					<div className="flex justify-center items-center gap-2" data-id={id} data-modal="productDetails">
-						<span className="flex items-center w-max h-max" data-id={id} data-modal="productDetails"> <CartPlus data-id={id} data-modal="productDetails" /> </span>
-						{isMenu || <span data-id={id} data-modal="productDetails">Agregar al carrito</span>}
+					<div
+						className="flex justify-center items-center gap-2"
+						data-id={id}
+						data-modal={dataModal || 'productDetails'}
+					>
+						<span
+							className="flex items-center w-max h-max"
+							data-id={id}
+							data-modal={dataModal || 'productDetails'}
+						>
+							{' '}
+							<CartPlus data-id={id} data-modal={dataModal || 'productDetails'} />{' '}
+						</span>
+						{isMenu || (
+							<span data-id={id} data-modal={dataModal || 'productDetails'}>
+								Agregar al carrito
+							</span>
+						)}
 					</div>
 				</button>
 			</section>

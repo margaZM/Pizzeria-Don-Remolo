@@ -9,12 +9,11 @@ const modalSlice = createSlice({
 		cart: false,
 		bannerBenefit: false,
 		productDetails: false,
+		promotionDetails: false,
 	},
 	reducers: {
 		openModal: (state, action) => {
 			state[action.payload] = true;
-			console.log(state);
-			console.log(action.payload);
 		},
 		closeModal: (state, action) => {
 			state[action.payload] = false;

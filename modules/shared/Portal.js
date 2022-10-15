@@ -10,6 +10,7 @@ import ProductDetails from '../shared/ProductDetails/Main';
 import { BannerBenefit } from '../home/components/banners/BannerBenefit';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
+import { PromotionsDetailsModal } from '/modules/shared/PromotionsDetailsModal/PromotionsDetailsModal.js';
 
 export const Portal = () => {
 	const { modals } = useOnModalChange();
@@ -59,6 +60,8 @@ export const Portal = () => {
 				<Modal>
 					<ProductDetails />{' '}
 				</Modal>
+			) : modals.promotionDetails ? (
+				<PromotionsDetailsModal />
 			) : null}
 		</>
 	);

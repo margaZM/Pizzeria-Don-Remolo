@@ -1,23 +1,23 @@
 import { useState } from 'react';
 
 export const useCounterButtons = () => {
-	const [counter, setCounter] = useState(0);
+	const [productQuantity, setProductQuantity] = useState(0);
 
-	const increment = (maxAmount) => {
-		if (maxAmount && counter < maxAmount) {
-			setCounter(counter + 1);
+	const incrementProduct = (maxAmount) => {
+		if (maxAmount && productQuantity < maxAmount) {
+			setProductQuantity(productQuantity + 1);
 		}
 	};
-	const decrement = () => {
-		if (counter > 0) {
-			setCounter(counter - 1);
+	const decrementProduct = () => {
+		if (productQuantity > 0) {
+			setProductQuantity(productQuantity - 1);
 		}
 	};
 
 	return {
-		counter,
-		setCounter,
-		increment,
-		decrement,
+		productQuantity,
+		setProductQuantity,
+		incrementProduct,
+		decrementProduct,
 	};
 };

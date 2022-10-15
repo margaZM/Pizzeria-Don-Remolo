@@ -3,22 +3,33 @@ import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { ButtonsCounter } from '/modules/shared/ButtonsCounter';
 
-export const OptionDetail = ({ detailPromo }) => {
-	const { icon, title, options, maxAmount } = detailPromo;
+export const OptionDetail = ({ detailPromo, quantitiesByGroup }) => {
+	const { groupName, products, sizeId } = detailPromo;
 
 	return (
 		<div>
 			<div className="flex items-center pl-1 pr-4">
-				<Image src={require(`/public/assets/icons/${icon}.svg`)} alt={icon} />
-				<span className="uppercase font-bold ml-2">{title} </span>
-				<span className="ml-auto text-primary text-xxs">{`0/${maxAmount}`}</span>
+				<Image
+					src={require(`/public/assets/icons/icons-detail/${groupName}.svg`)}
+					alt={groupName}
+				/>
+				<span className="uppercase font-bold ml-2">
+					{`Elige ${sizeId > 1 ? 'las' : 'la'} ${sizeId > 1 ? sizeId : ''} ${groupName}`}
+				</span>
+				<span className="ml-auto text-primary text-xxs">{`${
+					quantitiesByGroup[groupName] || 0
+				}/${sizeId || 1}`}</span>
 			</div>
 			<div className="mb-2">
-				{options.map((option) => (
-					<div key={option}>
+				{products.map((option) => (
+					<div key={option.id}>
 						<div className="pl-12 pr-4 flex justify-between items-center">
-							<span>{option} </span>
-							<ButtonsCounter maxAmount={maxAmount} />
+							<span>{option.name} </span>
+							<ButtonsCounter
+								maxAmount={sizeId || 1}
+								product={{ ...option, group: groupName, maxQuantityGroup: sizeId }}
+								disabled={{ add: quantitiesByGroup[groupName] >= sizeId }}
+							/>
 						</div>
 						<hr className="ml-12 mr-4 my-1 text-gray-light" />
 					</div>
