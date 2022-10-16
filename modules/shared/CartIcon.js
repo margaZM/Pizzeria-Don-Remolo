@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { useOnModalChange } from '../../hooks/useOnModalChange';
 
-export const Cart = ({ position }) => {
+export const CartIcon = ({ position }) => {
 	const cartLength = useSelector((state) => state.cart.cart.cartLength);
 	const { openModalDispatch } = useOnModalChange();
 	return (

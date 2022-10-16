@@ -1,6 +1,6 @@
 import { useRedirect } from "../../../../hooks/useRedirect";
 import { PaymentProcessHeader } from "../../../payment-process/components/PaymentProcessHeader";
-import { Cart } from "../../../shared/Cart";
+import { CartIcon } from "../../../shared/CartIcon";
 import { mobileLayout } from "../../styles/layouts";
 import { MenuIcon } from "./MenuIcon";
 import LoginButton from '../AuthButton';
@@ -38,7 +38,7 @@ export const MobileNavHeader = () => {
 						{!isUser?.token ? <LoginButton authType="login" action="Ingresar" />
 							: <p className="font-bold"> Hola, {isUser && splitName(isUser.name)} </p>
 						}
-						<Cart position="justify-self-end" />
+						<CartIcon position="justify-self-end" />
 					</div>
 				</header>
 			}
