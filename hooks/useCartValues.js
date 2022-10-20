@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { 
+import {
 	handleAddToCart,
 	handleDeleteCartItem,
 	handleEditCartItem,
 	handleSelectedEditItemQuantity,
 	handleCartItemQuantity,
-	setActionType
-} from "../redux/slices/cart/cartSlice";
-import { productServices } from "../services/product-services/productServices";
-import { useNotification } from "./useNotification";
-import { useOnModalChange } from "./useOnModalChange";
-import { useSelectProduct } from "./useSelectProduct";
+	setActionType,
+} from '../redux/slices/cart/cartSlice';
+import { productServices } from '../services/product-services/productServices';
+import { useNotification } from './useNotification';
+import { useOnModalChange } from './useOnModalChange';
+import { useSelectProduct } from './useSelectProduct';
 
 export const useCartValues = (context) => {
 	const dispatch = useDispatch();
 	const { currentState } = useSelectProduct();
 	const { openModalDispatch } = useOnModalChange();
-	const cartState = useSelector(state => state.cart.cart);
+	const cartState = useSelector((state) => state.cart.cart);
 	const actionType = cartState.actionType;
 	const [drinksAsProducts, setDrinksAsProducts] = useState([]);
 	const [basketValues, setBasketValues] = useState([]);
@@ -120,8 +120,7 @@ export const useCartValues = (context) => {
 							productId: selectedDrink.id,
 							isDrink: true,
 							productRelationNumber:
-								currentState?.selectedProduct?.id ||
-								cartStatet?.selectedEditItem?.id,
+								currentState?.selectedProduct?.id || cartStatet?.selectedEditItem?.id,
 						},
 					]);
 				});
@@ -133,7 +132,7 @@ export const useCartValues = (context) => {
 					drinks: [...values.drinks, { productName: e.target.value, price }],
 				};
 			});
-		};
+		}
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -205,10 +204,10 @@ export const useCartValues = (context) => {
 		}
 	};
 	useEffect(() => {
-		console.log('use cart values')
-		if(context === 'productDetails') {
+		console.log('use cart values');
+		if (context === 'productDetails') {
 			return () => clearTimeout(cartTimeout);
-		};
+		}
 	}, []);
 	return {
 		dispatch,
@@ -223,10 +222,15 @@ export const useCartValues = (context) => {
 		cartState,
 		actionType,
 		currentState,
-		values, setValues,
-		basketValues, setBasketValues,
-		drinksAsProducts, setDrinksAsProducts,
-		infoNotification, setInfoNotification,
-		isOpenNotification, setIsOpenNotification,
+		values,
+		setValues,
+		basketValues,
+		setBasketValues,
+		drinksAsProducts,
+		setDrinksAsProducts,
+		infoNotification,
+		setInfoNotification,
+		isOpenNotification,
+		setIsOpenNotification,
 	};
 };

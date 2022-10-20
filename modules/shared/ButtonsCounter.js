@@ -2,21 +2,25 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { useCounterButtons } from '/hooks/useCounterButtons';
-import { useSelectPromotion } from '/hooks/useSelectPromotion';
 
-export const ButtonsCounter = ({ maxAmount, product, disabled }) => {
-	const { productQuantity, incrementProduct, decrementProduct } = useCounterButtons();
-	const { handleSelectedPromotionOptions, handleDeleteSelectedPromotionOptions } =
-		useSelectPromotion();
+export const ButtonsCounter = ({
+	maxAmount,
+	product,
+	disabled,
+	handlerAdd,
+	handlerMinus,
+	initialQuantity,
+}) => {
+	const { productQuantity, incrementProduct, decrementProduct } =
+		useCounterButtons(initialQuantity);
 
 	const addProduct = () => {
-		!disabled?.add &&
-			(incrementProduct(maxAmount), handleSelectedPromotionOptions(product));
+		!disabled?.add && (incrementProduct(maxAmount), handlerAdd(product || 'increase'));
 	};
 
 	const minusProduct = () => {
 		decrementProduct();
-		handleDeleteSelectedPromotionOptions(product);
+		handlerMinus(product || 'decrease');
 	};
 
 	return (

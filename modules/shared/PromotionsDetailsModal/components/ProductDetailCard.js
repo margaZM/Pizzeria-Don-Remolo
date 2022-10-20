@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { ButtonsCounter } from '/modules/shared/ButtonsCounter';
+import { useSelectPromotion } from '/hooks/useSelectPromotion';
 
 export const ProductDetailCard = ({ product }) => {
 	const { picture, title, newPrice, oldPrice, description } = product;
-
+	const { handleQuantity } = useSelectPromotion();
 	// console.log(product);
 
 	return (
@@ -27,7 +28,11 @@ export const ProductDetailCard = ({ product }) => {
 					<span className="text-primary font-medium"> $/{newPrice} </span>
 				</div>
 				<p>{description} </p>
-				<ButtonsCounter />
+				<ButtonsCounter
+					handlerAdd={handleQuantity}
+					handlerMinus={handleQuantity}
+					initialQuantity={1}
+				/>
 			</div>
 		</div>
 	);

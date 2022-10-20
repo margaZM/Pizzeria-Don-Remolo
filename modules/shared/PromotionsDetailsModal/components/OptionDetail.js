@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { ButtonsCounter } from '/modules/shared/ButtonsCounter';
+import { useSelectPromotion } from '/hooks/useSelectPromotion';
 
 export const OptionDetail = ({ detailPromo, quantitiesByGroup }) => {
 	const { groupName, products, sizeId } = detailPromo;
+	const { handleSelectedPromotionOptions, handleDeleteSelectedPromotionOptions } =
+		useSelectPromotion();
 
 	return (
 		<div>
@@ -29,6 +32,8 @@ export const OptionDetail = ({ detailPromo, quantitiesByGroup }) => {
 								maxAmount={sizeId || 1}
 								product={{ ...option, group: groupName, maxQuantityGroup: sizeId }}
 								disabled={{ add: quantitiesByGroup[groupName] >= sizeId }}
+								handlerAdd={handleSelectedPromotionOptions}
+								handlerMinus={handleDeleteSelectedPromotionOptions}
 							/>
 						</div>
 						<hr className="ml-12 mr-4 my-1 text-gray-light" />

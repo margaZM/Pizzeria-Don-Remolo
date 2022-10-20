@@ -30,8 +30,7 @@ export const useSelectPromotion = () => {
 			);
 		});
 	};
-	const handleQuantity = (e) =>
-		dispatch(handleSelectedProductCounter(e.target.dataset.action));
+	const handleQuantity = (action) => dispatch(handleSelectedProductCounter(action));
 
 	const handleSelectedPromotionOptions = (optionSelected) => {
 		const newProductOfPromotion = { ...optionSelected, quantity: 1 };
@@ -59,8 +58,6 @@ export const useSelectPromotion = () => {
 			(product) => product.productId === optionDeleted.productId,
 		);
 
-		console.log(productSelected);
-
 		const updateOptionsPromotion = selectedProductsOfPromotion.map((item) =>
 			item.productId === optionDeleted.productId
 				? { ...item, quantity: item.quantity - 1 }
@@ -70,11 +67,6 @@ export const useSelectPromotion = () => {
 		const deleteOptionsPromotion = selectedProductsOfPromotion.filter(
 			(item) => item.productId !== optionDeleted.productId,
 		);
-
-		console.log(deleteOptionsPromotion);
-
-		console.log(optionDeleted);
-
 		dispatch(
 			setDetailPromo(
 				productSelected.quantity === 1

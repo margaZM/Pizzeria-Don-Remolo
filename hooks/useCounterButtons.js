@@ -1,10 +1,14 @@
 import { useState } from 'react';
 
-export const useCounterButtons = () => {
-	const [productQuantity, setProductQuantity] = useState(0);
+export const useCounterButtons = (initialQuantity) => {
+	const [productQuantity, setProductQuantity] = useState(initialQuantity || 0);
 
 	const incrementProduct = (maxAmount) => {
-		if (maxAmount && productQuantity < maxAmount) {
+		if (maxAmount) {
+			if (productQuantity < maxAmount) {
+				setProductQuantity(productQuantity + 1);
+			}
+		} else {
 			setProductQuantity(productQuantity + 1);
 		}
 	};

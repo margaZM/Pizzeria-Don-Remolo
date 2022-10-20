@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { ProductDetailCard } from './components/ProductDetailCard';
-import { OptionDetail } from './components/OptionDetail';
+// import { OptionDetail } from './components/OptionDetail';
+import { OptionDetailList } from '/modules/shared/PromotionsDetailsModal/components/OptionDetailList.js';
+
 import Close from '/modules/shared/Close.js';
 import Modal from '/modules/shared/Modal.js';
 import { CartPlusIcon } from '/modules/shared/CartPlusIcon.js';
 import PropTypes from 'prop-types';
 import { useOnModalChange } from '/hooks/useOnModalChange';
 import { useSelectPromotion } from '/hooks/useSelectPromotion';
-import { handleAddToCart, handleEditCartItem } from '/redux/slices/cart/cartSlice';
+import { useCartValues } from '/hooks/useCartValues';
+import { Notification } from '/modules/shared/Notification';
 
 export const PromotionsDetailsModal = () => {
-	const [quantitiesByGroup, setQuantitiesByGroup] = useState({});
+	const [quantitiesByGroup, setQuantitiesByGroup] = useState([]);
 	const { closeModalDispatch } = useOnModalChange();
 	const { currentState } = useSelectPromotion();
-	const dispatch = useDispatch();
-	const cartState = useSelector((state) => state.cart);
 
 	const { picture, originalPrice, title, promotionalPrice, description, ruleItems } =
 		currentState.selectedProduct || {};
+
+	const { handleSubmit, infoNotification, isOpenNotification, setIsOpenNotification } =
+		useCartValues('productDetails');
 
 	const closeModal = () => {
 		closeModalDispatch('promotionDetails');
@@ -33,18 +36,21 @@ export const PromotionsDetailsModal = () => {
 	};
 	const detailPromo = ruleItems || [];
 
-	console.log(detailPromo);
+	// console.log(detailPromo);
 
 	useEffect(() => {
 		const selectedProductsOfPromotion = currentState.selectedProduct?.detailPromo || [];
 		const quantitiesSelectedProductsByGroup = () => {
-			return selectedProductsOfPromotion.reduce(
+			const sum = selectedProductsOfPromotion.reduce(
 				(count, product) => (
-					count[product.group] ? (count[product.group] += 1) : (count[product.group] = 1),
+					count.hasOwnProperty(product.group)
+						? (count[product.group] += 1)
+						: (count[product.group] = product.quantity),
 					count
 				),
 				[],
 			);
+			return sum;
 		};
 		quantitiesSelectedProductsByGroup();
 		setQuantitiesByGroup(quantitiesSelectedProductsByGroup());
@@ -59,26 +65,6 @@ export const PromotionsDetailsModal = () => {
 	// 	});
 	// };
 
-	const addToCart = () => {
-		dispatch(
-			handleAddToCart({
-				totalPrice:
-					currentState.selectedProduct?.promotionalPrice *
-					currentState.selectedProduct?.quantity,
-				data: {
-					id: currentState?.selectedProduct?.id,
-					img: currentState?.selectedProduct?.picture,
-					title: currentState?.selectedProduct?.title,
-					quantity: currentState?.selectedProduct?.quantity,
-					productSubTotal:
-						currentState.selectedProduct?.promotionalPrice *
-						currentState.selectedProduct?.quantity,
-					detailPromo: currentState.selectedProduct?.detailPromo,
-				},
-			}),
-		);
-	};
-
 	return (
 		<Modal>
 			<div className="w-full pt-4 flex flex-col">
@@ -89,22 +75,16 @@ export const PromotionsDetailsModal = () => {
 					{promotion.description && <ProductDetailCard product={promotion} />}
 
 					<div className="col-span-3 relative">
-						{detailPromo.length && (
-							<div className="max-h-[93%] overflow-auto">
-								{detailPromo?.map((detail) => (
-									<OptionDetail
-										detailPromo={detail}
-										quantitiesByGroup={quantitiesByGroup}
-										key={detail.categoryId}
-									/>
-								))}
-							</div>
-						)}
+						<OptionDetailList
+							quantitiesByGroup={quantitiesByGroup}
+							detailPromo={detailPromo}
+						/>
+
 						<div className="absolute bottom-0 right-0 bg-white h-16 border-t border-t-gray w-full rounded-br-xl flex justify-center items-center">
 							<button
 								className="bg-primary text-white rounded-full p-2 w-[70%] flex justify-center items-center gap-2"
 								type="button"
-								onClick={addToCart}
+								onClick={handleSubmit}
 							>
 								<CartPlusIcon />
 								<span>Agregar al carrito</span>
@@ -119,6 +99,14 @@ export const PromotionsDetailsModal = () => {
 					</div>
 				</div>
 			</div>
+			{isOpenNotification && (
+				<Notification
+					message={infoNotification.message}
+					icon={infoNotification.icon}
+					setIsOpenNotification={setIsOpenNotification}
+					successDelay={2000}
+				/>
+			)}
 		</Modal>
 	);
 };
