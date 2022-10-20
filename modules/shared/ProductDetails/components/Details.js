@@ -1,5 +1,4 @@
 import { useCartValues } from '../../../../hooks/useCartValues';
-import { useSelectProduct } from '../../../../hooks/useSelectProduct';
 import { Notification } from '../../Notification';
 import { CartPlus } from './CartPlus';
 import DetailsHeader from './DetailsHeader';
@@ -9,16 +8,16 @@ import { PickIngredients } from './PickIngredients';
 import { PickSize } from './PickSize';
 
 export const Details = () => {
-	const { currentState } = useSelectProduct();
 	const {
 		handleChange,
 		handleSubmit,
 		values,
 		cartState,
+		currentState,
 		infoNotification,
 		isOpenNotification,
 		setIsOpenNotification,
-	} = useCartValues('productDetails');
+	} = useCartValues({productDetailsContext: true});
 	return (
 		<form
 			className="relative w-full h-max p-3 pb-[4rem] sm:w-[60%]"
