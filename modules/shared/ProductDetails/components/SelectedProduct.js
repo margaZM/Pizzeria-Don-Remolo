@@ -8,7 +8,7 @@ export const SelectedProduct = () => {
 	const { currentState } = useSelectProduct();
 	const values = {
 		title: cartState?.selectedEditItem?.title || currentState?.selectedProduct?.title,
-		price: cartState?.selectedEditItem?.price || currentState?.selectedProduct?.price,
+		price: cartState?.selectedEditItem?.price || cartState?.selectedEditItem?.productPrice || currentState?.selectedProduct?.price,
 		description: cartState?.selectedEditItem?.description || currentState?.selectedProduct?.description,
 		img: cartState?.selectedEditItem?.img || currentState?.selectedProduct?.picture,
 	};
