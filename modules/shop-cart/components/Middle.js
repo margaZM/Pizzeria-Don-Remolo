@@ -18,9 +18,17 @@ export const Middle = () => {
 		if(localStorage.getItem("GuestCart") && cartState?.data?.length < 1) {
 			basketServices.getBasket(localStorage.getItem("GuestCart"))
 				.then(res => {
-					console.log('back res', res);
 					if(res.data.products.length > 0) {
-						drinks = res.data.products.filter(item => item.isDrink);
+						drinks = res.data.products.filter(item => item.isDrink).map(drink => {
+							return {
+								...drinks,
+								productName: drink.productName,
+								id: drink.productId, 
+								isDrink: drink.isDrink,
+								price: drink.productPrice,
+								productRelationNumber: drink.productRelationNumber
+							};
+						});
 						products = res.data.products.filter(item => !item.isDrink);
 						products.forEach((item) => {
 							let additionalPrice = [...products.map(item => item.ingredientsPrice), ...drinks.filter(drink => item.productId === drink.productRelationNumber).map(rawDrink => rawDrink.productPrice),].reduce((a, b) => a + b, 0);

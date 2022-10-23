@@ -1,8 +1,9 @@
-import { useSelector } from "react-redux";
+import { useCartValues } from "../../../../hooks/useCartValues";
 
 export const RequiredOption = ({ label, name, price, type, ...props }) => {
-	const size = useSelector(state => state?.cart?.cart?.selectedEditItem?.size);
-	const dough = useSelector(state => state?.cart?.cart?.selectedEditItem?.dough);
+	const {values} = useCartValues();
+	const size = values.size;
+	const dough = values.dough;
 	return (
 		<div className="flex justify-between pr-2 border-b border-gray-light">
 			<div className="flex items-center gap-3 h-max my-auto">
