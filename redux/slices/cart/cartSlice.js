@@ -17,6 +17,7 @@ const cartSlice = createSlice({
 	},
 	reducers: {
 		setActionType: (state, action) => {
+			if(action.payload === 'clearEditItem') state.cart.selectedEditItem = null;
 			if(action.payload.type === "edit") {
 				state.cart.selectedEditItem = state.cart.data.find(item => item.id === +action.payload.id);
 			};
