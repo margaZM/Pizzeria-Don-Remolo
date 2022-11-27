@@ -203,12 +203,6 @@ export const useCartValues = (context) => {
 			}, 2000);
 		}
 	};
-	useEffect(() => {
-		console.log('use cart values');
-		if (context === 'productDetails') {
-			return () => clearTimeout(cartTimeout);
-		}
-	}, []);
 	return {
 		dispatch,
 		handleChange,
