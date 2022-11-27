@@ -34,10 +34,8 @@ export const NavBtnsContainer = ({ mobileMenu }) => {
 	}, [dispatch]);
 	function facebookLogout() {
 		FB.getLoginStatus(function (response) {
-			console.log(response);
 			if (response.status === 'connected') {
 				FB.logout(function (response) {
-					console.log(response);
 					cleanup();
 				});
 			}

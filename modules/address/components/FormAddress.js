@@ -53,9 +53,6 @@ export const FormAddress = () => {
 					validationSchema={validate}
 					validator={() => ({})}
 					onSubmit={(values, { resetForm }) => {
-						console.log(values);
-						// handleAddress(values);
-						// console.log(address);
 						router.push('/');
 						resetForm({
 							values: {
