@@ -46,11 +46,7 @@ export const googleMaps = (googlemap, googleinput, type) => {
 			},
 			(results, status) => {
 				if (status == google.maps.GeocoderStatus.OK) {
-					console.log(results);
 					const address = results[0].formatted_address;
-					console.log(address);
-				} else {
-					console.log(status);
 				}
 			},
 		);

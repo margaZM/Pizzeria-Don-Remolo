@@ -22,6 +22,7 @@ export const useCartValues = (context) => {
 	const actionType = cartState.actionType;
 	const [drinksAsProducts, setDrinksAsProducts] = useState([]);
 	const [basketValues, setBasketValues] = useState([]);
+
 	const {
 		infoNotification,
 		setInfoNotification,
@@ -42,7 +43,10 @@ export const useCartValues = (context) => {
 		additionalPrice: cartState?.cart?.selectedEditItem?.additionalPrice || 0,
 		quantity: 1,
 		productSubTotal: cartState?.cart?.selectedEditItem?.productSubTotal || 0,
+		context: context,
+		detailPromo: currentState.selectedProduct?.detailPromo || [],
 	});
+	console.log(currentState?.selectedProduct);
 	let cartTimeout;
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
@@ -137,6 +141,7 @@ export const useCartValues = (context) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (actionType === 'edit') {
+			console.log('editando');
 			dispatch(
 				handleEditCartItem({
 					totalPrice:
@@ -148,7 +153,9 @@ export const useCartValues = (context) => {
 						img: cartState?.selectedEditItem?.img,
 						quantity: cartState?.selectedEditItem?.quantity,
 						productSubTotal: +values.productPrice + +values.additionalPrice,
+						detailPromo: currentState.selectedProduct?.detailPromo || [],
 					},
+					context: values.context,
 					apiData: {
 						id: localStorage.getItem('GuestCart') || uuidv4(),
 						products: [
@@ -177,7 +184,9 @@ export const useCartValues = (context) => {
 						title: currentState?.selectedProduct?.title,
 						quantity: currentState?.selectedProduct?.quantity,
 						productSubTotal: +values.productPrice + +values.additionalPrice,
+						detailPromo: currentState.selectedProduct?.detailPromo || [],
 					},
+					context: values.context,
 					apiData: {
 						id: localStorage.getItem('GuestCart') || uuidv4(),
 						products: [

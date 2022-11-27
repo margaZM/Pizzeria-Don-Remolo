@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import { useOnModalChange } from '../../../../../hooks/useOnModalChange';
-import { handleDeleteCartItem, setActionType } from '../../../../../redux/slices/cart/cartSlice';
+import {
+	handleDeleteCartItem,
+	setActionType,
+} from '../../../../../redux/slices/cart/cartSlice';
 import { ProductCounter } from '../../../../shared/ProductCounter';
 
-export const ProdButtons = ({ quantity, id }) => {
+export const ProdButtons = ({ quantity, id, context }) => {
 	const { openModalDispatch } = useOnModalChange();
 	const dispatch = useDispatch();
 	const handleDeleteItem = () => dispatch(handleDeleteCartItem(id));
@@ -30,8 +33,8 @@ export const ProdButtons = ({ quantity, id }) => {
 					src={require('../../../../../public/assets/icons/edit.svg')}
 					alt="edit-btn"
 					data-id={id}
-					data-action_type='edit'
-					data-modal='productDetails'
+					data-action_type="edit"
+					data-modal={context}
 					onClick={handleEditItem}
 				/>
 			</div>

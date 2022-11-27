@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ProductDetailCard } from './components/ProductDetailCard';
-// import { OptionDetail } from './components/OptionDetail';
 import { OptionDetailList } from '/modules/shared/PromotionsDetailsModal/components/OptionDetailList.js';
 
 import Close from '/modules/shared/Close.js';
@@ -20,8 +19,13 @@ export const PromotionsDetailsModal = () => {
 	const { picture, originalPrice, title, promotionalPrice, description, ruleItems } =
 		currentState.selectedProduct || {};
 
-	const { handleSubmit, infoNotification, isOpenNotification, setIsOpenNotification } =
-		useCartValues('promotionDetails');
+	const {
+		handleSubmit,
+		infoNotification,
+		isOpenNotification,
+		setIsOpenNotification,
+		actionType,
+	} = useCartValues('promotionDetails');
 
 	const closeModal = () => {
 		closeModalDispatch('promotionDetails');
@@ -77,6 +81,9 @@ export const PromotionsDetailsModal = () => {
 						<OptionDetailList
 							quantitiesByGroup={quantitiesByGroup}
 							detailPromo={detailPromo}
+							productsToUpdate={
+								actionType === 'edit' ? currentState.selectedProduct.detailPromo : []
+							}
 						/>
 
 						<div className="absolute bottom-0 right-0 bg-white h-16 border-t border-t-gray w-full rounded-br-xl flex justify-center items-center">
@@ -87,7 +94,9 @@ export const PromotionsDetailsModal = () => {
 								disabled={disabledButton()}
 							>
 								<CartPlusIcon />
-								<span>Agregar al carrito</span>
+								<span>
+									{actionType === 'edit' ? 'Editar orden' : 'Agregar al carrito'}
+								</span>
 								<span>|</span>
 								<span>
 									{'$'}{' '}

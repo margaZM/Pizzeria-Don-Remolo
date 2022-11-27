@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { ButtonsCounter } from '/modules/shared/ButtonsCounter';
 import { useSelectPromotion } from '/hooks/useSelectPromotion';
 
-export const OptionDetail = ({ detailPromo, quantitiesByGroup }) => {
+export const OptionDetail = ({ detailPromo, quantitiesByGroup, productsToUpdate }) => {
 	const { groupName, products, quantity } = detailPromo;
 	const { handleSelectedPromotionOptions, handleDeleteSelectedPromotionOptions } =
 		useSelectPromotion();
@@ -13,7 +13,7 @@ export const OptionDetail = ({ detailPromo, quantitiesByGroup }) => {
 		<div>
 			<div className="flex items-center pl-1 pr-4">
 				<Image
-					src={require(`/public/assets/icons/icons-detail/${groupName}.svg`)}
+					src={require(`/public/assets/icons/icons-detail/${groupName || group}.svg`)}
 					alt={groupName}
 				/>
 				<span className="uppercase font-bold ml-2">
@@ -36,6 +36,7 @@ export const OptionDetail = ({ detailPromo, quantitiesByGroup }) => {
 								disabled={{ add: quantitiesByGroup[groupName] >= quantity }}
 								handlerAdd={handleSelectedPromotionOptions}
 								handlerMinus={handleDeleteSelectedPromotionOptions}
+								productsToUpdate={productsToUpdate}
 							/>
 						</div>
 						<hr className="ml-12 mr-4 my-1 text-gray-light" />
