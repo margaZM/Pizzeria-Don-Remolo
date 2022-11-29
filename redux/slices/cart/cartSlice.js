@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
 	name: 'cart',
@@ -17,6 +17,7 @@ const cartSlice = createSlice({
 	},
 	reducers: {
 		setActionType: (state, action) => {
+			if (action.payload === 'clearEditItem') state.cart.selectedEditItem = null;
 			if (action.payload.type === 'edit') {
 				state.cart.selectedEditItem = state.cart.data.find(
 					(item) => item.id === +action.payload.id,
@@ -82,17 +83,27 @@ const cartSlice = createSlice({
 			state.cart.totalPrice = acumulator;
 			state.cart.selectedEditItem = null;
 			if (action.payload.apiData) {
-				// let newDrinksApiItems = action.payload.apiData.products.filter(newDrinkApiItem => newDrinkApiItem.isDrink);
-				let newSingleApiItem = action.payload.apiData.products.filter(
-					(newSingleApiItem) => !newSingleApiItem.isDrink,
+				const payloadNoDrinkApiItem = action.payload.apiData.products.filter(
+					(payloadNoDrinkApiItem) => !payloadNoDrinkApiItem.isDrink,
 				)[0];
-				if (
-					state.cart.apiData.products.find(
-						(apiDataItem) => apiDataItem.productId === newSingleApiItem.productId,
-					)
-				) {
-					state.cart.apiData.products = [...state.cart.apiData.products];
-				}
+				const payloadDrinksApiItems = action.payload.apiData.products.filter(
+					(newDrinkApiItem) => newDrinkApiItem.isDrink,
+				);
+				const firstFilterApiItems = [
+					...state.cart.apiData.products.filter(
+						(filterApiItem) =>
+							filterApiItem.productId !== payloadNoDrinkApiItem.productId,
+					),
+				];
+				const secondFilterApiItems = firstFilterApiItems.filter(
+					(filterApiItem) =>
+						filterApiItem.productRelationNumber !== payloadNoDrinkApiItem.productId,
+				);
+				state.cart.apiData.products = [
+					...secondFilterApiItems,
+					...payloadDrinksApiItems,
+					payloadNoDrinkApiItem,
+				];
 			}
 		},
 		handleDeleteCartItem: (state, action) => {

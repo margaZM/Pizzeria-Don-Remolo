@@ -20,9 +20,19 @@ export const Middle = () => {
 			basketServices
 				.getBasket(localStorage.getItem('GuestCart'))
 				.then((res) => {
-					console.log('back res', res);
 					if (res.data.products.length > 0) {
-						drinks = res.data.products.filter((item) => item.isDrink);
+						drinks = res.data.products
+							.filter((item) => item.isDrink)
+							.map((drink) => {
+								return {
+									...drinks,
+									productName: drink.productName,
+									id: drink.productId,
+									isDrink: drink.isDrink,
+									price: drink.productPrice,
+									productRelationNumber: drink.productRelationNumber,
+								};
+							});
 						products = res.data.products.filter((item) => !item.isDrink);
 						products.forEach((item) => {
 							let additionalPrice = [

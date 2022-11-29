@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -32,15 +32,15 @@ export const useCartValues = (context) => {
 	const [values, setValues] = useState({
 		id: currentState?.selectedProduct?.id || 0,
 		title: '',
-		size: cartState?.cart?.selectedEditItem?.size || { type: 'Mediana', id: 0 },
-		dough: cartState?.cart?.selectedEditItem?.dough || { type: 'Masa normal', id: 0 },
-		ingredients: cartState?.cart?.selectedEditItem?.ingredients || [],
-		rawIngredients: cartState?.cart?.selectedEditItem?.rawIngredients || [],
-		drinks: cartState?.cart?.selectedEditItem?.drinks || [],
-		rawDrinks: cartState?.cart?.selectedEditItem?.rawDrinks || [],
+		size: cartState?.selectedEditItem?.size || { type: 'Mediana', id: 2 },
+		dough: cartState?.selectedEditItem?.dough || { type: 'Masa Normal', id: 1 },
+		ingredients: cartState?.selectedEditItem?.ingredients || [],
+		rawIngredients: cartState?.selectedEditItem?.rawIngredients || [],
+		drinks: cartState?.selectedEditItem?.drinks || [],
+		rawDrinks: cartState?.selectedEditItem?.rawDrinks || [],
 		img: '',
-		productPrice: cartState?.cart?.selectedEditItem?.productPrice || 0,
-		additionalPrice: cartState?.cart?.selectedEditItem?.additionalPrice || 0,
+		productPrice: cartState?.selectedEditItem?.productPrice || 12,
+		additionalPrice: cartState?.selectedEditItem?.additionalPrice || 0,
 		quantity: 1,
 		productSubTotal: cartState?.cart?.selectedEditItem?.productSubTotal || 0,
 		context: context,
@@ -97,13 +97,24 @@ export const useCartValues = (context) => {
 			});
 		} else if (type === 'drinks') {
 			if (values.drinks.find((drink) => drink.productName === e.target.value)) {
+				let filteredDrinksAsProducts;
 				filteredAdditional = values.drinks.filter(
 					(drink) => drink.productName !== e.target.value,
 				);
+				filteredDrinksAsProducts = filteredAdditional
+					.filter((item) => item.isDrink)
+					.map((drink) => {
+						return {
+							...filteredDrinksAsProducts,
+							productId: drink.id,
+							isDrink: drink.isDrink,
+							productRelationNumber: drink.productRelationNumber,
+						};
+					});
 				filteredRawAdditional = values.rawDrinks.filter(
 					(rawDrink) => rawDrink !== e.target.value,
 				);
-				setDrinksAsProducts([...filteredAdditional]);
+				setDrinksAsProducts([...filteredDrinksAsProducts]);
 				return setValues({
 					...values,
 					additionalPrice: +values.additionalPrice - +price,
@@ -124,7 +135,7 @@ export const useCartValues = (context) => {
 							productId: selectedDrink.id,
 							isDrink: true,
 							productRelationNumber:
-								currentState?.selectedProduct?.id || cartStatet?.selectedEditItem?.id,
+								currentState?.selectedProduct?.id || cartState?.selectedEditItem?.id,
 						},
 					]);
 				});
@@ -133,7 +144,17 @@ export const useCartValues = (context) => {
 					...values,
 					additionalPrice: +prevState.additionalPrice + +price,
 					rawDrinks: [...values.rawDrinks, e.target.value],
-					drinks: [...values.drinks, { productName: e.target.value, price }],
+					drinks: [
+						...values.drinks,
+						{
+							productName: e.target.value,
+							isDrink: true,
+							price,
+							id,
+							productRelationNumber:
+								currentState?.selectedProduct?.id || cartState?.selectedEditItem?.id,
+						},
+					],
 				};
 			});
 		}

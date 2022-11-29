@@ -6,7 +6,7 @@ import { productDetailsSectionStyles } from "./styles/productDetailsStyles";
 const Main = () => {
 	return (
 		<section className={productDetailsSectionStyles}>
-			<header className="w-full flex justify-end items-center w-full h-[6%] pr-4">
+			<header className="flex justify-end items-center w-full h-[6%] pr-4">
 				<CloseBtn modal="productDetails" />
 			</header>
 			<div className="flex flex-wrap w-full min-h-[94%] overflow-y-auto">

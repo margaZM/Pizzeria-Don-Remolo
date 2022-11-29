@@ -26,7 +26,7 @@ export const Pizzas = ({ refProp }) => {
 				{category.pizzas?.data?.map((product) => (
 					<div key={product.id} className="min-h-[320px]">
 						<ProductCard
-							title={`Pizza ${product.name}`}
+							title={product.name}
 							desc={product.description}
 							oldPrice={product.price}
 							newPrice={product.price}
