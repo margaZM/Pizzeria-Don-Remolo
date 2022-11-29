@@ -20,7 +20,6 @@ export const Categories = () => {
 	}, []);
 
 	const redirect = (category) => {
-		console.log(category);
 		router.push({
 			pathname: '/menu',
 			query: { c: category },

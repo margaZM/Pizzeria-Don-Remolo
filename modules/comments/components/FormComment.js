@@ -39,7 +39,6 @@ export const FormComment = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		console.log(rating);
 		const data = {
 			calification: rating,
 			categories: categoriesSelected,

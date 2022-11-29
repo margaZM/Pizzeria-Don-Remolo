@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -22,6 +22,7 @@ export const useCartValues = (context) => {
 	const actionType = cartState.actionType;
 	const [drinksAsProducts, setDrinksAsProducts] = useState([]);
 	const [basketValues, setBasketValues] = useState([]);
+
 	const {
 		infoNotification,
 		setInfoNotification,
@@ -41,8 +42,11 @@ export const useCartValues = (context) => {
 		productPrice: cartState?.selectedEditItem?.productPrice || 12,
 		additionalPrice: cartState?.selectedEditItem?.additionalPrice || 0,
 		quantity: 1,
-		productSubTotal: cartState?.selectedEditItem?.productSubTotal || 0,
+		productSubTotal: cartState?.cart?.selectedEditItem?.productSubTotal || 0,
+		context: context,
+		detailPromo: currentState.selectedProduct?.detailPromo || [],
 	});
+	console.log(currentState?.selectedProduct);
 	let cartTimeout;
 	const handleChange = (e) => {
 		const type = e.target.dataset.type;
@@ -97,15 +101,16 @@ export const useCartValues = (context) => {
 				filteredAdditional = values.drinks.filter(
 					(drink) => drink.productName !== e.target.value,
 				);
-				filteredDrinksAsProducts = filteredAdditional.filter(item => item.isDrink).map(drink => {
-					return {
-						...filteredDrinksAsProducts,
-						productId: drink.id,
-						isDrink: drink.isDrink,
-						productRelationNumber:
-							drink.productRelationNumber,
-					};
-				});
+				filteredDrinksAsProducts = filteredAdditional
+					.filter((item) => item.isDrink)
+					.map((drink) => {
+						return {
+							...filteredDrinksAsProducts,
+							productId: drink.id,
+							isDrink: drink.isDrink,
+							productRelationNumber: drink.productRelationNumber,
+						};
+					});
 				filteredRawAdditional = values.rawDrinks.filter(
 					(rawDrink) => rawDrink !== e.target.value,
 				);
@@ -139,7 +144,17 @@ export const useCartValues = (context) => {
 					...values,
 					additionalPrice: +prevState.additionalPrice + +price,
 					rawDrinks: [...values.rawDrinks, e.target.value],
-					drinks: [...values.drinks, { productName: e.target.value, isDrink: true, price, id, productRelationNumber: currentState?.selectedProduct?.id || cartState?.selectedEditItem?.id, }],
+					drinks: [
+						...values.drinks,
+						{
+							productName: e.target.value,
+							isDrink: true,
+							price,
+							id,
+							productRelationNumber:
+								currentState?.selectedProduct?.id || cartState?.selectedEditItem?.id,
+						},
+					],
 				};
 			});
 		}
@@ -147,6 +162,7 @@ export const useCartValues = (context) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (actionType === 'edit') {
+			console.log('editando');
 			dispatch(
 				handleEditCartItem({
 					totalPrice:
@@ -158,7 +174,9 @@ export const useCartValues = (context) => {
 						img: cartState?.selectedEditItem?.img,
 						quantity: cartState?.selectedEditItem?.quantity,
 						productSubTotal: +values.productPrice + +values.additionalPrice,
+						detailPromo: currentState.selectedProduct?.detailPromo || [],
 					},
+					context: values.context,
 					apiData: {
 						id: localStorage.getItem('GuestCart') || uuidv4(),
 						products: [
@@ -187,7 +205,9 @@ export const useCartValues = (context) => {
 						title: currentState?.selectedProduct?.title,
 						quantity: currentState?.selectedProduct?.quantity,
 						productSubTotal: +values.productPrice + +values.additionalPrice,
+						detailPromo: currentState.selectedProduct?.detailPromo || [],
 					},
+					context: values.context,
 					apiData: {
 						id: localStorage.getItem('GuestCart') || uuidv4(),
 						products: [
@@ -213,24 +233,6 @@ export const useCartValues = (context) => {
 			}, 2000);
 		}
 	};
-	useEffect(() => {
-		if (context?.productDetailsContext) {
-			if(values.drinks.length > 0) {
-				let filteredDrinksAsProducts;
-				filteredDrinksAsProducts = values.drinks.map(drink => {
-					return {
-						...filteredDrinksAsProducts,
-						productId: drink.id,
-						isDrink: drink.isDrink,
-						productRelationNumber:
-							drink.productRelationNumber,
-					};
-				});
-				setDrinksAsProducts(filteredDrinksAsProducts);
-			}
-			return () => clearTimeout(cartTimeout);
-		};
-	}, []);
 	return {
 		dispatch,
 		handleChange,

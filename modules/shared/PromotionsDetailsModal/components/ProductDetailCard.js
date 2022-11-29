@@ -7,7 +7,6 @@ import { useSelectPromotion } from '/hooks/useSelectPromotion';
 export const ProductDetailCard = ({ product }) => {
 	const { picture, title, newPrice, oldPrice, description } = product;
 	const { handleQuantity } = useSelectPromotion();
-	// console.log(product);
 
 	return (
 		<div className="border-r-2 border-r-gray col-span-2">

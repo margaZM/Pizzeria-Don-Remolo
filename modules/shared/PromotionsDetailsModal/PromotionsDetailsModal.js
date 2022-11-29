@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { ProductDetailCard } from './components/ProductDetailCard';
-// import { OptionDetail } from './components/OptionDetail';
 import { OptionDetailList } from '/modules/shared/PromotionsDetailsModal/components/OptionDetailList.js';
 
 import Close from '/modules/shared/Close.js';
@@ -20,8 +19,13 @@ export const PromotionsDetailsModal = () => {
 	const { picture, originalPrice, title, promotionalPrice, description, ruleItems } =
 		currentState.selectedProduct || {};
 
-	const { handleSubmit, infoNotification, isOpenNotification, setIsOpenNotification } =
-		useCartValues('productDetails');
+	const {
+		handleSubmit,
+		infoNotification,
+		isOpenNotification,
+		setIsOpenNotification,
+		actionType,
+	} = useCartValues('promotionDetails');
 
 	const closeModal = () => {
 		closeModalDispatch('promotionDetails');
@@ -35,8 +39,6 @@ export const PromotionsDetailsModal = () => {
 		description,
 	};
 	const detailPromo = ruleItems || [];
-
-	// console.log(detailPromo);
 
 	useEffect(() => {
 		const selectedProductsOfPromotion = currentState.selectedProduct?.detailPromo || [];
@@ -56,14 +58,15 @@ export const PromotionsDetailsModal = () => {
 		setQuantitiesByGroup(quantitiesSelectedProductsByGroup());
 	}, [currentState.selectedProduct?.detailPromo]);
 
-	console.log(quantitiesByGroup);
-	console.log(currentState.selectedProduct);
-
-	// const disabledButton = () => {
-	// 	return detailPromo.map(item => {
-	// 		item.sizeId < quantitiesByGroup[item.groupName]
-	// 	});
-	// };
+	const disabledButton = () => {
+		const minQuantityByGroup = detailPromo.map((item) => {
+			return [item.groupName, item.quantity];
+		});
+		const isValidQuantities = minQuantityByGroup.map(
+			(group) => quantitiesByGroup && quantitiesByGroup[group[0]] >= group[1],
+		);
+		return isValidQuantities.some((item) => !item);
+	};
 
 	return (
 		<Modal>
@@ -78,16 +81,22 @@ export const PromotionsDetailsModal = () => {
 						<OptionDetailList
 							quantitiesByGroup={quantitiesByGroup}
 							detailPromo={detailPromo}
+							productsToUpdate={
+								actionType === 'edit' ? currentState.selectedProduct.detailPromo : []
+							}
 						/>
 
 						<div className="absolute bottom-0 right-0 bg-white h-16 border-t border-t-gray w-full rounded-br-xl flex justify-center items-center">
 							<button
-								className="bg-primary text-white rounded-full p-2 w-[70%] flex justify-center items-center gap-2"
+								className="bg-primary text-white rounded-full p-2 w-[70%] flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
 								type="button"
 								onClick={handleSubmit}
+								disabled={disabledButton()}
 							>
 								<CartPlusIcon />
-								<span>Agregar al carrito</span>
+								<span>
+									{actionType === 'edit' ? 'Editar orden' : 'Agregar al carrito'}
+								</span>
 								<span>|</span>
 								<span>
 									{'$'}{' '}

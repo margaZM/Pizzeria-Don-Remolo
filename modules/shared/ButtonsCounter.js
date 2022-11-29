@@ -10,9 +10,18 @@ export const ButtonsCounter = ({
 	handlerAdd,
 	handlerMinus,
 	initialQuantity,
+	productsToUpdate,
 }) => {
 	const { productQuantity, incrementProduct, decrementProduct } =
 		useCounterButtons(initialQuantity);
+
+	let productUpdated;
+
+	if (productsToUpdate?.length) {
+		productUpdated = productsToUpdate.find((item) => {
+			return item.productId === product.productId;
+		});
+	}
 
 	const addProduct = () => {
 		!disabled?.add && (incrementProduct(maxAmount), handlerAdd(product || 'increase'));
@@ -28,7 +37,9 @@ export const ButtonsCounter = ({
 			<button onClick={minusProduct}>
 				<Image src={require('/public/assets/icons/minus-btn.svg')} alt="boton restar" />
 			</button>
-			<span className="w-8 text-center"> {productQuantity} </span>
+			<span className="w-8 text-center">
+				{productUpdated?.quantity || productQuantity}
+			</span>
 			<button
 				className={disabled?.add && 'cursor-not-allowed opacity-50'}
 				onClick={addProduct}
