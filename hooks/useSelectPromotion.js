@@ -13,6 +13,7 @@ export const useSelectPromotion = () => {
 	const { openModalDispatch } = useOnModalChange();
 	const dispatch = useDispatch();
 	const currentState = useSelector((state) => state.selectedProduct);
+
 	const handlePromotion = (promotion, dataModal) => {
 		dispatch(setActionType({ type: 'add' }));
 		openModalDispatch(dataModal);
@@ -30,6 +31,7 @@ export const useSelectPromotion = () => {
 			);
 		});
 	};
+
 	const handleQuantity = (action) => dispatch(handleSelectedProductCounter(action));
 
 	const handleSelectedPromotionOptions = (optionSelected) => {

@@ -7,13 +7,15 @@ const selectedProductSlice = createSlice({
 	},
 	reducers: {
 		handleSelectedProduct: (state, action) => {
+			console.log(action);
 			const title = action?.payload?.data?.name || action?.payload?.data?.title;
-			const price = action?.payload?.data?.promotionalPrice || action?.payload?.data?.price;
+			const price =
+				action?.payload?.data?.promotionalPrice || action?.payload?.data?.price;
 			if (action.payload.selected) {
 				state.selectedProduct = {
 					...action.payload.data,
 					title,
-					price
+					price,
 				};
 			} else if (!action.payload.selected) {
 				state.selectedProduct = null;

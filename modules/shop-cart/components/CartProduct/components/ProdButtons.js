@@ -12,6 +12,7 @@ export const ProdButtons = ({ quantity, id, context }) => {
 	const dispatch = useDispatch();
 	const handleDeleteItem = () => dispatch(handleDeleteCartItem(id));
 	const handleEditItem = (e) => {
+		console.log(e.target);
 		dispatch(setActionType({ type: e.target.dataset.action_type, id }));
 		openModalDispatch(e.target.dataset.modal);
 	};

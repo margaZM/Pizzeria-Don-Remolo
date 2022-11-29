@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ProductCard } from '../../../shared/ProductCard';
 import { productServices } from '../../../../services/product-services/productServices';
+import { useSelectProduct } from '/hooks/useSelectProduct.js';
 
 const Main = () => {
 	const [popular, setPopular] = useState(null);
+	const { handleProductSelection } = useSelectProduct();
+
 	useEffect(() => {
-		productServices.getMostPopular().then(res => setPopular(res.data));
+		productServices.getMostPopular().then((res) => setPopular(res.data));
 	}, []);
 	return (
 		<div className="flex flex-col h-screen max-h-[380px] lg:w-[90%] xl:max-w-[70%] mx-auto pt-2 gap-2 md:max-h-[400px] lg:max-h-[450px]">
@@ -17,11 +20,14 @@ const Main = () => {
 					popular.map((prod) => (
 						<ProductCard
 							key={prod.id}
+							id={prod.id}
 							title={prod.name}
 							desc={prod.description}
 							oldPrice="15"
 							newPrice={prod.price}
 							image={prod.picture}
+							onClick={handleProductSelection}
+							dataModal={'productDetails'}
 						/>
 					))}
 			</section>

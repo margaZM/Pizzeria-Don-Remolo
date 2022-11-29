@@ -12,31 +12,33 @@ export const useSelectProduct = () => {
 	const { openModalDispatch } = useOnModalChange();
 	const dispatch = useDispatch();
 	const currentState = useSelector((state) => state.selectedProduct);
-	const handlePromotion = (e) => {
+
+	const handlePromotion = async (e) => {
 		dispatch(setActionType({ type: 'add' }));
-		openModalDispatch(e);
-		productServices.searchPromotionById(e).then((res) => {
+		const res = await productServices.searchPromotionById(e);
+		if (res.status === 200) {
 			dispatch(
 				handleSelectedProduct({
 					selected: true,
 					data: { ...res[0], quantity: 1, productRelationNumber: uuidv4() },
 				}),
 			);
-		});
+			openModalDispatch(e);
+		}
 	};
-	const handleProductSelection = (e) => {
+	const handleProductSelection = async (e) => {
 		const productID = e.target.dataset.id;
-		const actionType = e.target.dataset.action_type;
-		dispatch(setActionType({ type: actionType }));
-		openModalDispatch(e);
-		productServices.getProductByID(productID).then((res) => {
+		dispatch(setActionType({ type: 'add' }));
+		const res = await productServices.getProductByID(productID);
+		if (res.status === 200) {
 			dispatch(
 				handleSelectedProduct({
 					selected: true,
 					data: { ...res.data, quantity: 1, productRelationNumber: uuidv4() },
 				}),
 			);
-		});
+			openModalDispatch(e);
+		}
 	};
 	const handleQuantity = (e) =>
 		dispatch(handleSelectedProductCounter(e.target.dataset.action));

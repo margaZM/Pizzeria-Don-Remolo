@@ -51,9 +51,7 @@ export const Portal = () => {
 					<BannerBenefit />{' '}
 				</Modal>
 			) : modals.productDetails ? (
-				<Modal>
-					<ProductDetails />{' '}
-				</Modal>
+				<ProductDetails />
 			) : modals.promotionDetails ? (
 				<PromotionsDetailsModal />
 			) : null}
