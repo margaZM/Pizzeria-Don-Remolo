@@ -1,15 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useSelectPromotion } from '/hooks/useSelectPromotion.js';
+import { useEffect } from 'react';
+import { useSelectedProducts } from '/hooks/useSelectedProducts.js';
 import { productServices } from '../../../../services/product-services/productServices';
 import { ProductCard } from '../../../shared/ProductCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPromotions } from '/redux/slices/products/productsSlice.js';
 
 export const Promotions = ({ refProp, isMenu }) => {
-	const [promotions, setPromotions] = useState(null);
-	const { handlePromotion } = useSelectPromotion();
+	const { handlePromotion } = useSelectedProducts();
+	const dispatch = useDispatch();
+	const promotions = useSelector((state) => state.products.promotions);
 
 	useEffect(() => {
-		productServices.getPromotions().then((res) => setPromotions(res.data));
-	}, []);
+		productServices.getPromotions().then((res) => dispatch(setPromotions(res.data)));
+	}, [dispatch]);
 
 	return (
 		<div
@@ -19,7 +22,7 @@ export const Promotions = ({ refProp, isMenu }) => {
 			<div className="flex w-full max-w-[1200px]">
 				<h2 className="text-[1.2rem] font-bold">PROMOCIONES</h2>
 			</div>
-			<section className="flex justify-between max-w-[212] overflow-hidden gap-4 overflow-x-scroll min-h-[255px] h-full">
+			<section className="wrap-cards">
 				{promotions &&
 					promotions.map((promo) => (
 						<ProductCard

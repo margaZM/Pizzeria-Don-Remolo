@@ -1,8 +1,7 @@
-import Image from 'next/image';
-import { useSelectProduct } from '/hooks/useSelectProduct';
+import { useSelectedProducts } from '/hooks/useSelectedProducts.js';
 import { ProductDetailCard } from '/modules/shared/PromotionsDetailsModal/components/ProductDetailCard.js';
 
 export const SelectedProduct = () => {
-	const { currentState } = useSelectProduct();
+	const { currentState } = useSelectedProducts();
 	return <ProductDetailCard product={currentState?.selectedProduct} />;
 };

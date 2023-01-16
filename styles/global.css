@@ -14,6 +14,15 @@
 	@apply cursor-pointer block rounded-3xl shadow outline-none text-gray-dark border border-gray-dark transition-opacity max-w-[32rem] hover:bg-primary hover:text-white hover:border-primary;
 }
 
+.responsive-cards {
+	display: grid;
+	grid-auto-rows: 22rem;
+	grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+}
+
+.wrap-cards {
+	@apply flex justify-between max-w-[212] overflow-hidden gap-4 overflow-x-scroll min-h-[255px] h-full;
+}
 input,
 select,
 textarea {

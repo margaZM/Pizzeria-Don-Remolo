@@ -31,17 +31,24 @@ export const ButtonsCounter = ({
 		decrementProduct();
 		handlerMinus(product || 'decrease');
 	};
+	const quantity = productUpdated?.quantity || productQuantity;
 
 	return (
 		<div className="flex gap-1 items-center">
-			<button onClick={minusProduct}>
+			<button
+				onClick={minusProduct}
+				className={
+					disabled?.minus || quantity === 0
+						? 'cursor-not-allowed text-gray-dark'
+						: 'text-primary'
+				}
+				disabled={disabled?.minus || quantity === 0}
+			>
 				<Image src={require('/public/assets/icons/minus-btn.svg')} alt="boton restar" />
 			</button>
-			<span className="w-8 text-center">
-				{productUpdated?.quantity || productQuantity}
-			</span>
+			<span className="w-8 text-center">{quantity}</span>
 			<button
-				className={disabled?.add && 'cursor-not-allowed opacity-50'}
+				className={disabled?.add ? 'cursor-not-allowed text-gray-dark' : 'text-primary'}
 				onClick={addProduct}
 			>
 				<Image src={require('/public/assets/icons/plus-btn.svg')} alt="boton sumar" />

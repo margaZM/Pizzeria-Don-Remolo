@@ -10,11 +10,11 @@ export const OptionDetailList = ({
 	return (
 		detailPromo.length && (
 			<div className="max-h-[93%] overflow-auto">
-				{detailPromo?.map((detail) => (
+				{detailPromo?.map((detail, index) => (
 					<OptionDetail
 						detailPromo={detail}
 						quantitiesByGroup={quantitiesByGroup}
-						key={detail.categoryId}
+						key={index}
 						productsToUpdate={productsToUpdate}
 					/>
 				))}
@@ -23,4 +23,7 @@ export const OptionDetailList = ({
 	);
 };
 
-OptionDetailList.propTypes = {};
+OptionDetailList.propTypes = {
+	detailPromo: PropTypes.array,
+	quantitiesByGroup: PropTypes.array,
+};

@@ -1,15 +1,16 @@
-import { useRequest } from "../../../../hooks/useRequest";
-import { OptionalOption } from "./OptionalOption";
+import { useRequest } from '../../../../hooks/useRequest';
+import { OptionalOption } from './OptionalOption';
 
 export const PickDrink = () => {
 	const drinks = useRequest({
-		request: "drinks",
+		request: 'drinks',
 		pageSize: 11,
 	});
+	console.log(drinks);
 	return (
 		<>
 			{drinks &&
-				drinks.map(drink => (
+				drinks.map((drink) => (
 					<OptionalOption
 						key={drink.id}
 						label={drink.name}
@@ -18,8 +19,7 @@ export const PickDrink = () => {
 						data-type="drinks"
 						data-id={drink.id}
 					/>
-				))
-			}
+				))}
 		</>
 	);
 };

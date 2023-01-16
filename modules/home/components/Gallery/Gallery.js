@@ -11,7 +11,7 @@ export const Gallery = () => {
 					</h2>
 				</section>
 
-				<section className="flex flex-wrap justify-center md:justify-between items-center gap-2 mt-4">
+				<section className="responsive-cards gap-2 mt-4">
 					<Image
 						src={require('/public/assets/gallery/picture1.png')}
 						alt="picture-don-remolo"

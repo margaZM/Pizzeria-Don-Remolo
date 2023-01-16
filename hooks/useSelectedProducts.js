@@ -1,43 +1,48 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
-import { setActionType } from '../redux/slices/cart/cartSlice';
 import {
-	handleSelectedProduct,
-	handleSelectedProductCounter,
+	setSelectedProduct,
 	setDetailPromo,
-} from '../redux/slices/selectedProduct/selectedProductSlice';
+	setSelectedProductCounter,
+} from '/redux/slices/selectedProduct/selectedProductsSlice.js';
 import { productServices } from '../services/product-services/productServices';
 import { useOnModalChange } from './useOnModalChange';
+import { setPromotions } from '/redux/slices/products/productsSlice.js';
 
-export const useSelectPromotion = () => {
+export const useSelectedProducts = () => {
 	const { openModalDispatch } = useOnModalChange();
 	const dispatch = useDispatch();
-	const currentState = useSelector((state) => state.selectedProduct);
+	const currentState = useSelector((state) => state.selectedProducts);
+	const promotions = useSelector((state) => state.products.promotions);
 
-	const handlePromotion = (promotion, dataModal) => {
-		dispatch(setActionType({ type: 'add' }));
+	const handlePromotion = async (promotion, dataModal) => {
 		openModalDispatch(dataModal);
-		productServices.getPromotionDetails(promotion.id).then((res) => {
-			dispatch(
-				handleSelectedProduct({
-					selected: true,
-					data: {
-						...promotion,
-						...res.data,
-						quantity: 1,
-						productRelationNumber: uuidv4(),
-					},
-				}),
-			);
-		});
+		const response = await getDetailPromotions(promotion.id);
+
+		const addRuleItemsInSelectedPromotion = promotions.map((item) =>
+			item.id === promotion.id ? { ...item, ruleItems: response.ruleItems } : item,
+		);
+		dispatch(setPromotions([...addRuleItemsInSelectedPromotion]));
+
+		dispatch(
+			setSelectedProduct({
+				selected: true,
+				...promotion,
+				title: promotion.title || promotion.name,
+				price: promotion.promotionalPrice,
+				...response,
+				quantity: 1,
+				isPromotion: true,
+				context: dataModal,
+			}),
+		);
 	};
 
-	const handleQuantity = (action) => dispatch(handleSelectedProductCounter(action));
+	const handleQuantity = (action) => dispatch(setSelectedProductCounter(action));
 
 	const handleSelectedPromotionOptions = (optionSelected) => {
 		const newProductOfPromotion = { ...optionSelected, quantity: 1 };
 
-		const selectedProductsOfPromotion = currentState.selectedProduct.detailPromo || [];
+		const selectedProductsOfPromotion = currentState.selectedProduct?.detailPromo || [];
 
 		const isProductAlreadySelected = selectedProductsOfPromotion.some(
 			(product) => product.productId === newProductOfPromotion.productId,
@@ -55,7 +60,7 @@ export const useSelectPromotion = () => {
 	};
 
 	const handleDeleteSelectedPromotionOptions = (optionDeleted) => {
-		const selectedProductsOfPromotion = currentState.selectedProduct.detailPromo || [];
+		const selectedProductsOfPromotion = currentState.selectedProduct?.detailPromo || [];
 		const productSelected = selectedProductsOfPromotion.find(
 			(product) => product.productId === optionDeleted.productId,
 		);
@@ -78,11 +83,35 @@ export const useSelectPromotion = () => {
 		);
 	};
 
+	const getDetailPromotions = async (id) => {
+		try {
+			const response = await productServices.getPromotionDetails(id);
+			return response.status === 200 && response.data;
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const handleProductSelection = async (product, dataModal) => {
+		dispatch(
+			setSelectedProduct({
+				selected: true,
+				context: dataModal,
+				...product,
+				quantity: 1,
+				context: dataModal,
+			}),
+		);
+		openModalDispatch(dataModal);
+	};
+
 	return {
 		handlePromotion,
 		handleQuantity,
-		currentState,
+		handleProductSelection,
 		handleSelectedPromotionOptions,
 		handleDeleteSelectedPromotionOptions,
+		currentState,
+		getDetailPromotions,
 	};
 };

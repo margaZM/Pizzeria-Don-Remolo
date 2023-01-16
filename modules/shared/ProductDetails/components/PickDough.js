@@ -1,12 +1,12 @@
-import { useRequest } from "../../../../hooks/useRequest";
-import { RequiredOption } from "./RequiredOption";
+import { useRequest } from '../../../../hooks/useRequest';
+import { RequiredOption } from './RequiredOption';
 
 export const PickDough = () => {
-	const doughs = useRequest({request: "doughs"})
+	const doughs = useRequest({ request: 'doughs' });
 	return (
 		<>
 			{doughs &&
-				doughs.map(dough => (
+				doughs.map((dough) => (
 					<RequiredOption
 						key={dough.id}
 						label={dough.name}
@@ -15,8 +15,7 @@ export const PickDough = () => {
 						type="dough"
 						data-id={dough.id}
 					/>
-				))
-			}
+				))}
 		</>
 	);
 };

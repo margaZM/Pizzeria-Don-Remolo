@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from 'next/image';
 import { ButtonsCounter } from '/modules/shared/ButtonsCounter';
-import { useSelectPromotion } from '/hooks/useSelectPromotion';
+import { useSelectedProducts } from '/hooks/useSelectedProducts';
 
 export const OptionDetail = ({ detailPromo, quantitiesByGroup, productsToUpdate }) => {
 	const { groupName, products, quantity } = detailPromo;
 	const { handleSelectedPromotionOptions, handleDeleteSelectedPromotionOptions } =
-		useSelectPromotion();
+		useSelectedProducts();
 
 	return (
 		<div>
@@ -27,13 +27,15 @@ export const OptionDetail = ({ detailPromo, quantitiesByGroup, productsToUpdate 
 			</div>
 			<div className="mb-2">
 				{products.map((option) => (
-					<div key={option.id}>
+					<div key={option.productId}>
 						<div className="pl-12 pr-4 flex justify-between items-center">
 							<span>{option.name} </span>
 							<ButtonsCounter
 								maxAmount={quantity || 1}
 								product={{ ...option, group: groupName, maxQuantityGroup: quantity }}
-								disabled={{ add: quantitiesByGroup[groupName] >= quantity }}
+								disabled={{
+									add: quantitiesByGroup[groupName] >= quantity,
+								}}
 								handlerAdd={handleSelectedPromotionOptions}
 								handlerMinus={handleDeleteSelectedPromotionOptions}
 								productsToUpdate={productsToUpdate}
